@@ -23,7 +23,7 @@ ClyAddTranscriptPointCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddTranscriptPointCommand >> defaultMenuItemName [
-	^' Add     TranscriptPoint    to  ', sourceNode displaySourceCode
+	^' Add     TranscriptPoint    to  ', sourceNode displaySourceCode 
 ]
 
 { #category : #accessing }
