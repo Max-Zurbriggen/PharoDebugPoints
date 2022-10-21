@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 TranscriptPoint >> hit [
-	Transcript show: text
+	Transcript show: text 
 ]
 
 { #category : #accessing }
