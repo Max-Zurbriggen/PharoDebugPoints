@@ -9,12 +9,10 @@ Class {
 
 { #category : #accessing }
 ConditionalBreakpoint >> breakWithContext: aContext [
-	"<debuggerCompleteToSender>"
-	"not yet working"
+	<debuggerCompleteToSender>
 	|a|
 	
 	a := self evaluate: self condition withContext: aContext.
-	self halt.
 	
 	a ifFalse: [ ^self ].
 	Break break.
@@ -48,4 +46,18 @@ ConditionalBreakpoint >> evaluate: expression withContext: aContext [
 		context: aContext;
 		receiver: aContext receiver;
 		evaluate
+]
+
+{ #category : #accessing }
+ConditionalBreakpoint >> newConditionPopup [
+
+	| textInput |
+	textInput := SpRequestTextDialog new
+		label: 'Enter condition for this point (self and variables are supported):';
+		text: '';
+		title: 'Enter condition';
+		openModal.
+	textInput ifNil: [ ^condition ].
+	textInput ifEmpty: [ ^false ].
+	^textInput 
 ]

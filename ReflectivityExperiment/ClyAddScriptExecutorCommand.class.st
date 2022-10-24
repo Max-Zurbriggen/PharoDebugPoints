@@ -18,7 +18,7 @@ ClyAddScriptExecutorCommand class >> contextMenuOrder [
 
 { #category : #accessing }
 ClyAddScriptExecutorCommand >> defaultMenuIconName [
-	^#class
+	^#smallDebug
 ]
 
 { #category : #accessing }
@@ -34,11 +34,15 @@ ClyAddScriptExecutorCommand >> description [
 { #category : #execution }
 ClyAddScriptExecutorCommand >> execute [
 	
-	"SimpleBreakpoint installOn: sourceNode"
-	"Counter installOn: sourceNode"
-	ScriptExecutor installOn: sourceNode
-	"ConditionalBreakpoint installOn: sourceNode"
-	"OnceBreakpoint installOn: sourceNode"
+	| textInput |
+	textInput := SpRequestTextDialog new
+		label: 'Enter script to execute when hitting this point:';
+		text: '';
+		title: 'Enter code';
+		openModal.
+	textInput ifNil: [ ^'' ].
+	(ScriptExecutor installOn: sourceNode) script: textInput .
+
 ]
 
 { #category : #execution }

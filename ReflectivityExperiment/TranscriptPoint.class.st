@@ -19,7 +19,6 @@ TranscriptPoint >> hit [
 TranscriptPoint >> initialize [ 
 	super initialize. 
 	text:= ''.
-	text := self newTextPopup.
 ]
 
 { #category : #accessing }

@@ -156,6 +156,11 @@ DebugPoint >> node: anObject [
 	node := anObject
 ]
 
+{ #category : #accessing }
+DebugPoint >> printTargetForBreakpointInspection [
+	^node methodNode method printString
+]
+
 { #category : #API }
 DebugPoint >> setObjectScope: anObject [
 	self targetInstance: anObject.

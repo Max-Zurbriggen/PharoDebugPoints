@@ -18,8 +18,7 @@ ScriptExecutor >> hit [
 { #category : #accessing }
 ScriptExecutor >> initialize [ 
 	super initialize. 
-	
-	script := self newScriptPopup.
+	self script: ''
 ]
 
 { #category : #accessing }
@@ -27,11 +26,11 @@ ScriptExecutor >> newScriptPopup [
 
 	| textInput |
 	textInput := SpRequestTextDialog new
-		label: 'Enter code for this point:';
+		label: 'Enter script to execute when hitting this point:';
 		text: '';
 		title: 'Enter code';
 		openModal.
-	textInput ifNil: [ ^'' ].
+	textInput ifNil: [ ^self script ].
 	^textInput 
 ]
 
@@ -39,6 +38,11 @@ ScriptExecutor >> newScriptPopup [
 ScriptExecutor >> runScript [
 	"run the script attached to this object"
 	Behavior evaluate: script.
+]
+
+{ #category : #accessing }
+ScriptExecutor >> script [ 
+	^script
 ]
 
 { #category : #accessing }

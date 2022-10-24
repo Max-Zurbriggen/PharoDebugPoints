@@ -18,7 +18,7 @@ ClyAddSimpleBreakpointCommand class >> contextMenuOrder [
 
 { #category : #accessing }
 ClyAddSimpleBreakpointCommand >> defaultMenuIconName [
-	^#class
+	^#smallDebug
 ]
 
 { #category : #accessing }

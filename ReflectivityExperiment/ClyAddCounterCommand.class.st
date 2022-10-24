@@ -18,7 +18,7 @@ ClyAddCounterCommand class >> contextMenuOrder [
 
 { #category : #accessing }
 ClyAddCounterCommand >> defaultMenuIconName [
-	^#class
+	^#smallDebug
 ]
 
 { #category : #accessing }

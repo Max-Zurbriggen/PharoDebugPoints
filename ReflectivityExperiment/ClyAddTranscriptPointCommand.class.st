@@ -18,7 +18,7 @@ ClyAddTranscriptPointCommand class >> contextMenuOrder [
 
 { #category : #accessing }
 ClyAddTranscriptPointCommand >> defaultMenuIconName [
-	^#class
+	^#smallDebug
 ]
 
 { #category : #accessing }
@@ -33,12 +33,15 @@ ClyAddTranscriptPointCommand >> description [
 
 { #category : #execution }
 ClyAddTranscriptPointCommand >> execute [
-	
-	TranscriptPoint installOn: sourceNode
-	"Counter installOn: sourceNode"
-	"ScriptExecutor installOn: sourceNode"
-	"ConditionalBreakpoint installOn: sourceNode"
-	"OnceBreakpoint installOn: sourceNode"
+	| textInput |
+	textInput := SpRequestTextDialog new
+		label: 'Enter text to print to transcript:';
+		text: '';
+		title: 'Enter text';
+		openModal.
+	textInput ifNil: [ ^'' ].
+	(TranscriptPoint installOn: sourceNode) text: textInput.
+
 ]
 
 { #category : #execution }
