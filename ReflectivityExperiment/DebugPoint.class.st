@@ -157,14 +157,23 @@ DebugPoint >> node: anObject [
 ]
 
 { #category : #accessing }
-DebugPoint >> printTargetForBreakpointInspection [
+DebugPoint >> printTarget [
 	^node methodNode method printString
 ]
 
 { #category : #API }
+DebugPoint >> resetObjectScope [
+	self targetInstance: nil.
+	self link condition: nil arguments: nil 
+
+]
+
+{ #category : #API }
 DebugPoint >> setObjectScope: anObject [
+	anObject ifNil: [ ^self resetObjectScope ].
 	self targetInstance: anObject.
-	^self link condition: [ :ctx | ctx receiver == targetInstance ] arguments: #(context)
+ 	self link condition: [ :ctx | ctx receiver == targetInstance ] arguments: #(context)
+
 ]
 
 { #category : #accessing }

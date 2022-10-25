@@ -37,12 +37,26 @@ ChainBreakpoint >> followingPoints [
 ChainBreakpoint >> hit [
 	<debuggerCompleteToSender>
 	self enabled: false.
-	self followingPoints do: [ :bp | bp enable ].
+	self followingPoints do: [ :bp | bp enabled: true ].
 	Break break.
 	
+]
+
+{ #category : #initialization }
+ChainBreakpoint >> install [ 
+	super install.
+	self setParent.
 ]
 
 { #category : #accessing }
 ChainBreakpoint >> removeFollowingPoint: aDebugPoint [
 	self followingPoints remove: aDebugPoint ifAbsent: [].
+]
+
+{ #category : #initialization }
+ChainBreakpoint >> setParent [
+	|parent|
+	parent := DebugPointSelectDialog new items: ChainBreakpoint allOfThisClass; openModal.
+	parent ifNotNil: [ parent addFollowingPoint: self. self entryPoint: false. self enabled: false ]
+	"DebugPointsTablePresenter new items: Counter allOfThisClass; open."
 ]
