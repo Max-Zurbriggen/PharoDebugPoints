@@ -42,7 +42,11 @@ DebugPoint >> getBehavior: aBehaviorClass [
 { #category : #'as yet unclassified' }
 DebugPoint >> hit [
 	self enabled ifFalse: [ ^self ].
-	self behaviors do: [ :behavior | behavior execute ]
+	self behaviors do: [ :behavior | 
+		"this might be bad style but makes for a more robust implementation of behaviors since execution only stops if it returns false and else continues"
+		behavior execute = false ifTrue: [ ^self ]
+
+		 ]
 ]
 
 { #category : #'as yet unclassified' }

@@ -22,7 +22,7 @@ DebugPointBehavior >> execute [
 
 { #category : #initialization }
 DebugPointBehavior >> initialize [ 
-	self priority: 50
+	self priority: 0
 ]
 
 { #category : #accessing }
