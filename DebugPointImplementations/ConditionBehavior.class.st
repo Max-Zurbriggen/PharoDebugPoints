@@ -28,6 +28,7 @@ ConditionBehavior >> evaluate: expression withContext: aContext [
 		source: expression;
 		context: aContext;
 		receiver: aContext receiver;
+		bindings: { #thisContext -> aContext };
 		evaluate
 ]
 

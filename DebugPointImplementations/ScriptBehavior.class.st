@@ -9,7 +9,7 @@ Class {
 
 { #category : #execution }
 ScriptBehavior >> execute [ 
-	Behavior evaluate: script.
+	Smalltalk compiler evaluate: script.
 ]
 
 { #category : #execution }

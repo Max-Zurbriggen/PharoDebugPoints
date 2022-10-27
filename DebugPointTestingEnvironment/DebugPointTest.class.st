@@ -1,8 +1,19 @@
 Class {
 	#name : #DebugPointTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'dp'
+	],
 	#category : #DebugPointTestingEnvironment
 }
+
+{ #category : #running }
+DebugPointTest >> setUp [
+	super setUp.
+	
+	"Put here a common initialization logic for tests"
+	dp := DebugPoint new.
+]
 
 { #category : #initialization }
 DebugPointTest >> setUpContext [
@@ -20,9 +31,16 @@ DebugPointTest >> setUpContext [
 ]
 
 { #category : #running }
+DebugPointTest >> tearDown [ 
+	
+	dp remove.
+	
+	super tearDown.
+]
+
+{ #category : #running }
 DebugPointTest >> testBehaviorPriority [
-	| dp a b c set |
-	dp := DebugPoint new.
+	| a b c set |
 	a := BreakBehavior new priority: 2.
 	b := CountBehavior new priority: 1.
 	c := CountBehavior new priority: 3.
@@ -36,8 +54,7 @@ DebugPointTest >> testBehaviorPriority [
 
 { #category : #running }
 DebugPointTest >> testBreakBehavior [
-	| dp |
-	dp := DebugPoint new.
+
 	dp addBehavior: BreakBehavior new.
 	self should: [dp hit] raise: Break.
 	self should: [dp hit] raise: Break.
@@ -45,9 +62,34 @@ DebugPointTest >> testBreakBehavior [
 
 { #category : #running }
 DebugPointTest >> testConditionBehavior [
-	| dp behavior args |
-	dp := DebugPoint new.
-	behavior := ConditionBehavior new debugPoint: dp; condition: 'corner=(300@200)'.
+	| behavior args |
+	behavior := ConditionBehavior new condition: 'corner=(300@200)'.
+	dp addBehavior: behavior.
+	dp addBehavior: BreakBehavior new.
+
+	args := Dictionary new at: #context put: self setUpContext; yourself.
+	
+	"hit the point so the arguments are actually saved in the debug point"
+	dp hitWithArguments: args.
+	"condition is false and should not trigger break"
+	self assert: (behavior execute) equals: false.
+	self shouldnt: [dp hit] raise: Break.
+	"condition is false and should not trigger break"
+	behavior condition: 'self corner=(300@200)'.
+	self assert: (behavior execute) equals: false.
+	self shouldnt: [dp hit] raise: Break.
+	"condition is true and should trigger the break"
+	behavior condition: 'corner=(200@200)'.
+	self assert: (behavior execute) equals: behavior .
+	self should: [dp hit] raise: Break.
+
+]
+
+{ #category : #running }
+DebugPointTest >> testConditionBehaviorThisContext [
+	| behavior args |
+
+	behavior := ConditionBehavior new condition: 'thisContext method = 2'.
 	dp addBehavior: behavior.
 	dp addBehavior: BreakBehavior new.
 
@@ -56,14 +98,12 @@ DebugPointTest >> testConditionBehavior [
 	"hit the point so the arguments are actually saved in the debug point"
 	dp hitWithArguments: args.
 	
+	"it should not break with incorrect condition"
 	self assert: (behavior execute) equals: false.
 	self shouldnt: [dp hit] raise: Break.
-	
-	behavior condition: 'self corner=(300@200)'.
-	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hit] raise: Break.
-	
-	behavior condition: 'corner=(200@200)'.
+
+	"here the condition is correct and it should break"
+	behavior condition: 'thisContext method = (Rectangle methodDict at: #areasOutside:)'.
 	self assert: (behavior execute) equals: behavior .
 	self should: [dp hit] raise: Break.
 
@@ -71,8 +111,7 @@ DebugPointTest >> testConditionBehavior [
 
 { #category : #running }
 DebugPointTest >> testCountBehavior [
-	| dp |
-	dp := DebugPoint new.
+
 	dp addBehavior: CountBehavior new.
 	self assert: ( (dp getBehavior: CountBehavior) count ) equals: 0.
 	dp hit.
@@ -84,21 +123,19 @@ DebugPointTest >> testCountBehavior [
 
 { #category : #running }
 DebugPointTest >> testOnceBehavior [
-	| dp |
-	dp := DebugPoint new.
-	dp addBehavior: (OnceBehavior new debugPoint: dp).
+	dp addBehavior: (OnceBehavior new).
 	self assert: (dp enabled) equals: true.
 	dp hit.
 	self assert: (dp enabled) equals: false.
+
 
 ]
 
 { #category : #running }
 DebugPointTest >> testOnceBreakBehavior [
-	| dp |
-	dp := DebugPoint new.
+
 	dp addBehavior: (BreakBehavior new).
-	dp addBehavior: (OnceBehavior new debugPoint: dp).
+	dp addBehavior: (OnceBehavior new).
 	self assert: (dp enabled) equals: true.
 	self should: [dp hit] raise: Break.
 	self assert: (dp enabled) equals: false.
@@ -108,8 +145,7 @@ DebugPointTest >> testOnceBreakBehavior [
 
 { #category : #running }
 DebugPointTest >> testRequiredArguments [
-	| dp |
-	dp := DebugPoint new.
+
 	dp addBehavior: (ConditionBehavior new).
 	dp addBehavior: TestRequiredArgumentsBehavior new.
 	self assert: dp requiredArguments equals: #(context node smth) asSet.
@@ -121,9 +157,9 @@ DebugPointTest >> testRequiredArguments [
 { #category : #running }
 DebugPointTest >> testTranscriptBehavior [
 
-	| dp |
-	dp := DebugPoint new.
 	dp addBehavior: (TranscriptBehavior new text: 'string').
+	
 	dp hit.
+	Transcript stepGlobal .
 	self assert: Transcript contents equals: 'string'
 ]

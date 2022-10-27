@@ -7,13 +7,32 @@ Class {
 		'requiredArguments',
 		'arguments'
 	],
+	#classVars : [
+		'AllDebugPoints'
+	],
 	#category : #DebugPointFramework
 }
+
+{ #category : #adding }
+DebugPoint class >> add: aDebugPoint [
+	self all add: aDebugPoint.
+]
+
+{ #category : #accessing }
+DebugPoint class >> all [
+	^AllDebugPoints ifNil: [ AllDebugPoints := Set new. ]
+]
+
+{ #category : #adding }
+DebugPoint class >> remove: aDebugPoint [
+	self all remove: aDebugPoint.
+]
 
 { #category : #API }
 DebugPoint >> addBehavior: aDebugPointBehavior [
 	"adding a new behavior"
 	self behaviors add: aDebugPointBehavior.
+	aDebugPointBehavior debugPoint: self.
 	"adding required arguments for this behavior"
 	self requiredArguments add: aDebugPointBehavior requiredArguments.
 	self requiredArguments: self requiredArguments flattened asSet.
@@ -67,6 +86,7 @@ DebugPoint >> hit [
 	self enabled ifFalse: [ ^self ].
 	self behaviors do: [ :behavior | 
 		"this might be bad style but makes for a more robust implementation of behaviors since execution only stops if it returns false and else continues"
+		"API: execute should return false if it should interrupt behavior execution"
 		behavior execute = false ifTrue: [ ^self ]
 
 		 ]
@@ -80,6 +100,7 @@ DebugPoint >> hitWithArguments: aDictionary [
 
 { #category : #initialization }
 DebugPoint >> initialize [ 
+	self class add: self.
 	self enabled: true.
 	self behaviors: (SortedCollection sortUsing: [ :elem1 :elem2 | elem1 priority >= elem2 priority]).
 	self requiredArguments: Set new.
@@ -100,6 +121,11 @@ DebugPoint >> installOn: aNode [
 	#hitWithArguments:.
 	"the set of argument that is required to be sent as dictionary:"
 	self requiredArguments
+]
+
+{ #category : #removing }
+DebugPoint >> remove [
+	self class remove: self.
 ]
 
 { #category : #accessing }

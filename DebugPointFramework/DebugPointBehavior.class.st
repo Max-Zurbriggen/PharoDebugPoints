@@ -5,6 +5,9 @@ The highest value is executed first.
 Condition: 50 (at the beginning)
 Once: 0 (standard)
 Break: -100 (always at the end)
+
+API:
+execute method should return false if it should interrupt behavior execution
 "
 Class {
 	#name : #DebugPointBehavior,
