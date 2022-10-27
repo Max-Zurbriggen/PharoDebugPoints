@@ -7,7 +7,7 @@ Class {
 	#category : #DebugPointImplementations
 }
 
-{ #category : #accessing }
+{ #category : #execution }
 TranscriptBehavior >> execute [ 
 	Transcript show: text.
 ]
