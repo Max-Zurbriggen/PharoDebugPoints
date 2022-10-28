@@ -163,3 +163,37 @@ DebugPointTest >> testTranscriptBehavior [
 	Transcript stepGlobal .
 	self assert: Transcript contents equals: 'string'
 ]
+
+{ #category : #running }
+DebugPointTest >> testWatchBehavior [
+	
+	| wb his args | 
+	wb := WatchBehavior new expression: 'corner'.
+	dp addBehavior: (wb).
+	his := OrderedCollection new.
+	args := Dictionary new at: #context put: self setUpContext; yourself.
+	
+	"check empty history"
+	self assert: wb history equals: his.
+	"check history after hitting dp"
+	dp hitWithArguments: args.
+	his add: 200@200.
+	self assert: wb history equals: his.
+	"once more"
+	wb expression: '''string'''.
+	dp hitWithArguments: args.
+	his addFirst: 'string'.
+	self assert: wb history equals: his.
+	"once more"	
+	dp hitWithArguments: args.
+	his addFirst: 'string'.
+	self assert: wb history equals: his.
+	"check if limit is applie correctly"
+	wb limit: 2.
+	his removeLast.
+	self assert: wb history equals: his.
+	"hitting does not change the history size anymore"
+	dp hitWithArguments: args.
+	self assert: wb history equals: his.
+
+]
