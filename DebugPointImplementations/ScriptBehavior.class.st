@@ -12,12 +12,12 @@ ScriptBehavior >> execute [
 	Smalltalk compiler evaluate: script.
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 ScriptBehavior >> script [
 	^script
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 ScriptBehavior >> script: aString [
 	script := aString
 ]

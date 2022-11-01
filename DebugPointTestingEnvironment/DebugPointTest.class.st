@@ -61,6 +61,47 @@ DebugPointTest >> testBreakBehavior [
 ]
 
 { #category : #running }
+DebugPointTest >> testChainBehavior [
+	| dp2 dp3 |
+	dp2 := DebugPoint new.
+	dp3 := DebugPoint new.
+	dp addBehavior: (ChainBehavior new addChild: dp2).
+	dp2 addBehavior: (ChainBehavior new addChild: dp3).
+	"dp3 addBehavior: (ChainBehavior new addChild: dp2)."
+	dp2 enabled: false.
+	dp3 enabled: false.
+
+	"hitting dp2 or dp3 should not change the state of any debugPoint"
+	dp2 hit.
+	self assert: dp enabled equals: true.
+	self assert: dp2 enabled equals: false.
+	self assert: dp3 enabled equals: false.
+	dp3 hit.
+	self assert: dp enabled equals: true.
+	self assert: dp2 enabled equals: false.
+	self assert: dp3 enabled equals: false.
+	"hitting dp enables dp2 and disables dp"
+	dp hit.
+	self assert: dp enabled equals: false.
+	self assert: dp2 enabled equals: true.
+	self assert: dp3 enabled equals: false.
+	"hitting dp1 does nothing"
+	dp hit.
+	self assert: dp enabled equals: false.
+	self assert: dp2 enabled equals: true.
+	self assert: dp3 enabled equals: false.
+	"hitting dp2 disables dp2 and enables dp3"
+	dp2 hit.
+	self assert: dp enabled equals: false.
+	self assert: dp2 enabled equals: false.
+	self assert: dp3 enabled equals: true.
+	
+	"cleanup"
+	dp2 remove.
+	dp3 remove.
+]
+
+{ #category : #running }
 DebugPointTest >> testConditionBehavior [
 	| behavior args |
 	behavior := ConditionBehavior new condition: 'corner=(300@200)'.

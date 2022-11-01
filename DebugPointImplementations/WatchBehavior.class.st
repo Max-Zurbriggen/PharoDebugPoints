@@ -1,3 +1,7 @@
+"
+history stores values up to the limit.
+no limit when: limit = nil
+"
 Class {
 	#name : #WatchBehavior,
 	#superclass : #DebugPointBehavior,

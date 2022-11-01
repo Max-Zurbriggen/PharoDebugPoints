@@ -25,12 +25,12 @@ DebugPointBehavior class >> addToDebugPoint: aDebugPoint [
 	^aDebugPoint 
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 DebugPointBehavior >> debugPoint [
 	^ debugPoint 
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 DebugPointBehavior >> debugPoint: aDebugPoint [
 	debugPoint := aDebugPoint 
 ]

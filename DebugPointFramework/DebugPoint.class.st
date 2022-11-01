@@ -76,7 +76,7 @@ DebugPoint >> getArgument: aSymbol [
 	^self arguments at: aSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 DebugPoint >> getBehavior: aBehaviorClass [
 	^self behaviors detect: [ :bh | bh class = aBehaviorClass ]
 ]
