@@ -23,11 +23,10 @@ ClyAddDebugPointEditorCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddDebugPointEditorCommand >> defaultMenuItemName [
-	^' Add Watchpoint to: ',  sourceNode displaySourceCode
+	^' Add Debug Point to: ',  sourceNode displaySourceCode
 ]
 
 { #category : #execution }
 ClyAddDebugPointEditorCommand >> execute [
-	
-	DebugPoint new in: sourceNode
+	DebugPointInstaller installOn: sourceNode.
 ]

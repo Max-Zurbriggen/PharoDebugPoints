@@ -23,7 +23,7 @@ ClyAddWatchpointCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddWatchpointCommand >> defaultMenuItemName [
-	^' Add Debug Point to: ',  sourceNode displaySourceCode
+	^' Add to: ',  sourceNode displaySourceCode
 ]
 
 { #category : #execution }

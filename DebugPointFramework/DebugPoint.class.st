@@ -83,6 +83,8 @@ DebugPoint >> getBehavior: aBehaviorClass [
 
 { #category : #API }
 DebugPoint >> hit [
+	<debuggerCompleteToSender>
+	
 	self enabled ifFalse: [ ^self ].
 	self behaviors do: [ :behavior | 
 		"this might be bad style but makes for a more robust implementation of behaviors since execution only stops if it returns false and else continues"
