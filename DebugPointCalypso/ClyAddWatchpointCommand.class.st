@@ -23,11 +23,14 @@ ClyAddWatchpointCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddWatchpointCommand >> defaultMenuItemName [
-	^' Add Watchpoint to: ',  sourceNode displaySourceCode
+	^' Add Debug Point to: ',  sourceNode displaySourceCode
 ]
 
 { #category : #execution }
 ClyAddWatchpointCommand >> execute [
-	
-	Watch in: sourceNode
+	| dp |
+	dp :=	DebugPoint new.
+		
+	"dp addBehavior: .	"
+	dp installOn: sourceNode.
 ]
