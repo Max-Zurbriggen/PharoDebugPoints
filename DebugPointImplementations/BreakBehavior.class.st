@@ -15,3 +15,8 @@ BreakBehavior >> initialize [
 	"breaking should always occur at the end so assign the lowest priority to this"
 	self priority: -100
 ]
+
+{ #category : #accessing }
+BreakBehavior >> uiElement [ 
+	^SpLabelPresenter new label: 'Break'.
+]

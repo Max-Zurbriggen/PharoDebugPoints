@@ -8,3 +8,8 @@ Class {
 OnceBehavior >> execute [
 	self debugPoint enabled: false.
 ]
+
+{ #category : #accessing }
+OnceBehavior >> uiElement [ 
+	^SpLabelPresenter new label: 'Once'.
+]

@@ -64,3 +64,8 @@ DebugPointBehavior >> priority: anInteger [
 DebugPointBehavior >> requiredArguments [ 
 	^#()
 ]
+
+{ #category : #accessing }
+DebugPointBehavior >> uiElement [ 
+	self subclassResponsibility 
+]

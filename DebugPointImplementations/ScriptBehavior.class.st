@@ -21,3 +21,9 @@ ScriptBehavior >> script [
 ScriptBehavior >> script: aString [
 	script := aString
 ]
+
+{ #category : #accessing }
+ScriptBehavior >> uiElement [ 
+
+	^ScriptUI new behavior: self.
+]

@@ -5,7 +5,8 @@ Class {
 		'enabled',
 		'behaviors',
 		'requiredArguments',
-		'arguments'
+		'arguments',
+		'metaLink'
 	],
 	#classVars : [
 		'AllDebugPoints'
@@ -25,7 +26,7 @@ DebugPoint class >> all [
 
 { #category : #adding }
 DebugPoint class >> remove: aDebugPoint [
-	self all remove: aDebugPoint.
+	self all remove: aDebugPoint ifAbsent: [].
 ]
 
 { #category : #API }
@@ -96,7 +97,9 @@ DebugPoint >> hit [
 
 { #category : #API }
 DebugPoint >> hitWithArguments: aDictionary [
-	self arguments: aDictionary.
+	"workaround because metalinks don't return dictionaries"
+	self arguments: (Dictionary new at: #context put: aDictionary; yourself).
+	"self arguments: aDictionary."
 	self hit.
 ]
 
@@ -108,25 +111,30 @@ DebugPoint >> initialize [
 	self requiredArguments: Set new.
 ]
 
-{ #category : #API }
-DebugPoint >> installOn: aNode [
+{ #category : #accessing }
+DebugPoint >> link [
+	^metaLink
+]
 
-	"aDebugPoint installOn: smth. 
-	since the smth is not in scope of my work this method will have to be implemented when it is defined. 
-	This is what should happen on execution:
-	smth gets a reference to the debugpoint: aDebugPoint
-	smth gets the method to execute:
-	smth gets set of arguments that need to be returned as dictionary: (e.g. #(context node) )"
+{ #category : #accessing }
+DebugPoint >> link: aMetaLink [
+	metaLink := aMetaLink 
+]
 
-
-	"method to be sent to execute on hit:"
-	#hitWithArguments:.
-	"the set of argument that is required to be sent as dictionary:"
-	self requiredArguments
+{ #category : #accessing }
+DebugPoint >> openEditor [ 
+	| sp |
+	sp := DebugPointEditor new.
+	sp layout: SpBoxLayout newTopToBottom.
+	self behaviors do: [ :bh | sp layout add: bh uiElement expand: false fill: true padding: 10  ].
+	sp open.
+	
 ]
 
 { #category : #removing }
 DebugPoint >> remove [
+	
+	self link ifNotNil: [self link uninstall].
 	self class remove: self.
 ]
 

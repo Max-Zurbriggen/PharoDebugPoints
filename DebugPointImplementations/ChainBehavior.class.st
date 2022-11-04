@@ -27,3 +27,8 @@ ChainBehavior >> execute [
 ChainBehavior >> removeChild: aDebugPoint [
 	self childrenDebugPoints remove: aDebugPoint ifAbsent: [].
 ]
+
+{ #category : #accessing }
+ChainBehavior >> uiElement [ 
+	^SpLabelPresenter new label: 'Chain TOBEIMPLEMENTED'.
+]

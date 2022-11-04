@@ -79,3 +79,8 @@ WatchBehavior >> limit: anInteger [
 WatchBehavior >> requiredArguments [
 	^#(context)
 ]
+
+{ #category : #execution }
+WatchBehavior >> uiElement [ 
+	^SpLabelPresenter new label: 'Watch TOBEIMPLEMENTED'.
+]

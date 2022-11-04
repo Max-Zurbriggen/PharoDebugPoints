@@ -21,3 +21,9 @@ TranscriptBehavior >> text [
 TranscriptBehavior >> text: aString [
 	text := aString
 ]
+
+{ #category : #accessing }
+TranscriptBehavior >> uiElement [
+
+	^TranscriptUI new behavior: self.
+]

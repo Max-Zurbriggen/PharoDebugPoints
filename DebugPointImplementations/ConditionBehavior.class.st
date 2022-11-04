@@ -48,3 +48,9 @@ ConditionBehavior >> initialize [
 ConditionBehavior >> requiredArguments [
 	^#(context)
 ]
+
+{ #category : #accessing }
+ConditionBehavior >> uiElement [
+
+	^ConditionUI new behavior: self.
+]
