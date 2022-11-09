@@ -9,12 +9,13 @@ Class {
 
 { #category : #execution }
 ScriptBehavior >> execute [ 
-	Smalltalk compiler evaluate: script.
+	self script ifNil: [ ^self ].
+	Smalltalk compiler evaluate: self script.
 ]
 
 { #category : #accessing }
 ScriptBehavior >> script [
-	^script
+	^script ifNil:['']
 ]
 
 { #category : #accessing }

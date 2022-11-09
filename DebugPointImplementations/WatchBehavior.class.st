@@ -1,6 +1,8 @@
 "
 history stores values up to the limit.
 no limit when: limit = nil
+
+At the moment it references objects so the objects can still change before looking at the history.
 "
 Class {
 	#name : #WatchBehavior,
@@ -20,6 +22,7 @@ WatchBehavior >> context [
 
 { #category : #execution }
 WatchBehavior >> currentValue [
+	
 	^self evaluate: self expression withContext: self context.
 ]
 
@@ -35,16 +38,16 @@ WatchBehavior >> evaluate: tExpression withContext: aContext [
 
 { #category : #execution }
 WatchBehavior >> execute [ 
-	
+	self expression ifNil: [ ^self ].
 	self history addFirst: self currentValue.
-	limit ifNotNil: [ 
+	(self limit = 0) ifFalse: [ 
 		self history size > self limit ifTrue: [ self history removeLast ].
 	]
 ]
 
 { #category : #execution }
 WatchBehavior >> expression [
-	^expression
+	^expression ifNil: [ '' ]
 ]
 
 { #category : #execution }
@@ -64,23 +67,18 @@ WatchBehavior >> history: anOrderedCollection [
 
 { #category : #execution }
 WatchBehavior >> limit [
-	^limit
+	^limit ifNil: [ limit := 0 ]
 ]
 
 { #category : #execution }
 WatchBehavior >> limit: anInteger [
 	limit := anInteger.
-	anInteger ifNotNil: [ 
+	(anInteger = 0) ifFalse: [ 
 		(self history size > anInteger) ifTrue: [ self history: (self history copyFrom: 1 to: anInteger) ]
 	]
 ]
 
 { #category : #execution }
-WatchBehavior >> requiredArguments [
-	^#(context)
-]
-
-{ #category : #execution }
 WatchBehavior >> uiElement [ 
-	^SpLabelPresenter new label: 'Watch TOBEIMPLEMENTED'.
+	^WatchUI new behavior: self.
 ]

@@ -14,20 +14,15 @@ DebugPointInstaller class >> installOn: aNode [
 	
 	
 	ml := (MetaLink new
-		  metaObject: dp;
-		  options: #(+ optionCompileOnLinkInstallation)).
-		
-	"add executed method and arguments to metalink"
-	dp requiredArguments 
-		ifEmpty: [ 
-			ml selector: #hit ] 
-		ifNotEmpty: [  
-		ml selector: #hitWithArguments:;
-		"metalinks might not support arguments that are delivered by DebugPointImplementations"
-			arguments: dp requiredArguments asArray].
+		metaObject: dp;
+		options: #(+ optionCompileOnLinkInstallation);
+		selector: #hitWithContext:node:;
+		arguments: #(context node)).
+
 	
 	dp link: ml.
-	aNode link: ml 
+	aNode link: ml.
+	dp openEditor.
 ]
 
 { #category : #'as yet unclassified' }

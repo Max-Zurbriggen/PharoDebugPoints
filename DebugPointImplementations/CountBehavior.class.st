@@ -29,5 +29,5 @@ CountBehavior >> increaseCount [
 
 { #category : #accessing }
 CountBehavior >> uiElement [ 
-	^SpLabelPresenter new label: 'Count'.
+	^CountUI new behavior: self.
 ]

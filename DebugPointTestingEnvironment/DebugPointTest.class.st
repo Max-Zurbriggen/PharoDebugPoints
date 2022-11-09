@@ -103,15 +103,15 @@ DebugPointTest >> testChainBehavior [
 
 { #category : #running }
 DebugPointTest >> testConditionBehavior [
-	| behavior args |
+	| behavior aContext |
 	behavior := ConditionBehavior new condition: 'corner=(300@200)'.
 	dp addBehavior: behavior.
 	dp addBehavior: BreakBehavior new.
 
-	args := Dictionary new at: #context put: self setUpContext; yourself.
+	aContext := self setUpContext.
 	
 	"hit the point so the arguments are actually saved in the debug point"
-	dp hitWithArguments: args.
+	dp hitWithContext: aContext node: nil.
 	"condition is false and should not trigger break"
 	self assert: (behavior execute) equals: false.
 	self shouldnt: [dp hit] raise: Break.
@@ -128,16 +128,16 @@ DebugPointTest >> testConditionBehavior [
 
 { #category : #running }
 DebugPointTest >> testConditionBehaviorThisContext [
-	| behavior args |
+	| behavior aContext |
 
 	behavior := ConditionBehavior new condition: 'thisContext method = 2'.
 	dp addBehavior: behavior.
 	dp addBehavior: BreakBehavior new.
 
-	args := Dictionary new at: #context put: self setUpContext; yourself.
+	aContext := self setUpContext.
 	
 	"hit the point so the arguments are actually saved in the debug point"
-	dp hitWithArguments: args.
+	dp hitWithContext: aContext node: nil.
 	
 	"it should not break with incorrect condition"
 	self assert: (behavior execute) equals: false.
@@ -185,17 +185,6 @@ DebugPointTest >> testOnceBreakBehavior [
 ]
 
 { #category : #running }
-DebugPointTest >> testRequiredArguments [
-
-	dp addBehavior: (ConditionBehavior new).
-	dp addBehavior: TestRequiredArgumentsBehavior new.
-	self assert: dp requiredArguments equals: #(context node smth) asSet.
-
-
-
-]
-
-{ #category : #running }
 DebugPointTest >> testTranscriptBehavior [
 
 	dp addBehavior: (TranscriptBehavior new text: 'string').
@@ -208,25 +197,27 @@ DebugPointTest >> testTranscriptBehavior [
 { #category : #running }
 DebugPointTest >> testWatchBehavior [
 	
-	| wb his args | 
+	| wb his aContext | 
 	wb := WatchBehavior new expression: 'corner'.
 	dp addBehavior: (wb).
 	his := OrderedCollection new.
-	args := Dictionary new at: #context put: self setUpContext; yourself.
+	aContext := self setUpContext.
 	
+	"hit the point so the arguments are actually saved in the debug point"
+
 	"check empty history"
 	self assert: wb history equals: his.
 	"check history after hitting dp"
-	dp hitWithArguments: args.
+	dp hitWithContext: aContext node: nil.
 	his add: 200@200.
 	self assert: wb history equals: his.
 	"once more"
 	wb expression: '''string'''.
-	dp hitWithArguments: args.
+	dp hitWithContext: aContext node: nil.
 	his addFirst: 'string'.
 	self assert: wb history equals: his.
 	"once more"	
-	dp hitWithArguments: args.
+	dp hitWithContext: aContext node: nil.
 	his addFirst: 'string'.
 	self assert: wb history equals: his.
 	"check if limit is applie correctly"
@@ -234,7 +225,7 @@ DebugPointTest >> testWatchBehavior [
 	his removeLast.
 	self assert: wb history equals: his.
 	"hitting does not change the history size anymore"
-	dp hitWithArguments: args.
+	dp hitWithContext: aContext node: nil.
 	self assert: wb history equals: his.
 
 ]

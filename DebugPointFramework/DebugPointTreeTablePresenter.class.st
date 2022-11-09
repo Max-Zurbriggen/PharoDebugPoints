@@ -18,17 +18,22 @@ DebugPointTreeTablePresenter >> debugPointContextMenu [
 					enabled: [ table1 selectedItem isNotNil ];
 					action: [ table1 selectedItem inspect ] ];	
 				addItem: [ :anItem | 	anItem
+					name: 'Edit';
+					description: 'edit this debug point';
+					enabled: [ table1 selectedItem isNotNil ];
+					action: [ table1 selectedItem openEditor  ] ];	
+				addItem: [ :anItem | 	anItem
 					name: 'Remove';
 					description: 'removes the selected debug point';
 					enabled: [ table1 selectedItem isNotNil ];
-					action: [ table1 selectedItem uninstall. table1 refresh ] ]
+					action: [ table1 selectedItem remove. self refreshRoots. ] ]
 			];
 		addGroup: [ :aGroup | 
 			aGroup 
 				addItem: [ :anItem | 	anItem
 					name: 'Refresh';
 					description: 'refresh this window';
-					action: [ table1 refresh ] ]
+					action: [ self refreshRoots ] ]
 				]
 ]
 
@@ -63,4 +68,10 @@ DebugPointTreeTablePresenter >> initializePresenters [
 		activateOnDoubleClick;
 		whenActivatedDo: [ :selection | selection selectedItem inspect ];
 		expandAll.
+]
+
+{ #category : #initialization }
+DebugPointTreeTablePresenter >> refreshRoots [
+	table1 roots: (DebugPoint all asOrderedCollection );
+	expandAll.
 ]

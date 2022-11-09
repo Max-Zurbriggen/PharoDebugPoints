@@ -60,11 +60,6 @@ DebugPointBehavior >> priority: anInteger [
 	priority := anInteger 
 ]
 
-{ #category : #initialization }
-DebugPointBehavior >> requiredArguments [ 
-	^#()
-]
-
 { #category : #accessing }
 DebugPointBehavior >> uiElement [ 
 	self subclassResponsibility 

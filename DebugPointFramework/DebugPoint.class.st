@@ -35,8 +35,8 @@ DebugPoint >> addBehavior: aDebugPointBehavior [
 	self behaviors add: aDebugPointBehavior.
 	aDebugPointBehavior debugPoint: self.
 	"adding required arguments for this behavior"
-	self requiredArguments add: aDebugPointBehavior requiredArguments.
-	self requiredArguments: self requiredArguments flattened asSet.
+	"self requiredArguments add: aDebugPointBehavior requiredArguments.
+	self requiredArguments: self requiredArguments flattened asSet."
 	
 	"alternative version for adding required arguments so we dont have to flatten manually:"
 	"aDebugPointBehavior requiredArguments do: [ :arg | self requiredArguments add: arg ]."
@@ -103,12 +103,22 @@ DebugPoint >> hitWithArguments: aDictionary [
 	self hit.
 ]
 
+{ #category : #API }
+DebugPoint >> hitWithContext: aContext node: aNode [
+
+	self arguments: (Dictionary new 
+		at: #context put: aContext; 
+		at: #node put: aNode;
+		yourself).
+
+	self hit.
+]
+
 { #category : #initialization }
 DebugPoint >> initialize [ 
 	self class add: self.
 	self enabled: true.
 	self behaviors: (SortedCollection sortUsing: [ :elem1 :elem2 | elem1 priority >= elem2 priority]).
-	self requiredArguments: Set new.
 ]
 
 { #category : #accessing }
@@ -124,9 +134,8 @@ DebugPoint >> link: aMetaLink [
 { #category : #accessing }
 DebugPoint >> openEditor [ 
 	| sp |
-	sp := DebugPointEditor new.
-	sp layout: SpBoxLayout newTopToBottom.
-	self behaviors do: [ :bh | sp layout add: bh uiElement expand: false fill: true padding: 10  ].
+	sp := DebugPointEditor new debugPoint: self.
+	
 	sp open.
 	
 ]
@@ -136,14 +145,4 @@ DebugPoint >> remove [
 	
 	self link ifNotNil: [self link uninstall].
 	self class remove: self.
-]
-
-{ #category : #accessing }
-DebugPoint >> requiredArguments [
-	^requiredArguments
-]
-
-{ #category : #accessing }
-DebugPoint >> requiredArguments: aList [
-	requiredArguments := aList
 ]

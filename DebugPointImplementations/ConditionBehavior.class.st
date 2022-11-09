@@ -34,6 +34,7 @@ ConditionBehavior >> evaluate: expression withContext: aContext [
 
 { #category : #execution }
 ConditionBehavior >> execute [
+	self condition ifNil: [ ^self ].
 	(self evaluate: self condition withContext: self context) ifFalse: [ ^false ]
 ]
 
@@ -41,12 +42,8 @@ ConditionBehavior >> execute [
 ConditionBehavior >> initialize [ 
 	"should be executed before once and count etc."
 	super initialize.
-	self priority: 50
-]
-
-{ #category : #initialization }
-ConditionBehavior >> requiredArguments [
-	^#(context)
+	self priority: 50.
+	self condition: 'false'.
 ]
 
 { #category : #accessing }

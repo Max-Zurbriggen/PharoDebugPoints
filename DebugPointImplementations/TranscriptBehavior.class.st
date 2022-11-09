@@ -14,7 +14,7 @@ TranscriptBehavior >> execute [
 
 { #category : #accessing }
 TranscriptBehavior >> text [
-	^text
+	^text ifNil: [ '' ]
 ]
 
 { #category : #accessing }
