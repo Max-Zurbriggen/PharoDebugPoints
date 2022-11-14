@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'condition'
 	],
-	#category : #DebugPointImplementations
+	#category : #DebugPointBehaviors
 }
 
 { #category : #initialization }

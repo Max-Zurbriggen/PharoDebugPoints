@@ -5,21 +5,30 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-DebugPointInstaller class >> installOn: aNode [
+DebugPointInstaller class >> install: aDebugPointClass On: aNode [
 	| dp ml |
-	dp := DebugPoint new.
+	dp := aDebugPointClass new.
 
 	"adding selected behaviors"	
 	self requestBehaviors ifNil: [ dp remove. ^self ] ifNotNil: [ :bhs | bhs do: [ :bh | dp addBehavior: bh new ] ] .
 	
-	
-	ml := (MetaLink new
-		metaObject: dp;
-		options: #(+ optionCompileOnLinkInstallation);
-		selector: #hitWithContext:node:;
-		arguments: #(context node)).
+	ml := dp metaLink.
 
+	dp link: ml.
+	aNode link: ml.
+	dp openEditor.
+]
+
+{ #category : #'as yet unclassified' }
+DebugPointInstaller class >> install: aDebugPointClass On: aNode withBehaviors: aListOfBehaviorClasses [
+	| dp ml |
+	dp := aDebugPointClass new.
+
+	"adding behaviors"	
+	aListOfBehaviorClasses do: [ :bhc | dp addBehavior: bhc new].
 	
+	ml := dp metaLink.
+
 	dp link: ml.
 	aNode link: ml.
 	dp openEditor.

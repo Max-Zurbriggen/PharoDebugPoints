@@ -1,6 +1,6 @@
 Class {
-	#name : #CountBehavior,
-	#superclass : #DebugPointBehavior,
+	#name : #CountDebugPoint,
+	#superclass : #DebugPoint,
 	#instVars : [
 		'count'
 	],
@@ -8,26 +8,29 @@ Class {
 }
 
 { #category : #execution }
-CountBehavior >> count [
+CountDebugPoint >> count [
 	^count ifNil: [ count := 0 ].
 ]
 
 { #category : #execution }
-CountBehavior >> count: anInteger [
+CountDebugPoint >> count: anInteger [
 	count:= anInteger 
 ]
 
-{ #category : #execution }
-CountBehavior >> execute [
+{ #category : #API }
+CountDebugPoint >> hitWithContext: aContext [
+	
+	super hitWithContext: aContext.
+	
 	self increaseCount.
 ]
 
 { #category : #execution }
-CountBehavior >> increaseCount [
+CountDebugPoint >> increaseCount [
 	self count: self count + 1.
 ]
 
 { #category : #accessing }
-CountBehavior >> uiElement [ 
+CountDebugPoint >> uiElement [ 
 	^CountUI new behavior: self.
 ]

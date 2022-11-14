@@ -1,6 +1,6 @@
 Class {
-	#name : #ScriptBehavior,
-	#superclass : #DebugPointBehavior,
+	#name : #ScriptDebugPoint,
+	#superclass : #DebugPoint,
 	#instVars : [
 		'script'
 	],
@@ -8,23 +8,27 @@ Class {
 }
 
 { #category : #execution }
-ScriptBehavior >> execute [ 
+ScriptDebugPoint >> hitWithContext: aContext [
+	<debuggerCompleteToSender>
+	
+	super hitWithContext: aContext.
+
 	self script ifNil: [ ^self ].
 	Smalltalk compiler evaluate: self script.
 ]
 
 { #category : #accessing }
-ScriptBehavior >> script [
+ScriptDebugPoint >> script [
 	^script ifNil:['']
 ]
 
 { #category : #accessing }
-ScriptBehavior >> script: aString [
+ScriptDebugPoint >> script: aString [
 	script := aString
 ]
 
 { #category : #accessing }
-ScriptBehavior >> uiElement [ 
+ScriptDebugPoint >> uiElement [ 
 
 	^ScriptUI new behavior: self.
 ]

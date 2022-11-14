@@ -1,7 +1,7 @@
 Class {
 	#name : #OnceBehavior,
 	#superclass : #DebugPointBehavior,
-	#category : #DebugPointImplementations
+	#category : #DebugPointBehaviors
 }
 
 { #category : #execution }

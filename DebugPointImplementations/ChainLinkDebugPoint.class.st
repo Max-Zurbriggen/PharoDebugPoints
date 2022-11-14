@@ -1,6 +1,6 @@
 Class {
-	#name : #ChainBehavior,
-	#superclass : #DebugPointBehavior,
+	#name : #ChainLinkDebugPoint,
+	#superclass : #DebugPoint,
 	#instVars : [
 		'childrenDebugPoints'
 	],
@@ -8,27 +8,30 @@ Class {
 }
 
 { #category : #execution }
-ChainBehavior >> addChild: aDebugPoint [
+ChainLinkDebugPoint >> addChild: aDebugPoint [
 	self childrenDebugPoints add: aDebugPoint.
 ]
 
 { #category : #execution }
-ChainBehavior >> childrenDebugPoints [
+ChainLinkDebugPoint >> childrenDebugPoints [
 	^childrenDebugPoints ifNil: [ childrenDebugPoints := WeakOrderedCollection new ]
 ]
 
 { #category : #execution }
-ChainBehavior >> execute [ 
+ChainLinkDebugPoint >> hitWithContext: aContext [
+	
+	super hitWithContext: aContext.
+	
 	self childrenDebugPoints do: [ :cdp | cdp enabled: true ].
 	self debugPoint enabled: false.
 ]
 
 { #category : #execution }
-ChainBehavior >> removeChild: aDebugPoint [
+ChainLinkDebugPoint >> removeChild: aDebugPoint [
 	self childrenDebugPoints remove: aDebugPoint ifAbsent: [].
 ]
 
 { #category : #accessing }
-ChainBehavior >> uiElement [ 
+ChainLinkDebugPoint >> uiElement [ 
 	^SpLabelPresenter new label: 'Chain TOBEIMPLEMENTED'.
 ]

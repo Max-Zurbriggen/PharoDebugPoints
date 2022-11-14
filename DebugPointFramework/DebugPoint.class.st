@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'enabled',
 		'behaviors',
-		'requiredArguments',
 		'arguments',
 		'metaLink'
 	],
@@ -34,12 +33,7 @@ DebugPoint >> addBehavior: aDebugPointBehavior [
 	"adding a new behavior"
 	self behaviors add: aDebugPointBehavior.
 	aDebugPointBehavior debugPoint: self.
-	"adding required arguments for this behavior"
-	"self requiredArguments add: aDebugPointBehavior requiredArguments.
-	self requiredArguments: self requiredArguments flattened asSet."
-	
-	"alternative version for adding required arguments so we dont have to flatten manually:"
-	"aDebugPointBehavior requiredArguments do: [ :arg | self requiredArguments add: arg ]."
+
 ]
 
 { #category : #accessing }
@@ -83,35 +77,20 @@ DebugPoint >> getBehavior: aBehaviorClass [
 ]
 
 { #category : #API }
-DebugPoint >> hit [
+DebugPoint >> hitWithContext: aContext [
 	<debuggerCompleteToSender>
 	
 	self enabled ifFalse: [ ^self ].
+	
+	self arguments: (Dictionary new 
+		at: #context put: aContext; 
+		yourself).
+
 	self behaviors do: [ :behavior | 
 		"this might be bad style but makes for a more robust implementation of behaviors since execution only stops if it returns false and else continues"
 		"API: execute should return false if it should interrupt behavior execution"
 		behavior execute = false ifTrue: [ ^self ]
-
-		 ]
-]
-
-{ #category : #API }
-DebugPoint >> hitWithArguments: aDictionary [
-	"workaround because metalinks don't return dictionaries"
-	self arguments: (Dictionary new at: #context put: aDictionary; yourself).
-	"self arguments: aDictionary."
-	self hit.
-]
-
-{ #category : #API }
-DebugPoint >> hitWithContext: aContext node: aNode [
-
-	self arguments: (Dictionary new 
-		at: #context put: aContext; 
-		at: #node put: aNode;
-		yourself).
-
-	self hit.
+		 ].
 ]
 
 { #category : #initialization }
@@ -129,6 +108,15 @@ DebugPoint >> link [
 { #category : #accessing }
 DebugPoint >> link: aMetaLink [
 	metaLink := aMetaLink 
+]
+
+{ #category : #accessing }
+DebugPoint >> metaLink [
+	^(MetaLink new
+		metaObject: self;
+		options: #(+ optionCompileOnLinkInstallation);
+		selector: #hitWithContext:;
+		arguments: #(context) ).
 ]
 
 { #category : #accessing }

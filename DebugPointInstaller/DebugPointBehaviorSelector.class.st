@@ -152,7 +152,7 @@ DebugPointBehaviorSelector >> initializePresenters [
 				title: 'Behaviors'
 				evaluated: [ :item | item ])
 				yourself);
-		items: BreakBehavior package classes asOrderedCollection.
+		items: OnceBehavior package classes asOrderedCollection.
 ]
 
 { #category : #initialization }

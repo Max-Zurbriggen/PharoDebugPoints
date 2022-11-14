@@ -15,10 +15,6 @@ WatchUI >> defaultLayout [
 	^SpBoxLayout newTopToBottom 
 		add: (self newLabel label: 'Watch') expand: false ;
 		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
-			add: (self newLabel label: 'Expression:') expand: false;
-			add: textInput  expand: true ;
-			yourself) ;
-		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: (self newLabel label: 'History Limit:') expand: false;
 			add: textInput2  expand: true ;
 			yourself) ;
