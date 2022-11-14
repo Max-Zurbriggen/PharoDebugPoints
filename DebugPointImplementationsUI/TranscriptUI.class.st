@@ -1,6 +1,6 @@
 Class {
 	#name : #TranscriptUI,
-	#superclass : #BehaviorUI,
+	#superclass : #DebugPointUI,
 	#instVars : [
 		'textInput'
 	],

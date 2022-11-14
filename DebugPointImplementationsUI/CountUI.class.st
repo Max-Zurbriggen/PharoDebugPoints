@@ -1,6 +1,6 @@
 Class {
 	#name : #CountUI,
-	#superclass : #BehaviorUI,
+	#superclass : #DebugPointUI,
 	#instVars : [
 		'textInput'
 	],
@@ -15,8 +15,8 @@ CountUI >> defaultLayout [
 		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: (self newLabel label: 'Current Count:') expand: false ;
 			add: textInput  expand: true ;
-			add: (self newButton label: 'reset'; action: [behavior count: 0. self update]) height: 1 ;
-			yourself) ;
+			add: (self newButton label: 'reset'; action: [behavior count: 0. self update]) expand: false ;
+			yourself) expand: false;
 		yourself.
 		
 

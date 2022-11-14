@@ -73,7 +73,7 @@ DebugPoint >> getArgument: aSymbol [
 
 { #category : #accessing }
 DebugPoint >> getBehavior: aBehaviorClass [
-	^self behaviors detect: [ :bh | bh class = aBehaviorClass ]
+	^self behaviors detect: [ :bh | bh class = aBehaviorClass ] ifNone: [nil]
 ]
 
 { #category : #API }
@@ -98,6 +98,11 @@ DebugPoint >> initialize [
 	self class add: self.
 	self enabled: true.
 	self behaviors: (SortedCollection sortUsing: [ :elem1 :elem2 | elem1 priority >= elem2 priority]).
+]
+
+{ #category : #accessing }
+DebugPoint >> layout [
+	
 ]
 
 { #category : #accessing }
@@ -133,4 +138,17 @@ DebugPoint >> remove [
 	
 	self link ifNotNil: [self link uninstall].
 	self class remove: self.
+]
+
+{ #category : #API }
+DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
+	"removing a behavior"
+	self behaviors remove: (self getBehavior: aDebugPointBehaviorClass).
+
+]
+
+{ #category : #accessing }
+DebugPoint >> uiElement [
+	^SpLabelPresenter new label: 'UI not implemented'.
+	
 ]

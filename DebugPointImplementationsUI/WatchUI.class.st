@@ -1,8 +1,7 @@
 Class {
 	#name : #WatchUI,
-	#superclass : #BehaviorUI,
+	#superclass : #DebugPointUI,
 	#instVars : [
-		'textInput',
 		'historyList',
 		'textInput2'
 	],
@@ -17,7 +16,7 @@ WatchUI >> defaultLayout [
 		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: (self newLabel label: 'History Limit:') expand: false;
 			add: textInput2  expand: true ;
-			yourself) ;
+			yourself) expand: false;
 		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: (self newLabel label: 'History:') expand: false;
 			add: historyList expand: true;
@@ -33,16 +32,13 @@ WatchUI >> initializePresenters [
 	historyList := self newList 
 		activateOnDoubleClick;
 		whenActivatedDo: [ :selection | selection selectedItem inspect ].
-	textInput := self newTextInput.
 	textInput2 := self newNumberInput beInteger; minimum: 0.
-	textInput whenTextChangedDo: [ behavior expression: textInput text ].
 	textInput2 whenNumberChangedDo: [ :a | behavior limit: (textInput2 number ) ]
 ]
 
 { #category : #layout }
 WatchUI >> update [
 
-	textInput text: behavior expression.
 	textInput2 number: (behavior limit ifNil:[''] ifNotNil: [:s|s]).
 	historyList items: behavior history.
 ]

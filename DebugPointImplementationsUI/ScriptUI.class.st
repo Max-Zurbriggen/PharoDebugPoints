@@ -1,6 +1,6 @@
 Class {
 	#name : #ScriptUI,
-	#superclass : #BehaviorUI,
+	#superclass : #DebugPointUI,
 	#instVars : [
 		'codeInput'
 	],

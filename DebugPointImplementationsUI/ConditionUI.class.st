@@ -1,17 +1,46 @@
 Class {
 	#name : #ConditionUI,
-	#superclass : #BehaviorUI,
+	#superclass : #DebugPointUI,
 	#instVars : [
-		'codeInput'
+		'codeInput',
+		'checkBox'
 	],
 	#category : #DebugPointImplementationsUI
 }
 
 { #category : #layout }
+ConditionUI >> activate [
+	| bh |
+	
+	bh := (ConditionBehavior new condition: codeInput text).
+	self debugPoint addBehavior: bh.
+	codeInput beEditable.
+	self behavior: bh
+]
+
+{ #category : #layout }
+ConditionUI >> deactivate [
+
+	self debugPoint removeBehavior: ConditionBehavior.
+	codeInput beNotEditable.
+	self behavior: nil.
+]
+
+{ #category : #layout }
+ConditionUI >> debugPoint: aDebugPoint [
+	debugPoint := aDebugPoint.
+	behavior := self debugPoint getBehavior: ConditionBehavior.
+	checkBox state: self behavior isNotNil.
+	codeInput editable: checkBox state.
+	checkBox whenActivatedDo: [ self activate ].
+	checkBox whenDeactivatedDo: [ self deactivate   ].
+]
+
+{ #category : #layout }
 ConditionUI >> defaultLayout [ 
 	
 	^SpBoxLayout newTopToBottom
-		add: (self newLabel label: 'Condition') expand: false ;
+		add: (checkBox label: 'Condition') expand: false;
 		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: (self newLabel label: 'Condition:') expand: false ;
 			add: codeInput expand: true ;
@@ -24,11 +53,7 @@ ConditionUI >> initializePresenters [
 	
 	codeInput  := self newCode.
 	codeInput beForScripting.
-	codeInput whenTextChangedDo: [ behavior condition: codeInput text ]
-]
-
-{ #category : #layout }
-ConditionUI >> update [
-
-	codeInput text: behavior condition .
+	codeInput whenTextChangedDo: [ behavior condition: codeInput text ].
+	checkBox := self newCheckBox.
+	
 ]
