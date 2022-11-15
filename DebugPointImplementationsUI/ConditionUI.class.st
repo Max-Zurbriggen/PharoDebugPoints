@@ -42,7 +42,6 @@ ConditionUI >> defaultLayout [
 	^SpBoxLayout newTopToBottom
 		add: (checkBox label: 'Condition') expand: false;
 		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
-			add: (self newLabel label: 'Condition:') expand: false ;
 			add: codeInput expand: true ;
 			yourself) height: 60;
 		yourself.

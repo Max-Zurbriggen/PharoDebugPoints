@@ -19,13 +19,13 @@ OnceUI >> debugPoint: aDebugPoint [
 OnceUI >> defaultLayout [ 
 	
 	^SpBoxLayout newTopToBottom
-		add: (checkBox label: 'Once') expand: false;
+		add: checkBox expand: false;
 		yourself.
 ]
 
 { #category : #layout }
 OnceUI >> initializePresenters [ 
 	
-	checkBox  := self newCheckBox.
+	checkBox  := self newCheckBox label: 'Once'.
 
 ]
