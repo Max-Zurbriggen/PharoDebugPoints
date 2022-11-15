@@ -37,15 +37,6 @@ DebugPointEditor >> initializePresenters [
 
 ]
 
-{ #category : #'as yet unclassified' }
-DebugPointEditor >> initializeWindow: aWindowPresenter [
-	
-	aWindowPresenter
-		title: 'Debug Point Editor';		
-		windowIcon: (self application iconNamed: #glamorousBug);
-		initialExtent: 330@600
-]
-
 { #category : #accessing }
 DebugPointEditor >> updateAll [
 

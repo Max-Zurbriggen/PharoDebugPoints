@@ -59,8 +59,11 @@ DebugPointTreeTablePresenter >> initializePresenters [
 				width: 20;
 				enabled: false;
 				yourself);"
+			addColumn: (SpCheckBoxTableColumn evaluated: [ :aClass | aClass enabled ]);
 			addColumn: (SpStringTableColumn evaluated: [ :aClass | aClass class ]);
+			
 			yourself);
+			
 		roots: (DebugPoint all asOrderedCollection );
 		children: [ :aClass | aClass class = DebugPoint ifTrue: [aClass behaviors] ifFalse: [ #() ] ];
 		beResizable;
