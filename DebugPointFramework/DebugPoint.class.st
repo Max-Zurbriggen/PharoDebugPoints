@@ -78,9 +78,10 @@ DebugPoint >> getBehavior: aBehaviorClass [
 
 { #category : #API }
 DebugPoint >> hitWithContext: aContext [
+	"returns false if the executin should be stopped, else true"
 	<debuggerCompleteToSender>
 	
-	self enabled ifFalse: [ ^self ].
+	self enabled ifFalse: [ ^false ].
 	
 	self arguments: (Dictionary new 
 		at: #context put: aContext; 
@@ -89,8 +90,10 @@ DebugPoint >> hitWithContext: aContext [
 	self behaviors do: [ :behavior | 
 		"this might be bad style but makes for a more robust implementation of behaviors since execution only stops if it returns false and else continues"
 		"API: execute should return false if it should interrupt behavior execution"
-		behavior execute = false ifTrue: [ ^self ]
+		behavior execute = false ifTrue: [ ^false ]
 		 ].
+	
+	^true.
 ]
 
 { #category : #initialization }

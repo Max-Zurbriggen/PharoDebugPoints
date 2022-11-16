@@ -13,6 +13,7 @@ DebugPointManager >> defaultLayout [
 	^SpPanedLayout newLeftToRight 
 		add: dpTable;
 		add: dpEditor;
+		positionOfSlider:40percent;
 		yourself.
 		
 ]
@@ -31,5 +32,10 @@ DebugPointManager >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'Debug Point Manager';		
 		windowIcon: (self application iconNamed: #glamorousBug);
-		initialExtent: 430@500
+		initialExtent: 500@450
+]
+
+{ #category : #enumerating }
+DebugPointManager >> select: aDebugPoint [
+	dpTable selectItem: aDebugPoint 
 ]

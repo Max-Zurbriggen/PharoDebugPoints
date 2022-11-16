@@ -20,7 +20,7 @@ ChainLinkDebugPoint >> childrenDebugPoints [
 { #category : #execution }
 ChainLinkDebugPoint >> hitWithContext: aContext [
 	
-	super hitWithContext: aContext.
+	(super hitWithContext: aContext) ifFalse: [^self].
 	
 	self childrenDebugPoints do: [ :cdp | cdp enabled: true ].
 	self debugPoint enabled: false.

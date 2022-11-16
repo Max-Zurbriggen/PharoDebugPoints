@@ -20,7 +20,7 @@ CountDebugPoint >> count: anInteger [
 { #category : #API }
 CountDebugPoint >> hitWithContext: aContext [
 	
-	super hitWithContext: aContext.
+	(super hitWithContext: aContext) ifFalse: [^self].
 	
 	self increaseCount.
 ]

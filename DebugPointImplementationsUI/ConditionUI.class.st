@@ -11,10 +11,9 @@ Class {
 { #category : #layout }
 ConditionUI >> activate [
 	| bh |
-	
+	self behavior ifNotNil: [ ^self ].
 	bh := (ConditionBehavior new condition: codeInput text).
 	self debugPoint addBehavior: bh.
-	codeInput beEditable.
 	self behavior: bh
 ]
 
@@ -22,7 +21,6 @@ ConditionUI >> activate [
 ConditionUI >> deactivate [
 
 	self debugPoint removeBehavior: ConditionBehavior.
-	codeInput beNotEditable.
 	self behavior: nil.
 ]
 
@@ -31,9 +29,9 @@ ConditionUI >> debugPoint: aDebugPoint [
 	debugPoint := aDebugPoint.
 	behavior := self debugPoint getBehavior: ConditionBehavior.
 	checkBox state: self behavior isNotNil.
-	codeInput editable: checkBox state.
-	checkBox whenActivatedDo: [ self activate ].
-	checkBox whenDeactivatedDo: [ self deactivate   ].
+	codeInput enabled: checkBox state.
+	(self behavior ifNotNil: [:bh | codeInput text: bh condition]).
+
 ]
 
 { #category : #layout }
@@ -52,7 +50,16 @@ ConditionUI >> initializePresenters [
 	
 	codeInput  := self newCode.
 	codeInput beForScripting.
-	codeInput whenTextChangedDo: [ behavior condition: codeInput text ].
+	codeInput whenTextChangedDo: [ self behavior ifNotNil: [behavior condition: codeInput text ]].
 	checkBox := self newCheckBox.
+	checkBox whenActivatedDo: [ self activate ].
+	checkBox whenDeactivatedDo: [ self deactivate ].
 	
+	
+]
+
+{ #category : #layout }
+ConditionUI >> update [ 
+	checkBox update.
+	codeInput update.
 ]

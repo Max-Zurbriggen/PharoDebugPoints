@@ -11,7 +11,7 @@ Class {
 ScriptDebugPoint >> hitWithContext: aContext [
 	<debuggerCompleteToSender>
 	
-	super hitWithContext: aContext.
+	(super hitWithContext: aContext) ifFalse: [^self].
 
 	self script ifNil: [ ^self ].
 	Smalltalk compiler evaluate: self script.

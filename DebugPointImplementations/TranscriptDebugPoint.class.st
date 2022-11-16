@@ -11,7 +11,7 @@ Class {
 TranscriptDebugPoint >> hitWithContext: aContext [
 	<debuggerCompleteToSender>
 	
-	super hitWithContext: aContext.
+	(super hitWithContext: aContext) ifFalse: [^self].
 
 	Transcript show: self text.
 ]

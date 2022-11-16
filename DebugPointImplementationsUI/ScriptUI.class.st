@@ -14,9 +14,9 @@ ScriptUI >> defaultLayout [
 	^SpBoxLayout newTopToBottom
 		add: (self newLabel label: 'Script') expand: false ;
 		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
-			add: (self newLabel label: 'Script:') expand: false ;
+			"add: (self newLabel label: 'Script:') expand: false ;"
 			add: codeInput expand: true ;
-			yourself) height: 80;
+			yourself) expand: true;
 		yourself.
 ]
 

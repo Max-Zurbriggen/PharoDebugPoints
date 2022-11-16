@@ -28,7 +28,7 @@ WatchDebugPoint >> history: anOrderedCollection [
 
 { #category : #initialization }
 WatchDebugPoint >> hitWithContext: aContext value: aValue [
-	self hitWithContext: aContext.
+	(super hitWithContext: aContext) ifFalse: [^self].
 	
 	self addValue: aValue.
 ]

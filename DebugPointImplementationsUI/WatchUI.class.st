@@ -13,14 +13,14 @@ WatchUI >> defaultLayout [
 	
 	^SpBoxLayout newTopToBottom 
 		add: (self newLabel label: 'Watch') expand: false ;
-		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
-			add: (self newLabel label: 'History Limit:') expand: false;
-			add: textInput2  expand: true ;
-			yourself) expand: false;
-		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
-			add: (self newLabel label: 'History:') expand: false;
+		add: ( SpBoxLayout newTopToBottom  borderWidth: 5;
+			add: ( SpBoxLayout newLeftToRight
+				add: (self newLabel label: 'History:') expand: true;
+				add: (self newLabel label: 'Limit:   ' ) expand: false;
+				add: textInput2  expand: false ;
+				yourself) height: 25;	
 			add: historyList expand: true;
-			yourself) height: 135;
+			yourself) expand: true;
 		yourself.
 		
 

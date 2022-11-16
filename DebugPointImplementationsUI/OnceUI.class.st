@@ -10,9 +10,9 @@ Class {
 { #category : #layout }
 OnceUI >> debugPoint: aDebugPoint [
 	debugPoint := aDebugPoint.
+	behavior := self debugPoint getBehavior: OnceBehavior.
 	checkBox state: (self debugPoint getBehavior: OnceBehavior) isNotNil.
-	checkBox whenActivatedDo: [ self debugPoint addBehavior: OnceBehavior new ].
-	checkBox whenDeactivatedDo: [ self debugPoint removeBehavior: OnceBehavior ].
+
 ]
 
 { #category : #layout }
@@ -27,5 +27,11 @@ OnceUI >> defaultLayout [
 OnceUI >> initializePresenters [ 
 	
 	checkBox  := self newCheckBox label: 'Once'.
+	checkBox whenActivatedDo: [ self behavior ifNil: [ debugPoint addBehavior: OnceBehavior new ] ].
+	checkBox whenDeactivatedDo: [ self debugPoint removeBehavior: OnceBehavior ].
+]
 
+{ #category : #layout }
+OnceUI >> update [ 
+	checkBox update.
 ]
