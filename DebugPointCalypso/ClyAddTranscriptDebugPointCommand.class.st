@@ -27,5 +27,5 @@ ClyAddTranscriptDebugPointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddTranscriptDebugPointCommand >> execute [
-	DebugPointInstaller install: TranscriptDebugPoint  On: sourceNode.
+	DebugPointManager installNew: TranscriptDebugPoint  On: sourceNode.
 ]

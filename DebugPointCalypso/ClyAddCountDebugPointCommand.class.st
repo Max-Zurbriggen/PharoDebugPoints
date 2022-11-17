@@ -27,5 +27,5 @@ ClyAddCountDebugPointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddCountDebugPointCommand >> execute [
-	DebugPointInstaller install: CountDebugPoint  On: sourceNode.
+	DebugPointManager installNew: CountDebugPoint  On: sourceNode.
 ]

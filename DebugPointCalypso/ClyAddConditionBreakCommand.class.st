@@ -27,5 +27,5 @@ ClyAddConditionBreakCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddConditionBreakCommand >> execute [
-	DebugPointInstaller install: BreakDebugPoint On: sourceNode withBehaviors: {ConditionBehavior }
+	DebugPointManager installNew: BreakDebugPoint On: sourceNode withBehaviors: {ConditionBehavior }
 ]

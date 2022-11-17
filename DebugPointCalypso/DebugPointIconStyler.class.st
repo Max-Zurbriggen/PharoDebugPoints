@@ -17,9 +17,9 @@ DebugPointIconStyler >> highlightColor [
 { #category : #defaults }
 DebugPointIconStyler >> iconBlock: aNode [
 
-	 ^ [ :seg | DebugPointManager new open; select: (self debugPointOn: aNode). self halt.
-	   "aNode breakpoints do: [ :breakpoint | breakpoint remove ].
-	   seg delete" ]
+	 ^ [ :seg | DebugPointManagerUI new open; select: (self debugPointOn: aNode). self halt.
+	   "aNode breakpoints do: [ :breakpoint | breakpoint remove ]."
+	   "seg delete" ]
 ]
 
 { #category : #defaults }

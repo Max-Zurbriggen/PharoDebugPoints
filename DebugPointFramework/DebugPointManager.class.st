@@ -1,83 +1,100 @@
 Class {
 	#name : #DebugPointManager,
-	#superclass : #SpPresenter,
-	#instVars : [
-		'dpTable',
-		'dpEditor'
-	],
+	#superclass : #Object,
 	#category : #DebugPointFramework
 }
 
-{ #category : #layout }
-DebugPointManager >> defaultLayout [ 
-	^SpPanedLayout newLeftToRight 
-		add: dpTable;
-		add: dpEditor;
-		positionOfSlider:40percent;
-		yourself.
-		
+{ #category : #'class initialization' }
+DebugPointManager class >> handleClassRemoved: anAnnouncement [
+
+	DebugPoint all copy do: [ :debugPoint | 
+		debugPoint link methods
+			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
+			ifFound: [ self removeDebugPoint: debugPoint "debugPoint removeFromClass: anAnnouncement classRemoved" ] ]
 ]
 
-{ #category : #initialization }
-DebugPointManager >> initializePresenters [ 
-	"self initializeTreeTable."
-	self initializeTable.
-	dpEditor := DebugPointEditor new.
-	
-	
+{ #category : #'class initialization' }
+DebugPointManager class >> handleMethodModified: anAnnouncement [
+	self removeFromMethod: anAnnouncement oldMethod
 ]
 
-{ #category : #initialization }
-DebugPointManager >> initializeTable [
-	dpTable := SpTablePresenter new
-	items: ( DebugPoint all asOrderedCollection );
-	addColumn: (SpCompositeTableColumn new
-			title: 'DebugPoints';
-			addColumn: (SpCheckBoxTableColumn new 
-				onActivation:  [ :dp | dp enabled: true ];
-				onDeactivation: [ :dp | dp enabled: false];
-				evaluated: [ :dp | dp enabled ]);
-			addColumn: (SpStringTableColumn evaluated: [ :dp | dp name ]);
-			yourself);
-	addColumn: (SpStringTableColumn new 
-		title: 'Class and Method'; 
-		evaluated: [ :dp | dp node methodNode method printString]);
-	
-	"contextMenu: self debugPointContextMenu;"
-	activateOnDoubleClick;
-	beResizable ;
-	whenActivatedDo: [ :selection | selection selectedItem inspect ].
-	
-	dpTable whenSelectionChangedDo: [ :sel | dpEditor debugPoint: dpTable selectedItem ].
+{ #category : #'class initialization' }
+DebugPointManager class >> handleMethodRemoved: anAnnouncement [
+	self removeFromMethod: anAnnouncement method
 ]
 
-{ #category : #deprecated }
-DebugPointManager >> initializeTreeTable [
-"TBD"
-"this was an idea to have a list with classes seperated but i don't think its intended to be used that way because it needs a lot of workarounds"
-	dpTable := SpTreePresenter new 
-
-	roots: {'Breakpoint'. 'Watcher'. 'Script'.'Transcript'.'Counter'.'Debugpoint'} ;
-	display: [ :ele | (ele isKindOf: DebugPoint) ifFalse: [ele,'s'] ifTrue: [ele asString]];
-	children: [ :atype | DebugPoint all asOrderedCollection select: [ :dp | dp name = atype ] ];
-	beResizable;
-	"contextMenu: self debugPointContextMenu;"
-	activateOnDoubleClick;
-	whenActivatedDo: [ :selection | selection selectedItem inspect ];
-	expandAll.
-	dpTable whenSelectionChangedDo: [ :sel | dpEditor debugPoint: dpTable selectedItem ].
+{ #category : #'class initialization' }
+DebugPointManager class >> initialize [
+	self registerInterestToSystemAnnouncement
 ]
 
-{ #category : #initialization }
-DebugPointManager >> initializeWindow: aWindowPresenter [
+{ #category : #'as yet unclassified' }
+DebugPointManager class >> installNew: aDebugPointClass On: aNode [
+
+	self installNew: aDebugPointClass On: aNode withBehaviors: {  }.
+]
+
+{ #category : #'as yet unclassified' }
+DebugPointManager class >> installNew: aDebugPointClass On: aNode withBehaviors: aListOfBehaviorClasses [
+	| dp ml |
+
+	dp := aDebugPointClass new node: aNode.
+
+	"adding behaviors"	
+	aListOfBehaviorClasses do: [ :bhc | dp addBehavior: bhc new].
 	
-	aWindowPresenter
-		title: 'Debug Point Manager';		
-		windowIcon: (self application iconNamed: #glamorousBug);
-		initialExtent: 800@450
+	ml := dp metaLink.
+
+	dp link: ml.
+	aNode link: ml.
+	DebugPoint add: dp.
+	DebugPointManagerUI new open.
 ]
 
-{ #category : #enumerating }
-DebugPointManager >> select: aDebugPoint [
-	dpTable selectItem: aDebugPoint 
+{ #category : #'as yet unclassified' }
+DebugPointManager class >> notifyDebugPointAdded: aDebugPoint [
+
+	| announcement |
+	announcement := DebugPointAdded 
+		on: aDebugPoint
+		nodes: aDebugPoint link nodes.
+	SystemAnnouncer uniqueInstance announce: announcement
+]
+
+{ #category : #'as yet unclassified' }
+DebugPointManager class >> notifyDebugPointRemoved: aDebugPoint [ 
+
+	| announcement |
+	announcement := DebugPointRemoved
+		on: aDebugPoint
+		nodes: aDebugPoint link nodes copy.
+	SystemAnnouncer uniqueInstance announce: announcement
+]
+
+{ #category : #'class initialization' }
+DebugPointManager class >> registerInterestToSystemAnnouncement [
+	<systemEventRegistration>
+
+	SystemAnnouncer uniqueInstance unsubscribe: self.
+	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #handleMethodRemoved: to: self.
+	SystemAnnouncer uniqueInstance weak when: MethodModified send: #handleMethodModified: to: self.
+	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
+]
+
+{ #category : #'class initialization' }
+DebugPointManager class >> removeDebugPoint: aDebugPoint [
+
+	| nodes |
+	nodes := aDebugPoint link nodes copy.
+	DebugPoint remove: aDebugPoint.
+	"self notifyBreakpointRemoved: aBreakpoint fromNodes: nodes"
+]
+
+{ #category : #'class initialization' }
+DebugPointManager class >> removeFromMethod: aMethod [
+
+	DebugPoint all copy do: [ :debugPoint | 
+		debugPoint link methods
+			detect: [ :m | m == aMethod ]
+			ifFound: [ self removeDebugPoint: debugPoint "debugPoint removeFromMethod: aMethod" ] ]
 ]

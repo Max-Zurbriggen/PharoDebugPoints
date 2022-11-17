@@ -27,5 +27,5 @@ ClyAddBreakPointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddBreakPointCommand >> execute [
-	DebugPointInstaller install: BreakDebugPoint On: sourceNode.
+	DebugPointManager installNew: BreakDebugPoint On: sourceNode.
 ]

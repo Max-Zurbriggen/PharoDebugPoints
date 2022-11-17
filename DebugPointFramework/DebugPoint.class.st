@@ -17,6 +17,7 @@ Class {
 { #category : #adding }
 DebugPoint class >> add: aDebugPoint [
 	self all add: aDebugPoint.
+	DebugPointManager notifyDebugPointAdded: aDebugPoint.
 ]
 
 { #category : #accessing }
@@ -27,6 +28,7 @@ DebugPoint class >> all [
 { #category : #adding }
 DebugPoint class >> remove: aDebugPoint [
 	self all remove: aDebugPoint ifAbsent: [].
+	DebugPointManager notifyDebugPointRemoved: aDebugPoint.
 ]
 
 { #category : #API }
@@ -99,7 +101,6 @@ DebugPoint >> hitWithContext: aContext [
 
 { #category : #initialization }
 DebugPoint >> initialize [ 
-	self class add: self.
 	self enabled: true.
 	self behaviors: (SortedCollection sortUsing: [ :elem1 :elem2 | elem1 priority >= elem2 priority]).
 ]
@@ -141,15 +142,6 @@ DebugPoint >> node [
 { #category : #accessing }
 DebugPoint >> node: aNode [
 	node := aNode.
-]
-
-{ #category : #accessing }
-DebugPoint >> openEditor [ 
-	| sp |
-	sp := DebugPointEditor new debugPoint: self.
-	
-	sp open.
-	
 ]
 
 { #category : #removing }

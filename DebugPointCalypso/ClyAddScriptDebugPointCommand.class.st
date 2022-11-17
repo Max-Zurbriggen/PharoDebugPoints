@@ -27,5 +27,5 @@ ClyAddScriptDebugPointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddScriptDebugPointCommand >> execute [
-	DebugPointInstaller install: ScriptDebugPoint  On: sourceNode.
+	DebugPointManager installNew: ScriptDebugPoint  On: sourceNode.
 ]
