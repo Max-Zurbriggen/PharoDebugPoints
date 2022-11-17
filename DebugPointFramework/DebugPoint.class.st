@@ -5,7 +5,8 @@ Class {
 		'enabled',
 		'behaviors',
 		'arguments',
-		'metaLink'
+		'metaLink',
+		'node'
 	],
 	#classVars : [
 		'AllDebugPoints'
@@ -125,6 +126,21 @@ DebugPoint >> metaLink [
 		options: #(+ optionCompileOnLinkInstallation);
 		selector: #hitWithContext:;
 		arguments: #(context) ).
+]
+
+{ #category : #accessing }
+DebugPoint >> name [
+	^#Debugpoint
+]
+
+{ #category : #accessing }
+DebugPoint >> node [
+	^node
+]
+
+{ #category : #accessing }
+DebugPoint >> node: aNode [
+	node := aNode.
 ]
 
 { #category : #accessing }

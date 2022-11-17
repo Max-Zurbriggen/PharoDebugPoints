@@ -6,23 +6,15 @@ Class {
 
 { #category : #'as yet unclassified' }
 DebugPointInstaller class >> install: aDebugPointClass On: aNode [
-	| dp ml |
-	dp := aDebugPointClass new.
 
-	"adding selected behaviors"	
-	self requestBehaviors ifNil: [ dp remove. ^self ] ifNotNil: [ :bhs | bhs do: [ :bh | dp addBehavior: bh new ] ] .
-	
-	ml := dp metaLink.
-
-	dp link: ml.
-	aNode link: ml.
-	dp openEditor.
+	self install: aDebugPointClass On: aNode withBehaviors: {  }.
 ]
 
 { #category : #'as yet unclassified' }
 DebugPointInstaller class >> install: aDebugPointClass On: aNode withBehaviors: aListOfBehaviorClasses [
 	| dp ml |
-	dp := aDebugPointClass new.
+
+	dp := aDebugPointClass new node: aNode.
 
 	"adding behaviors"	
 	aListOfBehaviorClasses do: [ :bhc | dp addBehavior: bhc new].
@@ -31,10 +23,5 @@ DebugPointInstaller class >> install: aDebugPointClass On: aNode withBehaviors: 
 
 	dp link: ml.
 	aNode link: ml.
-	dp openEditor.
-]
-
-{ #category : #'as yet unclassified' }
-DebugPointInstaller class >> requestBehaviors [
-	^DebugPointBehaviorSelector new openModal.
+	DebugPointManager new open.
 ]

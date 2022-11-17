@@ -18,6 +18,11 @@ ScriptDebugPoint >> hitWithContext: aContext [
 ]
 
 { #category : #accessing }
+ScriptDebugPoint >> name [
+	^#Script
+]
+
+{ #category : #accessing }
 ScriptDebugPoint >> script [
 	^script ifNil:['']
 ]

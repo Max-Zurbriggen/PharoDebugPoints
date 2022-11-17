@@ -56,6 +56,11 @@ WatchDebugPoint >> metaLink [
 				option: #(+ optionWeakAfter +optionAnnounce)).
 ]
 
+{ #category : #initialization }
+WatchDebugPoint >> name [
+	^#Watcher
+]
+
 { #category : #execution }
 WatchDebugPoint >> uiElement [ 
 	^WatchUI new behavior: self.

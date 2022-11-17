@@ -14,6 +14,11 @@ BreakDebugPoint >> hitWithContext: aContext [
 ]
 
 { #category : #accessing }
+BreakDebugPoint >> name [
+	^#Breakpoint
+]
+
+{ #category : #accessing }
 BreakDebugPoint >> uiElement [ 
 	^SpLabelPresenter new label: 'Break'.
 ]

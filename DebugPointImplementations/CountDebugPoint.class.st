@@ -30,6 +30,11 @@ CountDebugPoint >> increaseCount [
 	self count: self count + 1.
 ]
 
+{ #category : #execution }
+CountDebugPoint >> name [
+	^#Counter
+]
+
 { #category : #accessing }
 CountDebugPoint >> uiElement [ 
 	^CountUI new behavior: self.
