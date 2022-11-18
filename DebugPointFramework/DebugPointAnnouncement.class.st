@@ -3,7 +3,8 @@ Class {
 	#superclass : #SystemAnnouncement,
 	#instVars : [
 		'debugPoint',
-		'nodes'
+		'nodes',
+		'methods'
 	],
 	#category : #DebugPointFramework
 }
@@ -18,8 +19,8 @@ DebugPointAnnouncement class >> on: aDebugPoint nodes: nodes [
 
 { #category : #accessing }
 DebugPointAnnouncement >> affectsMethod: aMethod [
-	
-	^ self link methods anySatisfy: [:each | each compiledMethod == aMethod compiledMethod ]
+
+	^ self methods anySatisfy: [:each |  each compiledMethod == aMethod compiledMethod.  ]
 ]
 
 { #category : #accessing }
@@ -29,13 +30,13 @@ DebugPointAnnouncement >> affectsMethods [
 
 { #category : #accessing }
 DebugPointAnnouncement >> affectsMethodsDefinedInClass: aClass [
-	^ self link methods
+	^ self methods
 		anySatisfy: [ :each | each methodClass isNotNil and: [ each origin == aClass ] ]
 ]
 
 { #category : #accessing }
 DebugPointAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
-	^ self link methods
+	^ self methods
 		anySatisfy:
 			[ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
 ]
@@ -52,7 +53,15 @@ DebugPointAnnouncement >> debugPoint: aDebugPoint [
 
 { #category : #accessing }
 DebugPointAnnouncement >> link [
-	^self debugPoint link.
+	^ self debugPoint link
+]
+
+{ #category : #accessing }
+DebugPointAnnouncement >> methods [
+	^nodes flatCollect: [ :entity |
+		(entity isKindOf: RBProgramNode) 
+			ifTrue: [ {entity methodNode compiledMethod}  ]
+			ifFalse: [ entity usingMethods ] ]
 ]
 
 { #category : #accessing }

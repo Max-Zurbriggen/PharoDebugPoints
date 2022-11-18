@@ -4,9 +4,9 @@ Class {
 	#category : #DebugPointCalypso
 }
 
-{ #category : #asserting }
-TranscriptDebugPointIconStyler >> debugPointOn: aNode [
-	^(aNode links detect: [ :link | link metaObject class = TranscriptDebugPoint ]) metaObject.
+{ #category : #defaults }
+TranscriptDebugPointIconStyler >> forClass [
+	^TranscriptDebugPoint 
 ]
 
 { #category : #asserting }
@@ -18,11 +18,6 @@ TranscriptDebugPointIconStyler >> iconFor: aNode [
 { #category : #defaults }
 TranscriptDebugPointIconStyler >> iconLabel: aNode [
 	| debugPoint |
-	debugPoint := (aNode links detect: [ :link | link metaObject class = TranscriptDebugPoint ]) metaObject.
+	debugPoint := (aNode links detect: [ :link | link metaObject class = self forClass ]) metaObject.
 	^ 'Transcript ("', debugPoint text,'")'
-]
-
-{ #category : #asserting }
-TranscriptDebugPointIconStyler >> shouldStyleNode: aNode [
-	^aNode hasDebugPointOfType: TranscriptDebugPoint
 ]

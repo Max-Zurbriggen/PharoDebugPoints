@@ -4,9 +4,9 @@ Class {
 	#category : #DebugPointCalypso
 }
 
-{ #category : #'as yet unclassified' }
-BreakDebugPointIconStyler >> debugPointOn: aNode [
-	^(aNode links detect: [ :link | link metaObject class = BreakDebugPoint ]) metaObject.
+{ #category : #asserting }
+BreakDebugPointIconStyler >> forClass [
+	^BreakDebugPoint
 ]
 
 { #category : #asserting }
@@ -18,9 +18,4 @@ BreakDebugPointIconStyler >> iconFor: aNode [
 { #category : #defaults }
 BreakDebugPointIconStyler >> iconLabel: aNode [
 	^ 'Breakpoint'
-]
-
-{ #category : #asserting }
-BreakDebugPointIconStyler >> shouldStyleNode: aNode [
-	^aNode hasDebugPointOfType: BreakDebugPoint
 ]

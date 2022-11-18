@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #asserting }
-WatchDebugPointIconStyler >> debugPointOn: aNode [
-	^(aNode links detect: [ :link | link metaObject class = WatchDebugPoint ]) metaObject.
+WatchDebugPointIconStyler >> forClass [
+	^WatchDebugPoint 
 ]
 
 { #category : #asserting }
@@ -21,9 +21,4 @@ WatchDebugPointIconStyler >> iconLabel: aNode [
 	debugPoint := (aNode links detect: [ :link | link metaObject class = WatchDebugPoint ]) metaObject.
 	
 	^ 'Watcher (last value:"', (debugPoint history at: 1 ifAbsent: '') asString, '")'
-]
-
-{ #category : #asserting }
-WatchDebugPointIconStyler >> shouldStyleNode: aNode [
-	^aNode hasDebugPointOfType: WatchDebugPoint
 ]

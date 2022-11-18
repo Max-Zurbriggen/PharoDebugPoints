@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #asserting }
-CountDebugPointIconStyler >> debugPointOn: aNode [
-	^(aNode links detect: [ :link | link metaObject class = CountDebugPoint ]) metaObject.
+CountDebugPointIconStyler >> forClass [
+	^CountDebugPoint 
 ]
 
 { #category : #asserting }
@@ -20,9 +20,4 @@ CountDebugPointIconStyler >> iconLabel: aNode [
 	| counter |
 	counter := (aNode links detect: [ :link | link metaObject class = CountDebugPoint ]) metaObject.
 	^ 'Counter: ', counter count asString
-]
-
-{ #category : #asserting }
-CountDebugPointIconStyler >> shouldStyleNode: aNode [
-	^aNode hasDebugPointOfType: CountDebugPoint
 ]

@@ -19,6 +19,16 @@ DebugPointManagerUI >> defaultLayout [
 ]
 
 { #category : #initialization }
+DebugPointManagerUI >> initialize [ 
+
+	super initialize.
+	SystemAnnouncer uniqueInstance weak when: DebugPointAdded send: #updateTable to: self.
+	SystemAnnouncer uniqueInstance weak when: DebugPointRemoved send: #updateTable to: self.
+		
+	
+]
+
+{ #category : #initialization }
 DebugPointManagerUI >> initializePresenters [ 
 	"self initializeTreeTable."
 	self initializeTable.
@@ -80,4 +90,12 @@ DebugPointManagerUI >> initializeWindow: aWindowPresenter [
 { #category : #enumerating }
 DebugPointManagerUI >> select: aDebugPoint [
 	dpTable selectItem: aDebugPoint 
+]
+
+{ #category : #initialization }
+DebugPointManagerUI >> updateTable [
+
+	dpTable items: DebugPoint all asOrderedCollection .
+
+	
 ]

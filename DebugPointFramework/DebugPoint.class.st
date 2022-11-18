@@ -17,7 +17,6 @@ Class {
 { #category : #adding }
 DebugPoint class >> add: aDebugPoint [
 	self all add: aDebugPoint.
-	DebugPointManager notifyDebugPointAdded: aDebugPoint.
 ]
 
 { #category : #accessing }
@@ -27,8 +26,9 @@ DebugPoint class >> all [
 
 { #category : #adding }
 DebugPoint class >> remove: aDebugPoint [
+
 	self all remove: aDebugPoint ifAbsent: [].
-	DebugPointManager notifyDebugPointRemoved: aDebugPoint.
+	
 ]
 
 { #category : #API }
@@ -146,9 +146,18 @@ DebugPoint >> node: aNode [
 
 { #category : #removing }
 DebugPoint >> remove [
+	| announcement nodes |
+	nodes := self link nodes copy.
 	
-	self link ifNotNil: [self link uninstall].
 	self class remove: self.
+	self link ifNotNil: [self link uninstall].
+	
+	announcement := DebugPointRemoved
+	on: self
+	nodes: nodes.
+	SystemAnnouncer uniqueInstance announce: announcement.
+
+	
 ]
 
 { #category : #API }

@@ -10,7 +10,7 @@ DebugPointManager class >> handleClassRemoved: anAnnouncement [
 	DebugPoint all copy do: [ :debugPoint | 
 		debugPoint link methods
 			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
-			ifFound: [ self removeDebugPoint: debugPoint "debugPoint removeFromClass: anAnnouncement classRemoved" ] ]
+			ifFound: [ debugPoint remove"debugPoint removeFromClass: anAnnouncement classRemoved" ] ]
 ]
 
 { #category : #'class initialization' }
@@ -36,6 +36,7 @@ DebugPointManager class >> installNew: aDebugPointClass On: aNode [
 
 { #category : #'as yet unclassified' }
 DebugPointManager class >> installNew: aDebugPointClass On: aNode withBehaviors: aListOfBehaviorClasses [
+	"this should be the single point of installation for debug points, removal is in the remove method of debug point instances"
 	| dp ml |
 
 	dp := aDebugPointClass new node: aNode.
@@ -48,7 +49,8 @@ DebugPointManager class >> installNew: aDebugPointClass On: aNode withBehaviors:
 	dp link: ml.
 	aNode link: ml.
 	DebugPoint add: dp.
-	DebugPointManagerUI new open.
+	self notifyDebugPointAdded: dp.
+	
 ]
 
 { #category : #'as yet unclassified' }
@@ -62,13 +64,16 @@ DebugPointManager class >> notifyDebugPointAdded: aDebugPoint [
 ]
 
 { #category : #'as yet unclassified' }
-DebugPointManager class >> notifyDebugPointRemoved: aDebugPoint [ 
-
+DebugPointManager class >> notifyDebugPointRemoved: aDebugPoint fromNodes: nodes [
+	"nodes have to be seperate because they will be removed from the debugpoint before this method is called"
 	| announcement |
 	announcement := DebugPointRemoved
-		on: aDebugPoint
-		nodes: aDebugPoint link nodes copy.
-	SystemAnnouncer uniqueInstance announce: announcement
+		on: aDebugPoint 
+		nodes: nodes.
+	SystemAnnouncer uniqueInstance announce: announcement.
+
+		
+
 ]
 
 { #category : #'class initialization' }
@@ -82,19 +87,10 @@ DebugPointManager class >> registerInterestToSystemAnnouncement [
 ]
 
 { #category : #'class initialization' }
-DebugPointManager class >> removeDebugPoint: aDebugPoint [
-
-	| nodes |
-	nodes := aDebugPoint link nodes copy.
-	DebugPoint remove: aDebugPoint.
-	"self notifyBreakpointRemoved: aBreakpoint fromNodes: nodes"
-]
-
-{ #category : #'class initialization' }
 DebugPointManager class >> removeFromMethod: aMethod [
 
 	DebugPoint all copy do: [ :debugPoint | 
 		debugPoint link methods
 			detect: [ :m | m == aMethod ]
-			ifFound: [ self removeDebugPoint: debugPoint "debugPoint removeFromMethod: aMethod" ] ]
+			ifFound: [ debugPoint remove"debugPoint removeFromMethod: aMethod" ] ]
 ]

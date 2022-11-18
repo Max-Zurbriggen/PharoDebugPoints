@@ -5,16 +5,11 @@ Class {
 }
 
 { #category : #defaults }
-ScriptDebugPointIconStyler >> debugPointOn: aNode [
-	^(aNode links detect: [ :link | link metaObject class = ScriptDebugPoint ]) metaObject.
+ScriptDebugPointIconStyler >> forClass [
+	^ScriptDebugPoint 
 ]
 
 { #category : #defaults }
 ScriptDebugPointIconStyler >> iconLabel: aNode [
 	^ 'Script'
-]
-
-{ #category : #asserting }
-ScriptDebugPointIconStyler >> shouldStyleNode: aNode [
-	^aNode hasDebugPointOfType: ScriptDebugPoint
 ]

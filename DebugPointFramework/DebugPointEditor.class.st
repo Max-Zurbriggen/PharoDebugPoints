@@ -4,17 +4,20 @@ Class {
 	#instVars : [
 		'debugPoint',
 		'isActiveCheckBox',
-		'actionBar',
-		'onceCheckBox'
+		'actionBar'
 	],
 	#category : #DebugPointFramework
 }
 
 { #category : #layout }
 DebugPointEditor >> createLayout [
+
+	self debugPoint ifNil: [ ^self layout: self defaultLayout ].
+	
 	self layout: SpBoxLayout newTopToBottom.
 	self layout add: actionBar expand: false.
 	self layout add: isActiveCheckBox expand: false.
+	isActiveCheckBox state: self debugPoint enabled.
 	self layout add: (ConditionUI new debugPoint: debugPoint ) expand: false .
 	self layout add: (OnceUI new debugPoint: debugPoint )  expand: false.
 	self layout add: debugPoint uiElement.
@@ -54,23 +57,20 @@ DebugPointEditor >> initializePresenters [
 			label: 'Refresh'; 
 			icon: (self iconNamed: #smallUpdate);
 			help: 'refresh page';
-			action: [self layout: self createLayout ];
+			action: [self updateAll ];
 			yourself);
 		addLast: (self newButton
 			label: 'Remove'; 
 			icon: (self iconNamed: #smallCancel);
 			help: 'Remove this point';
-			action: [ debugPoint remove.  ];
+			action: [ debugPoint remove. ];
 			yourself);
 		yourself.
 		
-	onceCheckBox := self newCheckBox label: 'once'.
 ]
 
 { #category : #accessing }
 DebugPointEditor >> updateAll [
-
-	isActiveCheckBox state: debugPoint enabled.
 
 	self createLayout.
 	self layout children do: [ :c | c update]
