@@ -7,6 +7,12 @@ Class {
 	#category : #DebugPointBehaviors
 }
 
+{ #category : #accessing }
+ConditionBehavior class >> uiElement [
+
+	^ConditionUI
+]
+
 { #category : #initialization }
 ConditionBehavior >> condition [
 	^condition
@@ -44,10 +50,4 @@ ConditionBehavior >> initialize [
 	super initialize.
 	self priority: 50.
 	self condition: 'false'.
-]
-
-{ #category : #accessing }
-ConditionBehavior >> uiElement [
-
-	^ConditionUI new behavior: self.
 ]

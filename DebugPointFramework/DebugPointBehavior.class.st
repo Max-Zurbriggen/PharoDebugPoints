@@ -4,10 +4,10 @@ The highest value is executed first.
 
 Condition: 50 (at the beginning)
 Once: 0 (standard)
-Break: -100 (always at the end)
 
 API:
-execute method should return false if it should interrupt behavior execution
+execute method should return true if execution should continue and false if it should interrupt.
+
 "
 Class {
 	#name : #DebugPointBehavior,
@@ -58,9 +58,4 @@ DebugPointBehavior >> priority [
 { #category : #accessing }
 DebugPointBehavior >> priority: anInteger [
 	priority := anInteger 
-]
-
-{ #category : #accessing }
-DebugPointBehavior >> uiElement [ 
-	self subclassResponsibility 
 ]

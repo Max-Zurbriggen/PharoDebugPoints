@@ -89,13 +89,12 @@ DebugPoint >> hitWithContext: aContext [
 	self arguments: (Dictionary new 
 		at: #context put: aContext; 
 		yourself).
-
-	self behaviors do: [ :behavior | 
-		"this might be bad style but makes for a more robust implementation of behaviors since execution only stops if it returns false and else continues"
-		"API: execute should return false if it should interrupt behavior execution"
-		behavior execute = false ifTrue: [ ^false ]
-		 ].
 	
+	"bad code? don't know how anySatisfy: works so i'm leaving it for now"
+	self behaviors do: [ :behavior | 
+		"API: execute should return false if it should interrupt behavior execution"
+		behavior execute ifFalse: [ ^false ]
+		 ].
 	^true.
 ]
 

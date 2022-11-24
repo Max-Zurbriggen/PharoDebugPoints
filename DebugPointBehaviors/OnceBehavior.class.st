@@ -4,12 +4,14 @@ Class {
 	#category : #DebugPointBehaviors
 }
 
+{ #category : #accessing }
+OnceBehavior class >> uiElement [
+
+	^OnceUI
+]
+
 { #category : #execution }
 OnceBehavior >> execute [
 	self debugPoint enabled: false.
-]
-
-{ #category : #accessing }
-OnceBehavior >> uiElement [ 
-	^SpLabelPresenter new label: 'Once'.
+	^true.
 ]

@@ -20,5 +20,5 @@ BreakDebugPoint >> name [
 
 { #category : #accessing }
 BreakDebugPoint >> uiElement [ 
-	^SpLabelPresenter new label: 'Break'.
+	^SpLabelPresenter new "label: 'Break'".
 ]

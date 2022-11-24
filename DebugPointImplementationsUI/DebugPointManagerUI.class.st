@@ -5,7 +5,7 @@ Class {
 		'dpTable',
 		'dpEditor'
 	],
-	#category : #DebugPointFramework
+	#category : #DebugPointImplementationsUI
 }
 
 { #category : #layout }
@@ -30,7 +30,7 @@ DebugPointManagerUI >> initialize [
 
 { #category : #initialization }
 DebugPointManagerUI >> initializePresenters [ 
-	"self initializeTreeTable."
+
 	self initializeTable.
 	dpEditor := DebugPointEditor new.
 	
@@ -58,23 +58,6 @@ DebugPointManagerUI >> initializeTable [
 	beResizable ;
 	whenActivatedDo: [ :selection | selection selectedItem inspect ].
 	
-	dpTable whenSelectionChangedDo: [ :sel | dpEditor debugPoint: dpTable selectedItem ].
-]
-
-{ #category : #deprecated }
-DebugPointManagerUI >> initializeTreeTable [
-"TBD"
-"this was an idea to have a list with classes seperated but i don't think its intended to be used that way because it needs a lot of workarounds"
-	dpTable := SpTreePresenter new 
-
-	roots: {'Breakpoint'. 'Watcher'. 'Script'.'Transcript'.'Counter'.'Debugpoint'} ;
-	display: [ :ele | (ele isKindOf: DebugPoint) ifFalse: [ele,'s'] ifTrue: [ele asString]];
-	children: [ :atype | DebugPoint all asOrderedCollection select: [ :dp | dp name = atype ] ];
-	beResizable;
-	"contextMenu: self debugPointContextMenu;"
-	activateOnDoubleClick;
-	whenActivatedDo: [ :selection | selection selectedItem inspect ];
-	expandAll.
 	dpTable whenSelectionChangedDo: [ :sel | dpEditor debugPoint: dpTable selectedItem ].
 ]
 
