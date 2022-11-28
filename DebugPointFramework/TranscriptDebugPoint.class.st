@@ -12,7 +12,6 @@ Class {
 
 { #category : #API }
 TranscriptDebugPoint >> hitWithContext: aContext [
-	<debuggerCompleteToSender>
 	
 	(super hitWithContext: aContext) ifFalse: [^self].
 

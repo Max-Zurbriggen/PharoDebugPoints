@@ -17,13 +17,13 @@ ChainLinkDebugPoint >> childrenDebugPoints [
 	^childrenDebugPoints ifNil: [ childrenDebugPoints := WeakOrderedCollection new ]
 ]
 
-{ #category : #execution }
+{ #category : #API }
 ChainLinkDebugPoint >> hitWithContext: aContext [
 	
 	(super hitWithContext: aContext) ifFalse: [^self].
 	
 	self childrenDebugPoints do: [ :cdp | cdp enabled: true ].
-	self debugPoint enabled: false.
+	"self debugPoint enabled: false."
 ]
 
 { #category : #execution }
