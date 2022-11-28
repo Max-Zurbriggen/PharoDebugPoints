@@ -7,6 +7,13 @@ Class {
 	#category : #DebugPointImplementationsUI
 }
 
+{ #category : #accessing }
+ScriptUI >> debugPoint: aDebugPoint [
+	super debugPoint: aDebugPoint.
+
+	codeInput text: self debugPoint script.
+]
+
 { #category : #layout }
 ScriptUI >> defaultLayout [ 
 	
@@ -20,16 +27,10 @@ ScriptUI >> defaultLayout [
 		yourself.
 ]
 
-{ #category : #layout }
+{ #category : #initialization }
 ScriptUI >> initializePresenters [ 
 	
 	codeInput := self newCode.
 	codeInput beForScripting.
-	codeInput whenTextChangedDo: [ behavior script: codeInput text ]
-]
-
-{ #category : #layout }
-ScriptUI >> update [
-
-	codeInput text: behavior script.
+	codeInput whenTextChangedDo: [ self debugPoint script: codeInput text ]
 ]

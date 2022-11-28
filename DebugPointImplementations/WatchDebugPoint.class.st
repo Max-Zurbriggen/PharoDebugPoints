@@ -1,3 +1,6 @@
+"
+I am a debug point which keeps track of the values of the node I am attached to. Whenever the debug point is hit the value is recorded in my history.
+"
 Class {
 	#name : #WatchDebugPoint,
 	#superclass : #DebugPoint,
@@ -13,7 +16,8 @@ WatchDebugPoint >> addValue: aValue [
 	self history addFirst: aValue.
 	(self limit = 0) ifFalse: [ 
 		self history size > self limit ifTrue: [ self history removeLast ].
-	]
+	].
+	
 ]
 
 { #category : #execution }
@@ -28,9 +32,10 @@ WatchDebugPoint >> history: anOrderedCollection [
 
 { #category : #initialization }
 WatchDebugPoint >> hitWithContext: aContext value: aValue [
-	(super hitWithContext: aContext) ifFalse: [^self].
+	(self hitWithContext: aContext) ifFalse: [^self].
 	
 	self addValue: aValue.
+	DebugPointManager notifyDebugPointChanged: self.
 ]
 
 { #category : #execution }
@@ -43,7 +48,7 @@ WatchDebugPoint >> limit: anInteger [
 	limit := anInteger.
 	(anInteger = 0) ifFalse: [ 
 		(self history size > anInteger) ifTrue: [ self history: (self history copyFrom: 1 to: anInteger) ]
-	]
+	].
 ]
 
 { #category : #initialization }
@@ -61,7 +66,7 @@ WatchDebugPoint >> name [
 	^#Watcher
 ]
 
-{ #category : #execution }
+{ #category : #'ui building' }
 WatchDebugPoint >> uiElement [ 
-	^WatchUI new behavior: self.
+	^WatchUI new debugPoint: self.
 ]

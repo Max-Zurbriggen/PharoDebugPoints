@@ -1,3 +1,6 @@
+"
+I am the subclass for all debug points. New Debug points should be implemented as subclasses.
+"
 Class {
 	#name : #DebugPoint,
 	#superclass : #Object,
@@ -66,7 +69,8 @@ DebugPoint >> enabled [
 
 { #category : #accessing }
 DebugPoint >> enabled: aBoolean [
-	enabled := aBoolean 
+	enabled := aBoolean.
+	DebugPointManager notifyDebugPointChanged: self.
 ]
 
 { #category : #API }
@@ -95,12 +99,13 @@ DebugPoint >> hitWithContext: aContext [
 		"API: execute should return false if it should interrupt behavior execution"
 		behavior execute ifFalse: [ ^false ]
 		 ].
+	
 	^true.
 ]
 
 { #category : #initialization }
 DebugPoint >> initialize [ 
-	self enabled: true.
+	enabled := true.
 	self behaviors: (SortedCollection sortUsing: [ :elem1 :elem2 | elem1 priority >= elem2 priority]).
 ]
 
@@ -166,7 +171,7 @@ DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
 
 ]
 
-{ #category : #accessing }
+{ #category : #'ui building' }
 DebugPoint >> uiElement [
 	^SpLabelPresenter new label: 'UI not implemented'.
 	

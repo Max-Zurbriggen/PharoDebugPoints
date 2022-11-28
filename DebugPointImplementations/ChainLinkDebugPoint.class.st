@@ -31,7 +31,7 @@ ChainLinkDebugPoint >> removeChild: aDebugPoint [
 	self childrenDebugPoints remove: aDebugPoint ifAbsent: [].
 ]
 
-{ #category : #accessing }
+{ #category : #'ui building' }
 ChainLinkDebugPoint >> uiElement [ 
 	^SpLabelPresenter new label: 'Chain TOBEIMPLEMENTED'.
 ]

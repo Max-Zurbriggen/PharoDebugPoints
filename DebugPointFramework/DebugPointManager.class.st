@@ -1,10 +1,15 @@
+"
+I am responsible for managing the debug points.
+
+An exception is the removal of Debug points, which is handled in the ""remove"" method of DebugPoint instances.
+"
 Class {
 	#name : #DebugPointManager,
 	#superclass : #Object,
 	#category : #DebugPointFramework
 }
 
-{ #category : #'class initialization' }
+{ #category : #removing }
 DebugPointManager class >> handleClassRemoved: anAnnouncement [
 
 	DebugPoint all copy do: [ :debugPoint | 
@@ -13,12 +18,12 @@ DebugPointManager class >> handleClassRemoved: anAnnouncement [
 			ifFound: [ debugPoint remove"debugPoint removeFromClass: anAnnouncement classRemoved" ] ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : #removing }
 DebugPointManager class >> handleMethodModified: anAnnouncement [
 	self removeFromMethod: anAnnouncement oldMethod
 ]
 
-{ #category : #'class initialization' }
+{ #category : #removing }
 DebugPointManager class >> handleMethodRemoved: anAnnouncement [
 	self removeFromMethod: anAnnouncement method
 ]
@@ -28,13 +33,13 @@ DebugPointManager class >> initialize [
 	self registerInterestToSystemAnnouncement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #API }
 DebugPointManager class >> installNew: aDebugPointClass On: aNode [
 
-	self installNew: aDebugPointClass On: aNode withBehaviors: {  }.
+	^self installNew: aDebugPointClass On: aNode withBehaviors: {  }.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #API }
 DebugPointManager class >> installNew: aDebugPointClass On: aNode withBehaviors: aListOfBehaviorClasses [
 	"this should be the single point of installation for debug points, removal is in the remove method of debug point instances"
 	| dp ml |
@@ -51,9 +56,10 @@ DebugPointManager class >> installNew: aDebugPointClass On: aNode withBehaviors:
 	DebugPoint add: dp.
 	self notifyDebugPointAdded: dp.
 	
+	^dp	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #announcements }
 DebugPointManager class >> notifyDebugPointAdded: aDebugPoint [
 
 	| announcement |
@@ -63,7 +69,17 @@ DebugPointManager class >> notifyDebugPointAdded: aDebugPoint [
 	SystemAnnouncer uniqueInstance announce: announcement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #announcements }
+DebugPointManager class >> notifyDebugPointChanged: aDebugPoint [
+	
+	| announcement |
+	announcement := DebugPointChanged
+		on: aDebugPoint
+		nodes: aDebugPoint link nodes.
+	SystemAnnouncer uniqueInstance announce: announcement
+]
+
+{ #category : #announcements }
 DebugPointManager class >> notifyDebugPointRemoved: aDebugPoint fromNodes: nodes [
 	"nodes have to be seperate because they will be removed from the debugpoint before this method is called"
 	| announcement |

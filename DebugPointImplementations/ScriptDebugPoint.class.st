@@ -1,3 +1,6 @@
+"
+I am a debug point that executes a script when hit.
+"
 Class {
 	#name : #ScriptDebugPoint,
 	#superclass : #DebugPoint,
@@ -29,11 +32,12 @@ ScriptDebugPoint >> script [
 
 { #category : #accessing }
 ScriptDebugPoint >> script: aString [
-	script := aString
+	script := aString.
+
 ]
 
-{ #category : #accessing }
+{ #category : #'ui building' }
 ScriptDebugPoint >> uiElement [ 
 
-	^ScriptUI new behavior: self.
+	^ScriptUI new debugPoint: self.
 ]

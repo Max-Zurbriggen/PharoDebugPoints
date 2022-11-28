@@ -1,4 +1,6 @@
 "
+I am the subclass for different behaviors which can be added to all debug points.
+
 In what orders the behaviors are executed is decided by the priority variable.
 The highest value is executed first.
 

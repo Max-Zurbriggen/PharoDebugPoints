@@ -1,3 +1,6 @@
+"
+I am the condition behavior which can be added to debug points. If my condition is true or nil the execute method will return true, else it will return false or an error.
+"
 Class {
 	#name : #ConditionBehavior,
 	#superclass : #DebugPointBehavior,

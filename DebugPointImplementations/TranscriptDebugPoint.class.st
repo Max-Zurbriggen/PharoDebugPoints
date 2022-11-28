@@ -1,3 +1,6 @@
+"
+I am a debug point which writes something with Transcript when hit.
+"
 Class {
 	#name : #TranscriptDebugPoint,
 	#superclass : #DebugPoint,
@@ -28,11 +31,12 @@ TranscriptDebugPoint >> text [
 
 { #category : #accessing }
 TranscriptDebugPoint >> text: aString [
-	text := aString
+	text := aString.
+
 ]
 
-{ #category : #accessing }
+{ #category : #'ui building' }
 TranscriptDebugPoint >> uiElement [
 
-	^TranscriptUI new behavior: self.
+	^TranscriptUI new debugPoint: self.
 ]

@@ -2,7 +2,9 @@ Class {
 	#name : #DebugPointTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'dp'
+		'dp',
+		'node',
+		'context'
 	],
 	#category : #DebugPointTestingEnvironment
 }
@@ -11,8 +13,11 @@ Class {
 DebugPointTest >> setUp [
 	super setUp.
 	
-	"Put here a common initialization logic for tests"
-	dp := DebugPoint new.
+	"set a node to install the dp on"
+	node := (DummyTestClass methods select: [ :method | method name = 'DummyTestClass>>#id:' ]) first ast.
+	context := self setUpContext.
+	
+	
 ]
 
 { #category : #initialization }
@@ -41,9 +46,10 @@ DebugPointTest >> tearDown [
 { #category : #running }
 DebugPointTest >> testBehaviorPriority [
 	| a b c set |
-	a := BreakBehavior new priority: 2.
-	b := CountBehavior new priority: 1.
-	c := CountBehavior new priority: 3.
+	dp := DebugPointManager installNew: DebugPoint On: node.
+	a := OnceBehavior new priority: 2.
+	b := OnceBehavior new priority: 1.
+	c := OnceBehavior new priority: 3.
 	dp addBehavior: a.
 	dp addBehavior: b.
 	dp addBehavior: c.
@@ -53,120 +59,82 @@ DebugPointTest >> testBehaviorPriority [
 ]
 
 { #category : #running }
-DebugPointTest >> testBreakBehavior [
-
-	dp addBehavior: BreakBehavior new.
-	self should: [dp hit] raise: Break.
-	self should: [dp hit] raise: Break.
+DebugPointTest >> testBreakDebugPoint [
+	dp := DebugPointManager installNew: BreakDebugPoint On: node.
+	self should: [dp hitWithContext: context] raise: Break.
+	self should: [DummyTestClass new id:2 ] raise: Break.
 ]
 
 { #category : #running }
-DebugPointTest >> testChainBehavior [
-	| dp2 dp3 |
-	dp2 := DebugPoint new.
-	dp3 := DebugPoint new.
-	dp addBehavior: (ChainBehavior new addChild: dp2).
-	dp2 addBehavior: (ChainBehavior new addChild: dp3).
-	"dp3 addBehavior: (ChainBehavior new addChild: dp2)."
-	dp2 enabled: false.
-	dp3 enabled: false.
-
-	"hitting dp2 or dp3 should not change the state of any debugPoint"
-	dp2 hit.
-	self assert: dp enabled equals: true.
-	self assert: dp2 enabled equals: false.
-	self assert: dp3 enabled equals: false.
-	dp3 hit.
-	self assert: dp enabled equals: true.
-	self assert: dp2 enabled equals: false.
-	self assert: dp3 enabled equals: false.
-	"hitting dp enables dp2 and disables dp"
-	dp hit.
-	self assert: dp enabled equals: false.
-	self assert: dp2 enabled equals: true.
-	self assert: dp3 enabled equals: false.
-	"hitting dp1 does nothing"
-	dp hit.
-	self assert: dp enabled equals: false.
-	self assert: dp2 enabled equals: true.
-	self assert: dp3 enabled equals: false.
-	"hitting dp2 disables dp2 and enables dp3"
-	dp2 hit.
-	self assert: dp enabled equals: false.
-	self assert: dp2 enabled equals: false.
-	self assert: dp3 enabled equals: true.
-	
-	"cleanup"
-	dp2 remove.
-	dp3 remove.
+DebugPointTest >> testChainLinkDebugPoint [
+	dp := DebugPointManager installNew: ChainLinkDebugPoint On: node.
 ]
 
 { #category : #running }
 DebugPointTest >> testConditionBehavior [
-	| behavior aContext |
+	| behavior |
 	behavior := ConditionBehavior new condition: 'corner=(300@200)'.
+	dp := DebugPointManager installNew: BreakDebugPoint On: node.
 	dp addBehavior: behavior.
-	dp addBehavior: BreakBehavior new.
+	"dp addBehavior: BreakBehavior new."
 
-	aContext := self setUpContext.
-	
 	"hit the point so the arguments are actually saved in the debug point"
-	dp hitWithContext: aContext node: nil.
+	dp hitWithContext: context.
 	"condition is false and should not trigger break"
 	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hit] raise: Break.
+	self shouldnt: [dp hitWithContext: context.] raise: Break.
 	"condition is false and should not trigger break"
 	behavior condition: 'self corner=(300@200)'.
 	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hit] raise: Break.
+	self shouldnt: [dp hitWithContext: context.] raise: Break.
 	"condition is true and should trigger the break"
 	behavior condition: 'corner=(200@200)'.
-	self assert: (behavior execute) equals: behavior .
-	self should: [dp hit] raise: Break.
+	self assert: (behavior execute) equals: true .
+	self should: [dp hitWithContext: context.] raise: Break.
 
 ]
 
 { #category : #running }
 DebugPointTest >> testConditionBehaviorThisContext [
-	| behavior aContext |
+	| behavior |
+	
+	dp := DebugPointManager installNew: BreakDebugPoint On: node.
 
 	behavior := ConditionBehavior new condition: 'thisContext method = 2'.
 	dp addBehavior: behavior.
-	dp addBehavior: BreakBehavior new.
-
-	aContext := self setUpContext.
 	
 	"hit the point so the arguments are actually saved in the debug point"
-	dp hitWithContext: aContext node: nil.
+	dp hitWithContext: context.
 	
 	"it should not break with incorrect condition"
 	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hit] raise: Break.
+	self shouldnt: [dp hitWithContext: context] raise: Break.
 
 	"here the condition is correct and it should break"
 	behavior condition: 'thisContext method = (Rectangle methodDict at: #areasOutside:)'.
-	self assert: (behavior execute) equals: behavior .
-	self should: [dp hit] raise: Break.
+	self assert: (behavior execute) equals: true .
+	self should: [dp hitWithContext: context] raise: Break.
 
 ]
 
 { #category : #running }
-DebugPointTest >> testCountBehavior [
+DebugPointTest >> testCountDebugPoint [
+	dp := DebugPointManager installNew: CountDebugPoint On: node.
 
-	dp addBehavior: CountBehavior new.
-	self assert: ( (dp getBehavior: CountBehavior) count ) equals: 0.
-	dp hit.
-	self assert: ( (dp getBehavior: CountBehavior) count ) equals: 1.
-	dp hit.
-	self assert: ( (dp getBehavior: CountBehavior) count ) equals: 2.
+	self assert: ( dp  count ) equals: 0.
+	dp hitWithContext: context.
+	self assert: ( dp  count ) equals: 1.
+	dp hitWithContext: context.
+	self assert:  ( dp  count ) equals: 2.
 
 ]
 
 { #category : #running }
 DebugPointTest >> testOnceBehavior [
+	dp := DebugPointManager installNew: DebugPoint On: node.
 	dp addBehavior: (OnceBehavior new).
 	self assert: (dp enabled) equals: true.
-	dp hit.
+	dp hitWithContext: context.
 	self assert: (dp enabled) equals: false.
 
 
@@ -174,58 +142,54 @@ DebugPointTest >> testOnceBehavior [
 
 { #category : #running }
 DebugPointTest >> testOnceBreakBehavior [
+	dp := DebugPointManager installNew: BreakDebugPoint On: node withBehaviors: {OnceBehavior}.
 
-	dp addBehavior: (BreakBehavior new).
-	dp addBehavior: (OnceBehavior new).
 	self assert: (dp enabled) equals: true.
-	self should: [dp hit] raise: Break.
+	self should: [dp hitWithContext: context] raise: Break.
 	self assert: (dp enabled) equals: false.
-	self shouldnt: [dp hit] raise: Break.
+	self shouldnt: [dp hitWithContext: context] raise: Break.
 
 ]
 
 { #category : #running }
-DebugPointTest >> testTranscriptBehavior [
+DebugPointTest >> testTranscriptDebugPoint [
 
-	dp addBehavior: (TranscriptBehavior new text: 'string').
-	
-	dp hit.
+	dp := DebugPointManager installNew: TranscriptDebugPoint On: node.
+	dp text: 'string'.
+	dp hitWithContext: context.
 	Transcript stepGlobal .
 	self assert: Transcript contents equals: 'string'
 ]
 
 { #category : #running }
-DebugPointTest >> testWatchBehavior [
+DebugPointTest >> testWatchDebugPoint [
+	| his | 
 	
-	| wb his aContext | 
-	wb := WatchBehavior new expression: 'corner'.
-	dp addBehavior: (wb).
+	dp := DebugPointManager installNew: WatchDebugPoint On: node.
 	his := OrderedCollection new.
-	aContext := self setUpContext.
-	
-	"hit the point so the arguments are actually saved in the debug point"
 
 	"check empty history"
-	self assert: wb history equals: his.
+	self assert: dp history equals: his.
 	"check history after hitting dp"
-	dp hitWithContext: aContext node: nil.
-	his add: 200@200.
-	self assert: wb history equals: his.
+	DummyTestClass new id: 2.
+	his add: 2.
+	self assert: dp history equals: his.
 	"once more"
-	wb expression: '''string'''.
-	dp hitWithContext: aContext node: nil.
+	DummyTestClass new id: 'string'.
 	his addFirst: 'string'.
-	self assert: wb history equals: his.
+	self assert: dp history equals: his.
 	"once more"	
-	dp hitWithContext: aContext node: nil.
-	his addFirst: 'string'.
-	self assert: wb history equals: his.
-	"check if limit is applie correctly"
-	wb limit: 2.
+	DummyTestClass new id: 'string2'.
+	his addFirst: 'string2'.
+	self assert: dp history equals: his.
+	"check if limit is applied correctly"
+	dp limit: 2.
 	his removeLast.
-	self assert: wb history equals: his.
+	self assert: dp history equals: his.
 	"hitting does not change the history size anymore"
-	dp hitWithContext: aContext node: nil.
-	self assert: wb history equals: his.
+	DummyTestClass new id: 'string3'.
+	his addFirst: 'string3'.
+	his removeLast.
+	self assert: dp history equals: his.
 
 ]

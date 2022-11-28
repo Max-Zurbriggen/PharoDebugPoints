@@ -7,6 +7,13 @@ Class {
 	#category : #DebugPointImplementationsUI
 }
 
+{ #category : #accessing }
+CountUI >> debugPoint: aDebugPoint [
+	super debugPoint: aDebugPoint.
+
+	textInput text: self debugPoint count asString.
+]
+
 { #category : #layout }
 CountUI >> defaultLayout [ 
 	
@@ -15,22 +22,16 @@ CountUI >> defaultLayout [
 		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: (self newLabel label: 'Current Count:') expand: false ;
 			add: textInput  expand: true ;
-			add: (self newButton label: 'reset'; action: [behavior count: 0. self update]) expand: false ;
+			add: (self newButton label: 'reset'; action: [self debugPoint count: 0. self update]) expand: false ;
 			yourself) expand: false;
 		yourself.
 		
 
 ]
 
-{ #category : #layout }
+{ #category : #initialization }
 CountUI >> initializePresenters [ 
 	
 	textInput := self newTextInput beNotEditable .
-	"textInput whenTextChangedDo: [ behavior count: textInput text ]"
-]
 
-{ #category : #layout }
-CountUI >> update [
-
-	textInput text: behavior count asString.
 ]

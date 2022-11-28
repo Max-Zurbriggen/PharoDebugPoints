@@ -24,6 +24,7 @@ DebugPointManagerUI >> initialize [
 	super initialize.
 	SystemAnnouncer uniqueInstance weak when: DebugPointAdded send: #updateTable to: self.
 	SystemAnnouncer uniqueInstance weak when: DebugPointRemoved send: #updateTable to: self.
+	SystemAnnouncer uniqueInstance weak when: DebugPointChanged send: #updateEditor to: self.
 		
 	
 ]
@@ -76,9 +77,19 @@ DebugPointManagerUI >> select: aDebugPoint [
 ]
 
 { #category : #initialization }
-DebugPointManagerUI >> updateTable [
+DebugPointManagerUI >> updateEditor [
+	dpTable refresh.
+	dpEditor updateAll .
 
+	
+]
+
+{ #category : #initialization }
+DebugPointManagerUI >> updateTable [
+	| prevSel |
+	prevSel := dpTable selectedItem.
 	dpTable items: DebugPoint all asOrderedCollection .
+	dpTable selectItem: prevSel.
 
 	
 ]

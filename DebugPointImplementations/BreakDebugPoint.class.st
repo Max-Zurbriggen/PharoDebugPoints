@@ -1,3 +1,6 @@
+"
+I am a debug point that breaks when it is hit.
+"
 Class {
 	#name : #BreakDebugPoint,
 	#superclass : #DebugPoint,
@@ -18,7 +21,7 @@ BreakDebugPoint >> name [
 	^#Breakpoint
 ]
 
-{ #category : #accessing }
+{ #category : #'ui building' }
 BreakDebugPoint >> uiElement [ 
 	^SpLabelPresenter new "label: 'Break'".
 ]
