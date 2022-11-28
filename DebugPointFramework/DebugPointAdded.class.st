@@ -1,5 +1,5 @@
 Class {
 	#name : #DebugPointAdded,
 	#superclass : #DebugPointAnnouncement,
-	#category : #DebugPointFramework
+	#category : #'DebugPointFramework-Announcements'
 }

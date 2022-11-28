@@ -6,7 +6,7 @@ Class {
 		'isActiveCheckBox',
 		'actionBar'
 	],
-	#category : #DebugPointImplementationsUI
+	#category : #DebugPointUI
 }
 
 { #category : #initialization }

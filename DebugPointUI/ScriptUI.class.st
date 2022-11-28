@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'codeInput'
 	],
-	#category : #DebugPointImplementationsUI
+	#category : #DebugPointUI
 }
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ An exception is the removal of Debug points, which is handled in the ""remove"" 
 Class {
 	#name : #DebugPointManager,
 	#superclass : #Object,
-	#category : #DebugPointFramework
+	#category : #'DebugPointFramework-Base'
 }
 
 { #category : #removing }

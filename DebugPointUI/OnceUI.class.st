@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'checkBox'
 	],
-	#category : #DebugPointImplementationsUI
+	#category : #DebugPointUI
 }
 
 { #category : #accessing }

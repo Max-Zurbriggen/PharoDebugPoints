@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'count'
 	],
-	#category : #DebugPointImplementations
+	#category : #'DebugPointFramework-Implementations'
 }
 
 { #category : #execution }

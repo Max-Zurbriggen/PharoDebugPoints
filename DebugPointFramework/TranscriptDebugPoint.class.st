@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'text'
 	],
-	#category : #DebugPointImplementations
+	#category : #'DebugPointFramework-Implementations'
 }
 
-{ #category : #execution }
+{ #category : #API }
 TranscriptDebugPoint >> hitWithContext: aContext [
 	<debuggerCompleteToSender>
 	

@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'script'
 	],
-	#category : #DebugPointImplementations
+	#category : #'DebugPointFramework-Implementations'
 }
 
-{ #category : #execution }
+{ #category : #API }
 ScriptDebugPoint >> hitWithContext: aContext [
 	<debuggerCompleteToSender>
 	

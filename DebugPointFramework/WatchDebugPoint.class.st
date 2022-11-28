@@ -8,7 +8,7 @@ Class {
 		'history',
 		'limit'
 	],
-	#category : #DebugPointImplementations
+	#category : #'DebugPointFramework-Implementations'
 }
 
 { #category : #execution }
@@ -30,7 +30,7 @@ WatchDebugPoint >> history: anOrderedCollection [
 	history := anOrderedCollection 
 ]
 
-{ #category : #initialization }
+{ #category : #API }
 WatchDebugPoint >> hitWithContext: aContext value: aValue [
 	(self hitWithContext: aContext) ifFalse: [^self].
 	

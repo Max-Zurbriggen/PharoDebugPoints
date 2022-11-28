@@ -6,7 +6,7 @@ Class {
 		'node',
 		'context'
 	],
-	#category : #DebugPointTestingEnvironment
+	#category : #'DebugPointFramework-Tests'
 }
 
 { #category : #running }

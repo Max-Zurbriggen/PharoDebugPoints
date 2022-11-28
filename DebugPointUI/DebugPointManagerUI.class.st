@@ -5,7 +5,7 @@ Class {
 		'dpTable',
 		'dpEditor'
 	],
-	#category : #DebugPointImplementationsUI
+	#category : #DebugPointUI
 }
 
 { #category : #layout }

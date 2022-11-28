@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'AllDebugPoints'
 	],
-	#category : #DebugPointFramework
+	#category : #'DebugPointFramework-Base'
 }
 
 { #category : #adding }

@@ -5,7 +5,7 @@ Class {
 		'historyList',
 		'textInput2'
 	],
-	#category : #DebugPointImplementationsUI
+	#category : #DebugPointUI
 }
 
 { #category : #accessing }

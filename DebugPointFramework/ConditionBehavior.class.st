@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'condition'
 	],
-	#category : #DebugPointBehaviors
+	#category : #'DebugPointFramework-Behaviors'
 }
 
 { #category : #accessing }

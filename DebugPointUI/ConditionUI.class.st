@@ -5,7 +5,7 @@ Class {
 		'codeInput',
 		'checkBox'
 	],
-	#category : #DebugPointImplementationsUI
+	#category : #DebugPointUI
 }
 
 { #category : #layout }

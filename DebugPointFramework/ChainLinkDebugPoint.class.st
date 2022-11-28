@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'childrenDebugPoints'
 	],
-	#category : #DebugPointImplementations
+	#category : #'DebugPointFramework-Implementations'
 }
 
 { #category : #execution }

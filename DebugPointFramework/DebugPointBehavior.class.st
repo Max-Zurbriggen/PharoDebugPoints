@@ -18,7 +18,7 @@ Class {
 		'priority',
 		'debugPoint'
 	],
-	#category : #DebugPointFramework
+	#category : #'DebugPointFramework-Base'
 }
 
 { #category : #adding }

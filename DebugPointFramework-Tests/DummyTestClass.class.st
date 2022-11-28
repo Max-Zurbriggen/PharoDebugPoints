@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'id'
 	],
-	#category : #DebugPointTestingEnvironment
+	#category : #'DebugPointFramework-Tests'
 }
 
 { #category : #accessing }

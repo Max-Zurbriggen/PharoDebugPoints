@@ -4,7 +4,7 @@ I am the once behavior which can be added to debug points. When I am executed I 
 Class {
 	#name : #OnceBehavior,
 	#superclass : #DebugPointBehavior,
-	#category : #DebugPointBehaviors
+	#category : #'DebugPointFramework-Behaviors'
 }
 
 { #category : #accessing }

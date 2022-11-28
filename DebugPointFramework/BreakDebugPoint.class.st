@@ -4,10 +4,10 @@ I am a debug point that breaks when it is hit.
 Class {
 	#name : #BreakDebugPoint,
 	#superclass : #DebugPoint,
-	#category : #DebugPointImplementations
+	#category : #'DebugPointFramework-Implementations'
 }
 
-{ #category : #execution }
+{ #category : #API }
 BreakDebugPoint >> hitWithContext: aContext [
 	<debuggerCompleteToSender>
 	
