@@ -27,5 +27,20 @@ ClyAddTranscriptDebugPointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddTranscriptDebugPointCommand >> execute [
-	DebugPointManager installNew: TranscriptDebugPoint  On: sourceNode.
+	| dp |
+	dp := DebugPointManager installNew: TranscriptDebugPoint  On: sourceNode.
+	
+	dp text: self popUp
+]
+
+{ #category : #execution }
+ClyAddTranscriptDebugPointCommand >> popUp [
+	|textInput|
+	textInput := SpRequestDialog new
+		label: 'Enter string:';
+		text: '';
+		title: 'Transcript String';
+		openModal.
+	textInput ifNil: [ ^'' ].
+	^textInput 
 ]

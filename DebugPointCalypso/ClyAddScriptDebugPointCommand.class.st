@@ -27,5 +27,20 @@ ClyAddScriptDebugPointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddScriptDebugPointCommand >> execute [
-	DebugPointManager installNew: ScriptDebugPoint  On: sourceNode.
+	| dp |
+	dp := DebugPointManager installNew: ScriptDebugPoint  On: sourceNode.
+	
+	dp script: self popUp
+]
+
+{ #category : #execution }
+ClyAddScriptDebugPointCommand >> popUp [
+	|textInput|
+	textInput := SpRequestDialog new
+		label: 'Enter script:';
+		text: '';
+		title: 'Script';
+		openModal.
+	textInput ifNil: [ ^'' ].
+	^textInput 
 ]
