@@ -3,18 +3,36 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'dpTable',
-		'dpEditor'
+		'dpEditor',
+		'dpCode'
 	],
 	#category : #DebugPointUI
 }
 
+{ #category : #'world menu' }
+DebugPointManagerUI class >> menuCommandOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #'Debug Point Manager')
+		parent: #Debug;
+		action: [ self new open ];
+		order: -3;
+		help: 'for more information contact max.zurbriggen@uzh.ch';
+		icon: (self iconNamed: #glamorousBug).
+	aBuilder withSeparatorAfter
+]
+
 { #category : #layout }
 DebugPointManagerUI >> defaultLayout [ 
-	^SpPanedLayout newLeftToRight 
+	^SpPanedLayout newTopToBottom 
+		add: (SpPanedLayout newLeftToRight 
 		add: dpTable;
 		add: dpEditor;
-		positionOfSlider:40percent;
+		positionOfSlider:50percent;
+		yourself);
+		add: dpCode;
+		positionOfSlider:70percent;
 		yourself.
+		
 		
 ]
 
@@ -34,32 +52,18 @@ DebugPointManagerUI >> initializePresenters [
 
 	self initializeTable.
 	dpEditor := DebugPointEditor new.
+	dpCode := DebugPointCodePresenter new editable: false.
 	
 	
 ]
 
 { #category : #initialization }
 DebugPointManagerUI >> initializeTable [
-	dpTable := SpTablePresenter new
-	items: ( DebugPoint all asOrderedCollection );
-	addColumn: (SpCompositeTableColumn new
-			title: 'DebugPoints';
-			addColumn: (SpCheckBoxTableColumn new 
-				onActivation:  [ :dp | dp enabled: true ];
-				onDeactivation: [ :dp | dp enabled: false];
-				evaluated: [ :dp | dp enabled ]);
-			addColumn: (SpStringTableColumn evaluated: [ :dp | dp name ]);
-			yourself);
-	addColumn: (SpStringTableColumn new 
-		title: 'Class and Method'; 
-		evaluated: [ :dp | dp node methodNode method printString]);
+	dpTable := DebugPointTablePresenter new.
 	
-	"contextMenu: self debugPointContextMenu;"
-	activateOnDoubleClick;
-	beResizable ;
-	whenActivatedDo: [ :selection | selection selectedItem inspect ].
-	
-	dpTable whenSelectionChangedDo: [ :sel | dpEditor debugPoint: dpTable selectedItem ].
+	dpTable whenSelectionChangedDo: [ :sel | 
+		dpEditor debugPoint: dpTable selectedItem.
+		dpCode updateCode: dpTable selectedItem ].
 ]
 
 { #category : #initialization }

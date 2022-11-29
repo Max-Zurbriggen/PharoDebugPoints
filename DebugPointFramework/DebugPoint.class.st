@@ -9,7 +9,8 @@ Class {
 		'behaviors',
 		'arguments',
 		'metaLink',
-		'node'
+		'node',
+		'targetInstance'
 	],
 	#classVars : [
 		'AllDebugPoints'
@@ -169,6 +170,29 @@ DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
 	"removing a behavior"
 	self behaviors remove: (self getBehavior: aDebugPointBehaviorClass).
 
+]
+
+{ #category : #accessing }
+DebugPoint >> resetObjectScope [
+	self targetInstance: nil.
+	self link condition: nil arguments: nil
+]
+
+{ #category : #accessing }
+DebugPoint >> setObjectScope: anObject [
+	anObject ifNil: [ self resetObjectScope ].
+	self targetInstance: anObject.
+	self link condition: [ :ctx | ctx receiver == self targetInstance ] arguments: #(context).
+]
+
+{ #category : #accessing }
+DebugPoint >> targetInstance [
+	^targetInstance
+]
+
+{ #category : #accessing }
+DebugPoint >> targetInstance: anObject [
+	targetInstance := anObject 
 ]
 
 { #category : #'ui building' }
