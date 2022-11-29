@@ -1,4 +1,4 @@
-# XPImageGeneration
+# PharoDebugPoints
 
   
   ```Smalltalk
