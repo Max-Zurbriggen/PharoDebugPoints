@@ -27,5 +27,20 @@ ClyAddConditionBreakCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddConditionBreakCommand >> execute [
-	DebugPointManager installNew: BreakDebugPoint On: sourceNode withBehaviors: {ConditionBehavior }
+	|dp |
+	dp := DebugPointManager installNew: BreakDebugPoint On: sourceNode withBehaviors: {ConditionBehavior }.
+	
+	(dp getBehavior: ConditionBehavior) condition: self popUp
+]
+
+{ #category : #execution }
+ClyAddConditionBreakCommand >> popUp [
+	|textInput|
+	textInput := SpRequestDialog new
+		label: 'Enter condition:';
+		text: '';
+		title: 'Condition';
+		openModal.
+	textInput ifNil: [ ^'' ].
+	^textInput 
 ]

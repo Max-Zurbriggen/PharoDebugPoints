@@ -1,3 +1,6 @@
+"
+All of my subclasses are automatically styled.
+"
 Class {
 	#name : #DebugPointIconStyler,
 	#superclass : #IconStyler,

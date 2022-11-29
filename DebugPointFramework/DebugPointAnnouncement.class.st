@@ -6,7 +6,7 @@ Class {
 		'nodes',
 		'methods'
 	],
-	#category : #DebugPointFramework
+	#category : #'DebugPointFramework-Announcements'
 }
 
 { #category : #'instance creation' }

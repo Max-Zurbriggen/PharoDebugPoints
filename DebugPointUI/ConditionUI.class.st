@@ -5,7 +5,7 @@ Class {
 		'codeInput',
 		'checkBox'
 	],
-	#category : #DebugPointImplementationsUI
+	#category : #DebugPointUI
 }
 
 { #category : #layout }
@@ -24,9 +24,10 @@ ConditionUI >> deactivate [
 	self behavior: nil.
 ]
 
-{ #category : #layout }
+{ #category : #accessing }
 ConditionUI >> debugPoint: aDebugPoint [
-	debugPoint := aDebugPoint.
+	super debugPoint: aDebugPoint.
+	
 	behavior := self debugPoint getBehavior: ConditionBehavior.
 	checkBox state: self behavior isNotNil.
 	codeInput enabled: checkBox state.
@@ -45,7 +46,7 @@ ConditionUI >> defaultLayout [
 		yourself.
 ]
 
-{ #category : #layout }
+{ #category : #initialization }
 ConditionUI >> initializePresenters [ 
 	
 	codeInput  := self newCode.
@@ -56,10 +57,4 @@ ConditionUI >> initializePresenters [
 	checkBox whenDeactivatedDo: [ self deactivate ].
 	
 	
-]
-
-{ #category : #layout }
-ConditionUI >> update [ 
-	checkBox update.
-	codeInput update.
 ]

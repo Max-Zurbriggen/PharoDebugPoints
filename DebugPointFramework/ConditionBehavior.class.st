@@ -1,11 +1,20 @@
+"
+I am the condition behavior which can be added to debug points. If my condition is true or nil the execute method will return true, else it will return false or an error.
+"
 Class {
 	#name : #ConditionBehavior,
 	#superclass : #DebugPointBehavior,
 	#instVars : [
 		'condition'
 	],
-	#category : #DebugPointBehaviors
+	#category : #'DebugPointFramework-Behaviors'
 }
+
+{ #category : #accessing }
+ConditionBehavior class >> uiElement [
+
+	^ConditionUI
+]
 
 { #category : #initialization }
 ConditionBehavior >> condition [
@@ -34,8 +43,9 @@ ConditionBehavior >> evaluate: expression withContext: aContext [
 
 { #category : #execution }
 ConditionBehavior >> execute [
-	self condition ifNil: [ ^self ].
-	(self evaluate: self condition withContext: self context) ifFalse: [ ^false ]
+	self condition ifNil: [ ^true ].
+	(self evaluate: self condition withContext: self context) ifFalse: [ ^false ].
+	^true
 ]
 
 { #category : #initialization }
@@ -44,10 +54,4 @@ ConditionBehavior >> initialize [
 	super initialize.
 	self priority: 50.
 	self condition: 'false'.
-]
-
-{ #category : #accessing }
-ConditionBehavior >> uiElement [
-
-	^ConditionUI new behavior: self.
 ]

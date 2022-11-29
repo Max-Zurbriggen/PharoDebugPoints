@@ -5,7 +5,7 @@ Class {
 		'behavior',
 		'debugPoint'
 	],
-	#category : #DebugPointImplementationsUI
+	#category : #DebugPointUI
 }
 
 { #category : #accessing }

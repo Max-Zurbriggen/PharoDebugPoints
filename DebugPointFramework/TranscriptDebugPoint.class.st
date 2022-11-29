@@ -1,15 +1,17 @@
+"
+I am a debug point which writes something with Transcript when hit.
+"
 Class {
 	#name : #TranscriptDebugPoint,
 	#superclass : #DebugPoint,
 	#instVars : [
 		'text'
 	],
-	#category : #DebugPointImplementations
+	#category : #'DebugPointFramework-Implementations'
 }
 
-{ #category : #execution }
+{ #category : #API }
 TranscriptDebugPoint >> hitWithContext: aContext [
-	<debuggerCompleteToSender>
 	
 	(super hitWithContext: aContext) ifFalse: [^self].
 
@@ -28,11 +30,12 @@ TranscriptDebugPoint >> text [
 
 { #category : #accessing }
 TranscriptDebugPoint >> text: aString [
-	text := aString
+	text := aString.
+
 ]
 
-{ #category : #accessing }
+{ #category : #'ui building' }
 TranscriptDebugPoint >> uiElement [
 
-	^TranscriptUI new behavior: self.
+	^TranscriptUI new debugPoint: self.
 ]
