@@ -30,13 +30,16 @@ Behaviors can be added to all types of debug points in the manager.
 
 ## Managing Debug Points
 You can manage debug points in the manager or when hovering over the icon in the code editor:
+
 ![Menu](/pictures/worldMenu.png)
 ![Menu](/pictures/iconHoverOptions.png)
 
 The manager should be mostly self-explanatory, a debug point can be selected on the left side and edited on the right side:
+
 ![Menu](/pictures/debugPointManager.png)
 
 ## Object Centric Debug Points
 
 When inspecting an object, you can set the scope of an already existing debug point to this specific object:
+
 ![Menu](/pictures/scopeButton.png)
