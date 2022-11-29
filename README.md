@@ -13,7 +13,7 @@ Metacello new
 
 All debug points can be placed like with previous breakpoints by right-clicking on an expression in the code editor.
 (NOTE: only the submenu “Debug Points” is new, all other debugging features are already part of the image)
-![Menu](https://github.com/Max-Zurbriggen/PharoDebugPoints/tree/master/pictures/debugPointMenu.png)
+![Menu](/pictures/debugPointMenu.png)
 
 ## Debug Point Types
 - Breakpoint: 	Break when the node is reached
