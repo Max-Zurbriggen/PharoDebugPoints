@@ -46,14 +46,17 @@ DebugPointManager class >> installNew: aDebugPointClass On: aNode withBehaviors:
 
 	dp := aDebugPointClass new node: aNode.
 
-	"adding behaviors"	
-	aListOfBehaviorClasses do: [ :bhc | dp addBehavior: bhc new].
+
 	
 	ml := dp metaLink.
 
 	dp link: ml.
 	aNode link: ml.
 	DebugPoint add: dp.
+	
+		"adding behaviors"	
+	aListOfBehaviorClasses do: [ :bhc | dp addBehavior: bhc new].
+	
 	self notifyDebugPointAdded: dp.
 	
 	^dp	
