@@ -34,16 +34,6 @@ DebugPointIconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
 	textModel announce: conf
 ]
 
-{ #category : #defaults }
-DebugPointIconStyler >> conditionIcon: anIcon onNode: aNode [
-
-	
-	((self debugPointOn: aNode) getBehavior: ConditionBehavior) ifNotNil: [
-		^anIcon mergeWith: ((self iconNamed: #class)scaledToSize: 8@8 ) at: 8@8
-		].
-	^anIcon
-]
-
 { #category : #'as yet unclassified' }
 DebugPointIconStyler >> debugPointOn: aNode [
 	^(aNode links detect: [ :link | link metaObject isKindOf: self forClass ]) metaObject.
@@ -53,9 +43,10 @@ DebugPointIconStyler >> debugPointOn: aNode [
 DebugPointIconStyler >> disableIcon: anIcon onNode: aNode [
 
 	(self debugPointOn: aNode) enabled ifFalse: [
-		^anIcon mergeWith: (self iconNamed: #smallCancel)
+		^anIcon dimmed
+		"in case i want it crossed out when disabled:"
+		"^anIcon mergeWith: (self iconNamed: #smallCancel)"
 		].
-	
 	
 	^anIcon
 ]
@@ -63,6 +54,26 @@ DebugPointIconStyler >> disableIcon: anIcon onNode: aNode [
 { #category : #'as yet unclassified' }
 DebugPointIconStyler >> forClass [
 	^DebugPoint
+]
+
+{ #category : #defaults }
+DebugPointIconStyler >> hasBehaviorIcon: anIcon onNode: aNode [
+
+	((self debugPointOn: aNode) behaviors ) ifNotEmpty: [ ^anIcon mergeWith: (((self iconNamed: #smallCogInitialState)scaledToSize: 9@9)darker: 1 ) at: 8@0 ].
+	^anIcon
+	
+	"in case i want seperate things for each behavior:"
+	
+"	|rec|
+	rec := Rectangle origin: 8@0 extent: 8@8.
+	((self debugPointOn: aNode) getBehavior: OnceBehavior ) ifNotNil: [
+		^anIcon mergeWith: ((self iconNamed: #smallCogInitialState)scaledToSize: 9@9 ) at: 8@0
+		^anIcon fill: rec fillColor: (Color r: 0 g: 0.0 b: 1 )
+		]."
+	
+"	((self debugPointOn: aNode) getBehavior: ConditionBehavior) ifNotNil: [
+		^anIcon mergeWith: ((self iconNamed: #class)scaledToSize: 8@8 ) at: 8@8
+		]."
 ]
 
 { #category : #defaults }
@@ -92,11 +103,9 @@ DebugPointIconStyler >> iconBlockEdit: aNode [
 { #category : #defaults }
 DebugPointIconStyler >> iconFor: aNode [
 	| icon |
-	icon := self icon deepCopy.
-	icon := self conditionIcon: icon onNode: aNode.
-	icon := self onceIcon: icon onNode: aNode.
+	icon := self icon deepCopy.	
+	icon := self hasBehaviorIcon: icon onNode: aNode.
 	icon := self disableIcon: icon onNode: aNode.
-	
 
 	^ icon
 ]
@@ -104,18 +113,6 @@ DebugPointIconStyler >> iconFor: aNode [
 { #category : #defaults }
 DebugPointIconStyler >> iconLabel: aNode [
 	^ 'DebugPoint'
-]
-
-{ #category : #defaults }
-DebugPointIconStyler >> onceIcon: anIcon onNode: aNode [
-
-	|rec|
-	rec := Rectangle origin: 8@0 extent: 8@8.
-	((self debugPointOn: aNode) getBehavior: OnceBehavior ) ifNotNil: [
-		"^anIcon mergeWith: ((self iconNamed: #class)scaledToSize: 8@8 ) at: 8@8"
-		^anIcon fill: rec fillColor: (Color r: 0 g: 0.0 b: 1 )
-		].
-	^anIcon
 ]
 
 { #category : #testing }
