@@ -17,7 +17,7 @@ ClyAddTranscriptDebugPointCommand class >> contextMenuOrder [
 
 { #category : #accessing }
 ClyAddTranscriptDebugPointCommand >> defaultMenuIconName [
-	^#smallDebug
+	^#transcript
 ]
 
 { #category : #accessing }

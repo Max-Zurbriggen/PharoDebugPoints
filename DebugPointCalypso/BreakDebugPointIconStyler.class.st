@@ -10,7 +10,7 @@ BreakDebugPointIconStyler >> forClass [
 ]
 
 { #category : #asserting }
-BreakDebugPointIconStyler >> iconFor: aNode [
+BreakDebugPointIconStyler >> icon [
 	
 	^ self iconNamed: #smallError
 ]

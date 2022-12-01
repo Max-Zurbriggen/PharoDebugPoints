@@ -10,7 +10,7 @@ Class {
 { #category : #update }
 DebugPointCodePresenter >> updateCode: aDebugPoint [ 
 	"updates the code window with the code of the selected debug point"
-	
+	aDebugPoint ifNil:[self text: ''.^self].
 	self text: aDebugPoint node methodNode sourceCode;
 		beForMethod: aDebugPoint node methodNode compiledMethod;
 		addTextSegmentDecoration: 

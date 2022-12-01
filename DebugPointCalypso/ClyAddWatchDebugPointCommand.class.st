@@ -17,7 +17,7 @@ ClyAddWatchDebugPointCommand class >> contextMenuOrder [
 
 { #category : #accessing }
 ClyAddWatchDebugPointCommand >> defaultMenuIconName [
-	^#smallDebug
+	^#history
 ]
 
 { #category : #accessing }

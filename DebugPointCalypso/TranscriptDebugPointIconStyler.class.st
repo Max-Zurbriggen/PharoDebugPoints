@@ -10,9 +10,9 @@ TranscriptDebugPointIconStyler >> forClass [
 ]
 
 { #category : #asserting }
-TranscriptDebugPointIconStyler >> iconFor: aNode [
+TranscriptDebugPointIconStyler >> icon [
 	
-	^ self iconNamed: #smallDebug
+	^ self iconNamed: #transcript
 ]
 
 { #category : #defaults }

@@ -10,9 +10,9 @@ WatchDebugPointIconStyler >> forClass [
 ]
 
 { #category : #asserting }
-WatchDebugPointIconStyler >> iconFor: aNode [
+WatchDebugPointIconStyler >> icon [
 	
-	^ self iconNamed: #smallDebug
+	^ self iconNamed: #history
 ]
 
 { #category : #defaults }

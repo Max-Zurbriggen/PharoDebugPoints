@@ -34,9 +34,30 @@ DebugPointIconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
 	textModel announce: conf
 ]
 
+{ #category : #defaults }
+DebugPointIconStyler >> conditionIcon: anIcon onNode: aNode [
+
+	
+	((self debugPointOn: aNode) getBehavior: ConditionBehavior) ifNotNil: [
+		^anIcon mergeWith: ((self iconNamed: #class)scaledToSize: 8@8 ) at: 8@8
+		].
+	^anIcon
+]
+
 { #category : #'as yet unclassified' }
 DebugPointIconStyler >> debugPointOn: aNode [
 	^(aNode links detect: [ :link | link metaObject isKindOf: self forClass ]) metaObject.
+]
+
+{ #category : #defaults }
+DebugPointIconStyler >> disableIcon: anIcon onNode: aNode [
+
+	(self debugPointOn: aNode) enabled ifFalse: [
+		^anIcon mergeWith: (self iconNamed: #smallCancel)
+		].
+	
+	
+	^anIcon
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,6 +68,12 @@ DebugPointIconStyler >> forClass [
 { #category : #defaults }
 DebugPointIconStyler >> highlightColor [
 	^(Color yellow alpha: 0.3)
+]
+
+{ #category : #defaults }
+DebugPointIconStyler >> icon [
+	
+	^ self iconNamed: #smallDebug
 ]
 
 { #category : #defaults }
@@ -64,13 +91,31 @@ DebugPointIconStyler >> iconBlockEdit: aNode [
 
 { #category : #defaults }
 DebugPointIconStyler >> iconFor: aNode [
+	| icon |
+	icon := self icon deepCopy.
+	icon := self conditionIcon: icon onNode: aNode.
+	icon := self onceIcon: icon onNode: aNode.
+	icon := self disableIcon: icon onNode: aNode.
 	
-	^ self iconNamed: #smallDebug
+
+	^ icon
 ]
 
 { #category : #defaults }
 DebugPointIconStyler >> iconLabel: aNode [
 	^ 'DebugPoint'
+]
+
+{ #category : #defaults }
+DebugPointIconStyler >> onceIcon: anIcon onNode: aNode [
+
+	|rec|
+	rec := Rectangle origin: 8@0 extent: 8@8.
+	((self debugPointOn: aNode) getBehavior: OnceBehavior ) ifNotNil: [
+		"^anIcon mergeWith: ((self iconNamed: #class)scaledToSize: 8@8 ) at: 8@8"
+		^anIcon fill: rec fillColor: (Color r: 0 g: 0.0 b: 1 )
+		].
+	^anIcon
 ]
 
 { #category : #testing }

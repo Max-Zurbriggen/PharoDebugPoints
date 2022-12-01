@@ -40,6 +40,7 @@ DebugPoint >> addBehavior: aDebugPointBehavior [
 	"adding a new behavior"
 	self behaviors add: aDebugPointBehavior.
 	aDebugPointBehavior debugPoint: self.
+	DebugPointManager notifyDebugPointChanged: self.
 
 ]
 
@@ -169,6 +170,7 @@ DebugPoint >> remove [
 DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
 	"removing a behavior"
 	self behaviors remove: (self getBehavior: aDebugPointBehaviorClass).
+	DebugPointManager notifyDebugPointChanged: self.
 
 ]
 

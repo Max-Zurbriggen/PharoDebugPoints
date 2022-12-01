@@ -10,7 +10,7 @@ CountDebugPointIconStyler >> forClass [
 ]
 
 { #category : #asserting }
-CountDebugPointIconStyler >> iconFor: aNode [
+CountDebugPointIconStyler >> icon [
 	
 	^ self iconNamed: #smallDebug
 ]
