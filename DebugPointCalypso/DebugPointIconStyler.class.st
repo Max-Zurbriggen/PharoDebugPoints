@@ -34,7 +34,7 @@ DebugPointIconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
 	textModel announce: conf
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 DebugPointIconStyler >> debugPointOn: aNode [
 	^(aNode links detect: [ :link | link metaObject isKindOf: self forClass ]) metaObject.
 ]
@@ -51,7 +51,7 @@ DebugPointIconStyler >> disableIcon: anIcon onNode: aNode [
 	^anIcon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 DebugPointIconStyler >> forClass [
 	^DebugPoint
 ]

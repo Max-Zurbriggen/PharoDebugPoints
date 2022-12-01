@@ -135,6 +135,12 @@ DebugPoint >> metaLink [
 		arguments: #(context) ).
 ]
 
+{ #category : #removing }
+DebugPoint >> method [
+"returns the method to which the debug point is attached"
+	^self node methodNode method
+]
+
 { #category : #accessing }
 DebugPoint >> name [
 	^#Debugpoint
@@ -182,6 +188,8 @@ DebugPoint >> resetObjectScope [
 
 { #category : #accessing }
 DebugPoint >> setObjectScope: anObject [
+
+	"this might get changed such that the metalink will be attached to the instance directly instead of checking on all instances"
 	anObject ifNil: [ self resetObjectScope ].
 	self targetInstance: anObject.
 	self link condition: [ :ctx | ctx receiver == self targetInstance ] arguments: #(context).

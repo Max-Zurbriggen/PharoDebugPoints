@@ -2,7 +2,8 @@ Class {
 	#name : #DebugPointSelectDialog,
 	#superclass : #SpSelectDialog,
 	#instVars : [
-		'code'
+		'code',
+		'scope'
 	],
 	#category : #DebugPointUI
 }
@@ -47,5 +48,17 @@ DebugPointSelectDialog >> initializeWindow: aWindowPresenter [
 
 { #category : #layout }
 DebugPointSelectDialog >> items: items [ 
-	list items: items
+	"filter debug points such that only those that are attached to the class of the inspected object are displayed"
+	list items: (items select: [ :db | db method methodClass = self scope ])
+]
+
+{ #category : #layout }
+DebugPointSelectDialog >> scope [  
+	^scope
+]
+
+{ #category : #layout }
+DebugPointSelectDialog >> scope: anObject [ 
+"see items: method"
+	scope := anObject class
 ]
