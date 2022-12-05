@@ -5,6 +5,7 @@ Class {
 	#name : #DebugPoint,
 	#superclass : #Object,
 	#instVars : [
+		'name',
 		'enabled',
 		'behaviors',
 		'arguments',
@@ -143,7 +144,12 @@ DebugPoint >> method [
 
 { #category : #accessing }
 DebugPoint >> name [
-	^#Debugpoint
+	^name ifNil: [ #Debugpoint ]
+]
+
+{ #category : #accessing }
+DebugPoint >> name: aSymbol [
+	name := aSymbol
 ]
 
 { #category : #accessing }
@@ -207,6 +213,6 @@ DebugPoint >> targetInstance: anObject [
 
 { #category : #'ui building' }
 DebugPoint >> uiElement [
-	^SpLabelPresenter new label: 'UI not implemented'.
+	^SpLabelPresenter new .
 	
 ]

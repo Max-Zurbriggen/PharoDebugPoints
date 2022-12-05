@@ -18,7 +18,7 @@ BreakDebugPoint >> hitWithContext: aContext [
 
 { #category : #accessing }
 BreakDebugPoint >> name [
-	^#Breakpoint
+	^name ifNil: [ #Breakpoint ]
 ]
 
 { #category : #'ui building' }

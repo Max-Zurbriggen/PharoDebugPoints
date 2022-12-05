@@ -1,6 +1,6 @@
 Class {
 	#name : #CountUI,
-	#superclass : #DebugPointUI,
+	#superclass : #DebugPointBehaviorUI,
 	#instVars : [
 		'textInput'
 	],
@@ -10,28 +10,44 @@ Class {
 { #category : #accessing }
 CountUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
-
-	textInput text: self debugPoint count asString.
+	behavior := self debugPoint getBehavior: CountBehavior.
+	checkBox state: (self debugPoint getBehavior: CountBehavior) isNotNil.
+	behavior ifNotNil: [ 
+		textInput text: behavior count asString ].
 ]
 
 { #category : #layout }
 CountUI >> defaultLayout [ 
-	
-	^SpBoxLayout newTopToBottom 
-		add: (self newLabel label: 'Counter') expand: false ;
-		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
-			add: (self newLabel label: 'Current Count:') expand: false ;
-			add: textInput  expand: true ;
-			add: (self newButton label: 'reset'; action: [self debugPoint count: 0. self update]) expand: false ;
-			yourself) expand: false;
+	| newLayout |
+	newLayout := SpBoxLayout newTopToBottom 
+		add: checkBox expand: false;
 		yourself.
 		
+	self behavior ifNotNil: [
+		newLayout add: self expandedLayout expand: false;
+		yourself].
+		
+	^newLayout
 
+]
+
+{ #category : #layout }
+CountUI >> expandedLayout [
+	^( SpBoxLayout newLeftToRight borderWidth: 5;
+			add: (self newLabel label: 'Current Count:') expand: false ;
+			add: textInput  expand: true ;
+			add: (self newButton label: 'reset'; action: [self behavior count: 0. self update]) expand: false ;
+			yourself)
 ]
 
 { #category : #initialization }
 CountUI >> initializePresenters [ 
 	
 	textInput := self newTextInput beNotEditable .
-
+	
+	checkBox  := self newCheckBox label: 'Counter'.
+	checkBox whenActivatedDo: [ self behavior ifNil: [ debugPoint addBehavior: CountBehavior  new ] ].
+	checkBox whenDeactivatedDo: [ 
+		self debugPoint removeBehavior: CountBehavior. 
+		self behavior: nil. ].
 ]

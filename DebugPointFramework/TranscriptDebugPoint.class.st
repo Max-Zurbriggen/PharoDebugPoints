@@ -20,7 +20,8 @@ TranscriptDebugPoint >> hitWithContext: aContext [
 
 { #category : #accessing }
 TranscriptDebugPoint >> name [
-	^#Transcript
+	^name ifNil: [ #Transcript ]
+
 ]
 
 { #category : #accessing }

@@ -22,10 +22,13 @@ ClyAddCountDebugPointCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddCountDebugPointCommand >> defaultMenuItemName [
-	^' Add Count to: ',  sourceNode displaySourceCode
+	^' Add Counter to: ',  sourceNode displaySourceCode
 ]
 
 { #category : #execution }
 ClyAddCountDebugPointCommand >> execute [
-	DebugPointManager installNew: CountDebugPoint  On: sourceNode.
+	| dp |
+	dp := DebugPointManager installNew: DebugPoint  On: sourceNode withBehaviors: {CountBehavior}.
+	
+	dp name: #Counter
 ]

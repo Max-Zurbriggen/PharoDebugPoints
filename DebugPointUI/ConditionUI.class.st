@@ -1,9 +1,8 @@
 Class {
 	#name : #ConditionUI,
-	#superclass : #DebugPointUI,
+	#superclass : #DebugPointBehaviorUI,
 	#instVars : [
-		'codeInput',
-		'checkBox'
+		'codeInput'
 	],
 	#category : #DebugPointUI
 }
@@ -37,13 +36,20 @@ ConditionUI >> debugPoint: aDebugPoint [
 
 { #category : #layout }
 ConditionUI >> defaultLayout [ 
+	| newLayout |
 	
-	^SpBoxLayout newTopToBottom
-		add: (checkBox label: 'Condition') expand: false;
-		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
+	newLayout := SpBoxLayout newTopToBottom
+		add: checkBox expand: false;
+		yourself.
+		
+	self behavior ifNotNil: [
+		newLayout add: ( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: codeInput expand: true ;
 			yourself) height: 60;
-		yourself.
+		yourself].
+		
+	^newLayout
+
 ]
 
 { #category : #initialization }
@@ -52,7 +58,7 @@ ConditionUI >> initializePresenters [
 	codeInput  := self newCode.
 	codeInput beForScripting.
 	codeInput whenTextChangedDo: [ self behavior ifNotNil: [behavior condition: codeInput text ]].
-	checkBox := self newCheckBox.
+	checkBox := self newCheckBox label: 'Condition'.
 	checkBox whenActivatedDo: [ self activate ].
 	checkBox whenDeactivatedDo: [ self deactivate ].
 	

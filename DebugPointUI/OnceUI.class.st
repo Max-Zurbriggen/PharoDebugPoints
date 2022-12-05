@@ -1,9 +1,6 @@
 Class {
 	#name : #OnceUI,
-	#superclass : #DebugPointUI,
-	#instVars : [
-		'checkBox'
-	],
+	#superclass : #DebugPointBehaviorUI,
 	#category : #DebugPointUI
 }
 
