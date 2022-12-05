@@ -56,7 +56,7 @@ ConditionBehavior >> initialize [
 	self condition: 'false'.
 ]
 
-{ #category : #storing }
-ConditionBehavior >> saveState [ 
+{ #category : #cleanup }
+ConditionBehavior >> remove [ 
 	self debugPoint properties at: #Condition put: self condition.
 ]

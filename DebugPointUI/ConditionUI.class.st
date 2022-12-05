@@ -18,7 +18,6 @@ ConditionUI >> activate [
 
 { #category : #layout }
 ConditionUI >> deactivate [
-	self behavior saveState.
 	self debugPoint removeBehavior: ConditionBehavior.
 	self behavior: nil.
 ]
