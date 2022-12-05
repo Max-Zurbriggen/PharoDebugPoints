@@ -46,8 +46,11 @@ CountUI >> initializePresenters [
 	textInput := self newTextInput beNotEditable .
 	
 	checkBox  := self newCheckBox label: 'Counter'.
-	checkBox whenActivatedDo: [ self behavior ifNil: [ debugPoint addBehavior: CountBehavior  new ] ].
+	checkBox whenActivatedDo: [ 
+		self behavior ifNil: [ 
+			debugPoint addBehavior: CountBehavior new ] ].
 	checkBox whenDeactivatedDo: [ 
+		
 		self debugPoint removeBehavior: CountBehavior. 
 		self behavior: nil. ].
 ]

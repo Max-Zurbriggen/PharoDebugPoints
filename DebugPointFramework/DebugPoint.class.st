@@ -11,7 +11,8 @@ Class {
 		'arguments',
 		'metaLink',
 		'node',
-		'targetInstance'
+		'targetInstance',
+		'properties'
 	],
 	#classVars : [
 		'AllDebugPoints'
@@ -160,6 +161,11 @@ DebugPoint >> node [
 { #category : #accessing }
 DebugPoint >> node: aNode [
 	node := aNode.
+]
+
+{ #category : #accessing }
+DebugPoint >> properties [ 
+	^properties ifNil: [ properties := Dictionary new. ]
 ]
 
 { #category : #removing }

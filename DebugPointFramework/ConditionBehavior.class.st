@@ -55,3 +55,8 @@ ConditionBehavior >> initialize [
 	self priority: 50.
 	self condition: 'false'.
 ]
+
+{ #category : #storing }
+ConditionBehavior >> saveState [ 
+	self debugPoint properties at: #Condition put: self condition.
+]

@@ -11,14 +11,14 @@ Class {
 ConditionUI >> activate [
 	| bh |
 	self behavior ifNotNil: [ ^self ].
-	bh := (ConditionBehavior new condition: codeInput text).
+	bh := (ConditionBehavior new condition: (self debugPoint properties at: #Condition ifAbsent: '')).
 	self debugPoint addBehavior: bh.
 	self behavior: bh
 ]
 
 { #category : #layout }
 ConditionUI >> deactivate [
-
+	self behavior saveState.
 	self debugPoint removeBehavior: ConditionBehavior.
 	self behavior: nil.
 ]
