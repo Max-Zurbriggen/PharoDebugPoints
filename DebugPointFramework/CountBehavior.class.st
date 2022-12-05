@@ -24,6 +24,17 @@ CountBehavior >> count: anInteger [
 ]
 
 { #category : #execution }
+CountBehavior >> execute [
+	self increaseCount.
+	DebugPointManager notifyDebugPointChanged: self debugPoint.
+	^true
+	
+
+	
+	
+]
+
+{ #category : #execution }
 CountBehavior >> increaseCount [
 	self count: self count + 1.
 	

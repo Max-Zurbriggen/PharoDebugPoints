@@ -42,9 +42,10 @@ ChainLinkDebugPoint >> hitWithContext: aContext [
 	self enabled: false.
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 ChainLinkDebugPoint >> name [
-	^'ChainLink'
+	^name ifNil: [ #ChainLink ]
+
 ]
 
 { #category : #execution }
