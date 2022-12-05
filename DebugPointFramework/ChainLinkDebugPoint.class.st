@@ -17,7 +17,7 @@ ChainLinkDebugPoint >> addChild: aDebugPoint [
 
 { #category : #private }
 ChainLinkDebugPoint >> children [
-	^childrenDebugPoints ifNil: [ childrenDebugPoints := WeakOrderedCollection new ].
+	^childrenDebugPoints ifNil: [ childrenDebugPoints := WeakSet new ].
 
 ]
 
