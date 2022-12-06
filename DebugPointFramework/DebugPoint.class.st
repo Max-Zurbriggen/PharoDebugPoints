@@ -173,7 +173,7 @@ DebugPoint >> properties [
 DebugPoint >> remove [
 	| announcement nodes |
 	nodes := self link nodes copy.
-	
+	self behaviors do: [ :bh | bh remove ].
 	self class remove: self.
 	self link ifNotNil: [self link uninstall].
 	
