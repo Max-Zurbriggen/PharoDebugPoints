@@ -11,14 +11,14 @@ Class {
 ChainLinkUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
 	behavior := self debugPoint getBehavior: ChainBehavior.
-	checkBox state: (self debugPoint getBehavior: ChainBehavior) isNotNil.
+	checkBox state: behavior isNotNil.
 	behavior ifNotNil: [ 
 
 	chain roots: (ChainBehavior rootFor: aDebugPoint) asOrderedCollection .
 	chain children: [ :dp | (ChainBehavior childFor: dp) ifNil:[OrderedCollection new] ifNotNil: [:dp2 | { dp2 } ]].
 	"chain expandAll."
 	"since selectItem does not work after expanding this requires a different solution to clarify which chainlink is currently selected"
-	"chain selectItem: aDebugPoint."
+	chain selectItem: aDebugPoint.
 ].
 ]
 
@@ -32,11 +32,11 @@ ChainLinkUI >> defaultLayout [
 		yourself.
 		
 	self behavior ifNotNil: [
-		newLayout add: ( SpBoxLayout newLeftToRight borderWidth: 5;
-			"add: (self newLabel label: 'Text:') expand: false ;"
-			add: (self newButton label: 'Reset'; action: [self resetChain.]) expand: false;
+		newLayout add: ( SpBoxLayout newTopToBottom borderWidth: 5;
+			add: (self newButton label: 'Reset Chain State'; action: [self resetChain.]) expand: false;
+			add: chain height: 100 ;
 			yourself) expand: false;
-		add: chain  "expand: true" height: 100 ;
+		
 		yourself].
 		
 	^newLayout
@@ -46,17 +46,21 @@ ChainLinkUI >> defaultLayout [
 
 ]
 
-{ #category : #accessing }
-ChainLinkUI >> findChildren: aDebugPoint [
-	
-	^(aDebugPoint getBehavior: ChainBehavior ) ifNotNil: [ 
-	(aDebugPoint getBehavior: ChainBehavior ) childrenDebugPoints ] "ifFalse: [ OrderedCollection new. ]"
-]
-
 { #category : #initialization }
 ChainLinkUI >> initializePresenters [ 
 	
-	chain := self newTreeTable.
+	chain := self newTreeTable beResizable.
+	chain 
+			addColumn:
+			((SpStringTableColumn
+				title: 'Type'
+				evaluated: [ :item | item name ])
+				yourself);
+			addColumn:
+			((SpStringTableColumn
+				title: 'Target'
+				evaluated: [ :item | item method printString ])
+				yourself).
 	checkBox  := self newCheckBox label: 'Chain'.
 	checkBox whenActivatedDo: [ self behavior ifNil: [ debugPoint addBehavior: ChainBehavior new ] ].
 	checkBox whenDeactivatedDo: [ 
@@ -67,5 +71,5 @@ ChainLinkUI >> initializePresenters [
 { #category : #layout }
 ChainLinkUI >> resetChain [
 
-	self debugPoint resetChain.
+	self behavior resetChain.
 ]

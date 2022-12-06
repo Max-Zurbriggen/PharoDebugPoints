@@ -23,5 +23,5 @@ BreakDebugPoint >> name [
 
 { #category : #'ui building' }
 BreakDebugPoint >> uiElement [ 
-	^SpLabelPresenter new "label: 'Break'".
+	^nil
 ]

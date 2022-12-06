@@ -223,6 +223,6 @@ DebugPoint >> targetInstance: anObject [
 
 { #category : #'ui building' }
 DebugPoint >> uiElement [
-	^SpLabelPresenter new .
+	^nil
 	
 ]

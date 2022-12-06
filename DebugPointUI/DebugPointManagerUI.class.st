@@ -23,14 +23,14 @@ DebugPointManagerUI class >> menuCommandOn: aBuilder [
 
 { #category : #layout }
 DebugPointManagerUI >> defaultLayout [ 
-	^SpPanedLayout newTopToBottom 
-		add: (SpPanedLayout newLeftToRight 
+	^SpPanedLayout newLeftToRight
+		add: (SpPanedLayout newTopToBottom  
 		add: dpTable;
-		add: dpEditor;
+		add: dpCode;
 		positionOfSlider:50percent;
 		yourself);
-		add: dpCode;
-		positionOfSlider:70percent;
+		add: dpEditor;
+		positionOfSlider:50percent;
 		yourself.
 		
 		
@@ -72,7 +72,7 @@ DebugPointManagerUI >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'Debug Point Manager';		
 		windowIcon: (self application iconNamed: #glamorousBug);
-		initialExtent: 800@450
+		initialExtent: 800@550
 ]
 
 { #category : #enumerating }

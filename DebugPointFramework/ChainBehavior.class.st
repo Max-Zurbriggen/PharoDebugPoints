@@ -32,50 +32,32 @@ ChainBehavior class >> uiElement [
 ]
 
 { #category : #execution }
-ChainBehavior >> addChild: aDebugPoint [
-	|newSet|
-	newSet := (self class allChains at: self debugPoint ifAbsent: [Set new.]) .
-	newSet add: aDebugPoint.
-	self class allChains at: self debugPoint put: newSet.
+ChainBehavior >> checkCircularChain: aDebugPoint withParent: aParent [
+	"should return true if there is a circular dependency so that the child will not be added"
+	| parent |
 	
-	"self children add: aDebugPoint.
-	aDebugPoint addBehavior: self class.
-	(aDebugPoint getBehavior: self class) parent: self debugPoint."
+	(aParent = aDebugPoint) ifTrue: [ 
+		SpInformDialog new title: 'Circular Dependency';label: 'Adding this child would result in a circular chain, which is not allowed.'; openModal.
+		^true ].
+	
+	parent := self class allChains keyAtValue: aParent ifAbsent: [ ^false ].
+	
+	^self checkCircularChain: aDebugPoint withParent: parent.
+
 
 ]
 
 { #category : #private }
 ChainBehavior >> child [
 	^self class allChains at: self debugPoint ifAbsent: [ ^nil. ]
-	"^childrenDebugPoints ifNil: [ childrenDebugPoints := WeakSet new ].
-"
-]
 
-{ #category : #private }
-ChainBehavior >> children [
-	^self class allChains at: self debugPoint ifAbsent: [ ^nil. ]
-	"^childrenDebugPoints ifNil: [ childrenDebugPoints := WeakSet new ].
-"
-]
-
-{ #category : #API }
-ChainBehavior >> childrenDebugPoints [
-	"since removing a debug point does not remove them from the chain this check has to be made, use this method instead of children when accessing the chain from the outside"
-	self children copy select: [ :dp | (DebugPoint all includes: dp) not ] thenDo: [ :dp | self removeChild: dp. ].
-	^self children 
 ]
 
 { #category : #API }
 ChainBehavior >> execute [
-	"self childrenDebugPoints do: [ :cdp | cdp enabled: true ]."
+
 	self child enabled: true.
 	self debugPoint enabled: false.
-]
-
-{ #category : #execution }
-ChainBehavior >> findRoot [
-	^self parent ifNil: [ self debugPoint ] ifNotNil: [ ChainBehavior allChains keyAtValue: self parent ].
-	"^self parent ifNil: [ self ] ifNotNil: [ self parent findRoot ]."
 ]
 
 { #category : #execution }
@@ -84,49 +66,28 @@ ChainBehavior >> parent [
 ]
 
 { #category : #execution }
-ChainBehavior >> parent: aDebugPoint [
-	"parent := aDebugPoint "
-]
-
-{ #category : #execution }
 ChainBehavior >> putChild: aDebugPoint [
-
+	(self checkCircularChain: aDebugPoint withParent: self debugPoint) ifTrue: [ ^self ].
+	"check if there is already a parent or smth"
 	self class allChains at: self debugPoint put: aDebugPoint.
 	
-	"self children add: aDebugPoint.
-	aDebugPoint addBehavior: self class.
-	(aDebugPoint getBehavior: self class) parent: self debugPoint."
+
 
 ]
 
 { #category : #execution }
 ChainBehavior >> remove [ 
 	"removing element as child and as parent of other debug points"
-]
-
-{ #category : #execution }
-ChainBehavior >> removeChild: aDebugPoint [
-	self children remove: aDebugPoint ifAbsent: [].
-	(aDebugPoint getBehavior: self class) parent: nil.
+	self class allChains removeKey: self debugPoint ifAbsent: [].
+	self class allChains removeKey: (self class allChains keyAtValue: self debugPoint ifAbsent: [nil]) ifAbsent: []. 
 ]
 
 { #category : #execution }
 ChainBehavior >> resetChain [
 
-	self findRoot enabled: true.
-	self resetSubChain: self findRoot .
+	(self class rootFor: self debugPoint) enabled: true.
+	self resetSubChain: (self class rootFor: self debugPoint) .
 	
-]
-
-{ #category : #execution }
-ChainBehavior >> resetSubChain [
-	self child ifNotNil: [ :child | child].
-	self child enabled: false.
-	self child ifNotNil: [ :child | child getBehavior: ChainBehavior   ].
-	
-"	self childrenDebugPoints do: [ :child | 
-		child enabled: false.
-		(child class = self class ) ifTrue: [child resetSubChain ]. ]"
 ]
 
 { #category : #execution }
