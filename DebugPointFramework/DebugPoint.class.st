@@ -199,6 +199,7 @@ DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
 
 { #category : #removing }
 DebugPoint >> removeFromMethod: aMethod [
+	"only used when editing methods with debug points"
 	|  nodes |
 	nodes := self link nodes copy.
 	self behaviors do: [ :bh | bh remove ].
