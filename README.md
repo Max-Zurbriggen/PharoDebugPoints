@@ -1,5 +1,7 @@
 # PharoDebugPoints
 
+Imagine breakpoints that do something else than breaking. We named these points debug points. This repository adds debug points that can be placed in your code for easier debugging, and the tools to use them. There are a couple of different types and some behaviors which can be added to any type of debug point. You can add this repository to your image with the followng command:
+
   ```Smalltalk
 Metacello new
   repository: 'github://Max-Zurbriggen/PharoDebugPoints';
