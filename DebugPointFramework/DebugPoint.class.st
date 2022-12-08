@@ -181,7 +181,8 @@ DebugPoint >> remove [
 	on: self
 	nodes: nodes.
 	SystemAnnouncer uniqueInstance announce: announcement.
-
+	
+	
 	
 ]
 
@@ -194,6 +195,19 @@ DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
 	self behaviors remove: behavior.
 	DebugPointManager notifyDebugPointChanged: self.
 
+]
+
+{ #category : #removing }
+DebugPoint >> removeFromMethod: aMethod [
+	|  nodes |
+	nodes := self link nodes copy.
+	self behaviors do: [ :bh | bh remove ].
+	self class remove: self.
+
+	DebugPointManager notifyDebugPointRemoved: self fromNodes: nodes.
+
+
+	
 ]
 
 { #category : #accessing }

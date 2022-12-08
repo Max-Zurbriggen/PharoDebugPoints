@@ -20,7 +20,7 @@ DebugPointAnnouncement class >> on: aDebugPoint nodes: nodes [
 { #category : #accessing }
 DebugPointAnnouncement >> affectsMethod: aMethod [
 
-	^ self link methods anySatisfy: [:each |  each compiledMethod == aMethod compiledMethod.  ]
+	^ self methods anySatisfy: [:each |  each compiledMethod == aMethod compiledMethod.  ]
 ]
 
 { #category : #accessing }
@@ -30,13 +30,13 @@ DebugPointAnnouncement >> affectsMethods [
 
 { #category : #accessing }
 DebugPointAnnouncement >> affectsMethodsDefinedInClass: aClass [
-	^ self link methods
+	^ self methods
 		anySatisfy: [ :each | each methodClass isNotNil and: [ each origin == aClass ] ]
 ]
 
 { #category : #accessing }
 DebugPointAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
-	^ self link methods
+	^ self methods
 		anySatisfy:
 			[ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
 ]
@@ -44,7 +44,7 @@ DebugPointAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
 { #category : #accessing }
 DebugPointAnnouncement >> canAffectResultOfMethodQuery: aMethodQuery [
 
-	^ self link methods anySatisfy: [:each | 
+	^ self methods anySatisfy: [:each | 
 		aMethodQuery isAffectedByChangedMethod: each ]
 ]
 
@@ -56,11 +56,6 @@ DebugPointAnnouncement >> debugPoint [
 { #category : #accessing }
 DebugPointAnnouncement >> debugPoint: aDebugPoint [
 	debugPoint := aDebugPoint 
-]
-
-{ #category : #accessing }
-DebugPointAnnouncement >> link [
-	^ self debugPoint link
 ]
 
 { #category : #TOREMOVE }

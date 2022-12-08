@@ -111,5 +111,5 @@ DebugPointManager class >> removeFromMethod: aMethod [
 	DebugPoint all copy do: [ :debugPoint | 
 		debugPoint link methods
 			detect: [ :m | m == aMethod ]
-			ifFound: [ debugPoint remove"debugPoint removeFromMethod: aMethod" ] ]
+			ifFound: [ debugPoint removeFromMethod: aMethod ] ]
 ]
