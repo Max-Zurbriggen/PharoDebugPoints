@@ -18,11 +18,28 @@ ChainBehavior class >> childFor: aDebugPoint [
 ]
 
 { #category : #accessing }
+ChainBehavior class >> parentFor: aDebugPoint [
+	^self allChains keyAtValue: aDebugPoint ifAbsent: [^nil].
+]
+
+{ #category : #execution }
+ChainBehavior class >> removeChild: aDebugPoint [
+
+	self allChains
+		removeKey: (self allChains
+				 keyAtValue: aDebugPoint
+				 ifAbsent: [ nil ])
+		ifAbsent: [  ]
+]
+
+{ #category : #accessing }
 ChainBehavior class >> rootFor: aDebugPoint [
+
 	| parent |
-	
-	parent := self allChains keyAtValue: aDebugPoint ifAbsent: [ ^aDebugPoint ].
-	^self rootFor: parent.
+	parent := self allChains 
+		          keyAtValue: aDebugPoint
+		          ifAbsent: [ ^ aDebugPoint ].
+	^ self rootFor: parent
 ]
 
 { #category : #'ui building' }
@@ -40,7 +57,7 @@ ChainBehavior >> checkCircularChain: aDebugPoint withParent: aParent [
 		SpInformDialog new title: 'Circular Dependency';label: 'Adding this child would result in a circular chain, which is not allowed.'; openModal.
 		^true ].
 	
-	parent := self class allChains keyAtValue: aParent ifAbsent: [ ^false ].
+	parent := (self class parentFor: aParent) ifNil: [ ^false ].
 	
 	^self checkCircularChain: aDebugPoint withParent: parent.
 
@@ -49,37 +66,40 @@ ChainBehavior >> checkCircularChain: aDebugPoint withParent: aParent [
 
 { #category : #private }
 ChainBehavior >> child [
-	^self class allChains at: self debugPoint ifAbsent: [ ^nil. ]
+	^self class childFor: self debugPoint.
 
 ]
 
 { #category : #API }
 ChainBehavior >> execute [
 
-	self child enabled: true.
+	self child ifNotNil: [:child | child enabled: true].
 	self debugPoint enabled: false.
+	^true
 ]
 
 { #category : #execution }
 ChainBehavior >> parent [
-	^self class allChains keyAtValue: self debugPoint ifAbsent: [^nil].
+	^self class parentFor: self debugPoint.
 ]
 
 { #category : #execution }
 ChainBehavior >> putChild: aDebugPoint [
-	(self checkCircularChain: aDebugPoint withParent: self debugPoint) ifTrue: [ ^self ].
+
+	(self checkCircularChain: aDebugPoint withParent: self debugPoint) 
+		ifTrue: [ ^ self ].
 	"check if there is already a parent or smth"
+	self class removeChild: aDebugPoint.
 	self class allChains at: self debugPoint put: aDebugPoint.
-	
-
-
+	DebugPointManager notifyDebugPointChanged: aDebugPoint
 ]
 
 { #category : #execution }
 ChainBehavior >> remove [ 
 	"removing element as child and as parent of other debug points"
 	self class allChains removeKey: self debugPoint ifAbsent: [].
-	self class allChains removeKey: (self class allChains keyAtValue: self debugPoint ifAbsent: [nil]) ifAbsent: []. 
+	self class removeChild: self debugPoint.
+
 ]
 
 { #category : #execution }
@@ -98,7 +118,4 @@ ChainBehavior >> resetSubChain: aDebugPoint [
 		self resetSubChain: child].
 
 	
-"	self childrenDebugPoints do: [ :child | 
-		child enabled: false.
-		(child class = self class ) ifTrue: [child resetSubChain ]. ]"
 ]

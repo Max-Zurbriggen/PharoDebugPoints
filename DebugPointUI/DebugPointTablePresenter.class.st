@@ -91,7 +91,8 @@ DebugPointTablePresenter >> initializeDebugPointTable [
 	self dragEnabled: true.
 	self wantsDrop: [ :item | (item row ~= 0) and: [item passenger first isKindOf: DebugPoint] ]. 
 	self acceptDrop: [ :item | 
-		item passenger first addBehavior: ChainBehavior.
-		(self itemAt: item row) addBehavior: ChainBehavior.
-		((self itemAt: item row )getBehavior: ChainBehavior) putChild: (item passenger first)   ].
+		item passenger first addBehavior: ChainBehavior new.
+		(self itemAt: item row) addBehavior: ChainBehavior new.
+		((self itemAt: item row )getBehavior: ChainBehavior) putChild: (item passenger first).
+		].
 ]

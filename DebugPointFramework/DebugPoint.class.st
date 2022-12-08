@@ -40,7 +40,7 @@ DebugPoint class >> remove: aDebugPoint [
 { #category : #API }
 DebugPoint >> addBehavior: aDebugPointBehavior [
 	"adding a new behavior"
-	(self getBehavior: aDebugPointBehavior) ifNotNil: [ :bh | ^bh ].
+	(self getBehavior: aDebugPointBehavior class) ifNotNil: [ :bh | ^bh ].
 	self behaviors add: aDebugPointBehavior.
 	aDebugPointBehavior debugPoint: self.
 	DebugPointManager notifyDebugPointChanged: self.
