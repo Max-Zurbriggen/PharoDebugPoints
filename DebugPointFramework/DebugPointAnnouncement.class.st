@@ -20,7 +20,7 @@ DebugPointAnnouncement class >> on: aDebugPoint nodes: nodes [
 { #category : #accessing }
 DebugPointAnnouncement >> affectsMethod: aMethod [
 
-	^ self methods anySatisfy: [:each |  each compiledMethod == aMethod compiledMethod.  ]
+	^ self link methods anySatisfy: [:each |  each compiledMethod == aMethod compiledMethod.  ]
 ]
 
 { #category : #accessing }
@@ -30,15 +30,22 @@ DebugPointAnnouncement >> affectsMethods [
 
 { #category : #accessing }
 DebugPointAnnouncement >> affectsMethodsDefinedInClass: aClass [
-	^ self methods
+	^ self link methods
 		anySatisfy: [ :each | each methodClass isNotNil and: [ each origin == aClass ] ]
 ]
 
 { #category : #accessing }
 DebugPointAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
-	^ self methods
+	^ self link methods
 		anySatisfy:
 			[ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
+]
+
+{ #category : #accessing }
+DebugPointAnnouncement >> canAffectResultOfMethodQuery: aMethodQuery [
+
+	^ self link methods anySatisfy: [:each | 
+		aMethodQuery isAffectedByChangedMethod: each ]
 ]
 
 { #category : #accessing }
@@ -56,7 +63,7 @@ DebugPointAnnouncement >> link [
 	^ self debugPoint link
 ]
 
-{ #category : #accessing }
+{ #category : #TOREMOVE }
 DebugPointAnnouncement >> methods [
 	^nodes flatCollect: [ :entity |
 		(entity isKindOf: RBProgramNode) 

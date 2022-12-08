@@ -36,7 +36,7 @@ DebugPointTablePresenter >> debugPointContextMenu [
 					name: 'Remove';
 					description: 'removes the selected debug point';
 					enabled: [ self selectedItem isNotNil ];
-					action: [ self selectedItem uninstall. self refresh ] ]
+					action: [ self selectedItem remove. self refresh ] ]
 			];
 		addGroup: [ :aGroup | 
 			aGroup 
