@@ -25,7 +25,8 @@ DebugPointEditor >> createLayout [
 	DebugPointBehavior allSubclassesDo: [ :behavior |
 		 self layout add: (behavior uiElement new debugPoint: self debugPoint ) expand: false .
 		]. 
-	self layout add: debugPoint uiElement.
+	debugPoint uiElement ifNotNil: [ :ui | self layout add: ui ].
+	"self layout add: debugPoint uiElement."
 
 ]
 

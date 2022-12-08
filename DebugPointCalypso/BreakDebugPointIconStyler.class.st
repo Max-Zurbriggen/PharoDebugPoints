@@ -14,8 +14,3 @@ BreakDebugPointIconStyler >> icon [
 	
 	^ self iconNamed: #smallError
 ]
-
-{ #category : #defaults }
-BreakDebugPointIconStyler >> iconLabel: aNode [
-	^ 'Breakpoint'
-]

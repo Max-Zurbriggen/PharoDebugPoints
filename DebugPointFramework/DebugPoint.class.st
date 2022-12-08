@@ -5,12 +5,14 @@ Class {
 	#name : #DebugPoint,
 	#superclass : #Object,
 	#instVars : [
+		'name',
 		'enabled',
 		'behaviors',
 		'arguments',
 		'metaLink',
 		'node',
-		'targetInstance'
+		'targetInstance',
+		'properties'
 	],
 	#classVars : [
 		'AllDebugPoints'
@@ -38,10 +40,11 @@ DebugPoint class >> remove: aDebugPoint [
 { #category : #API }
 DebugPoint >> addBehavior: aDebugPointBehavior [
 	"adding a new behavior"
+	(self getBehavior: aDebugPointBehavior class) ifNotNil: [ :bh | ^bh ].
 	self behaviors add: aDebugPointBehavior.
 	aDebugPointBehavior debugPoint: self.
 	DebugPointManager notifyDebugPointChanged: self.
-
+	
 ]
 
 { #category : #accessing }
@@ -143,7 +146,12 @@ DebugPoint >> method [
 
 { #category : #accessing }
 DebugPoint >> name [
-	^#Debugpoint
+	^name ifNil: [ #Debugpoint ]
+]
+
+{ #category : #accessing }
+DebugPoint >> name: aSymbol [
+	name := aSymbol
 ]
 
 { #category : #accessing }
@@ -156,11 +164,16 @@ DebugPoint >> node: aNode [
 	node := aNode.
 ]
 
+{ #category : #accessing }
+DebugPoint >> properties [ 
+	^properties ifNil: [ properties := Dictionary new. ]
+]
+
 { #category : #removing }
 DebugPoint >> remove [
 	| announcement nodes |
 	nodes := self link nodes copy.
-	
+	self behaviors do: [ :bh | bh remove ].
 	self class remove: self.
 	self link ifNotNil: [self link uninstall].
 	
@@ -175,7 +188,10 @@ DebugPoint >> remove [
 { #category : #API }
 DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
 	"removing a behavior"
-	self behaviors remove: (self getBehavior: aDebugPointBehaviorClass).
+	|behavior|
+	behavior := (self getBehavior: aDebugPointBehaviorClass).
+	behavior remove.
+	self behaviors remove: behavior.
 	DebugPointManager notifyDebugPointChanged: self.
 
 ]
@@ -207,6 +223,6 @@ DebugPoint >> targetInstance: anObject [
 
 { #category : #'ui building' }
 DebugPoint >> uiElement [
-	^SpLabelPresenter new label: 'UI not implemented'.
+	^nil
 	
 ]

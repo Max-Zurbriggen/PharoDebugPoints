@@ -1,0 +1,121 @@
+Class {
+	#name : #ChainBehavior,
+	#superclass : #DebugPointBehavior,
+	#classVars : [
+		'Chains'
+	],
+	#category : #'DebugPointFramework-Implementations'
+}
+
+{ #category : #accessing }
+ChainBehavior class >> allChains [
+	^Chains ifNil: [ Chains := Dictionary new. ]
+]
+
+{ #category : #accessing }
+ChainBehavior class >> childFor: aDebugPoint [
+	^self allChains at: aDebugPoint ifAbsent: [ ^nil ]
+]
+
+{ #category : #accessing }
+ChainBehavior class >> parentFor: aDebugPoint [
+	^self allChains keyAtValue: aDebugPoint ifAbsent: [^nil].
+]
+
+{ #category : #execution }
+ChainBehavior class >> removeChild: aDebugPoint [
+
+	self allChains
+		removeKey: (self allChains
+				 keyAtValue: aDebugPoint
+				 ifAbsent: [ nil ])
+		ifAbsent: [  ]
+]
+
+{ #category : #accessing }
+ChainBehavior class >> rootFor: aDebugPoint [
+
+	| parent |
+	parent := self allChains 
+		          keyAtValue: aDebugPoint
+		          ifAbsent: [ ^ aDebugPoint ].
+	^ self rootFor: parent
+]
+
+{ #category : #'ui building' }
+ChainBehavior class >> uiElement [
+
+	^ ChainLinkUI
+]
+
+{ #category : #execution }
+ChainBehavior >> checkCircularChain: aDebugPoint withParent: aParent [
+	"should return true if there is a circular dependency so that the child will not be added"
+	| parent |
+	
+	(aParent = aDebugPoint) ifTrue: [ 
+		SpInformDialog new title: 'Circular Dependency';label: 'Adding this child would result in a circular chain, which is not allowed.'; openModal.
+		^true ].
+	
+	parent := (self class parentFor: aParent) ifNil: [ ^false ].
+	
+	^self checkCircularChain: aDebugPoint withParent: parent.
+
+
+]
+
+{ #category : #private }
+ChainBehavior >> child [
+	^self class childFor: self debugPoint.
+
+]
+
+{ #category : #API }
+ChainBehavior >> execute [
+
+	self child ifNotNil: [:child | child enabled: true].
+	self debugPoint enabled: false.
+	^true
+]
+
+{ #category : #execution }
+ChainBehavior >> parent [
+	^self class parentFor: self debugPoint.
+]
+
+{ #category : #execution }
+ChainBehavior >> putChild: aDebugPoint [
+
+	(self checkCircularChain: aDebugPoint withParent: self debugPoint) 
+		ifTrue: [ ^ self ].
+	"check if there is already a parent or smth"
+	self class removeChild: aDebugPoint.
+	self class allChains at: self debugPoint put: aDebugPoint.
+	DebugPointManager notifyDebugPointChanged: aDebugPoint
+]
+
+{ #category : #execution }
+ChainBehavior >> remove [ 
+	"removing element as child and as parent of other debug points"
+	self class allChains removeKey: self debugPoint ifAbsent: [].
+	self class removeChild: self debugPoint.
+
+]
+
+{ #category : #execution }
+ChainBehavior >> resetChain [
+
+	(self class rootFor: self debugPoint) enabled: true.
+	self resetSubChain: (self class rootFor: self debugPoint) .
+	
+]
+
+{ #category : #execution }
+ChainBehavior >> resetSubChain: aDebugPoint [
+	| child |
+	child := 	self class allChains at: aDebugPoint ifAbsent: [ ^nil. ].
+	child ifNotNil: [ child enabled: false.
+		self resetSubChain: child].
+
+	
+]

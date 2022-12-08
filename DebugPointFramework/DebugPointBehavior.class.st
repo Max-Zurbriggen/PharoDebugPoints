@@ -61,3 +61,9 @@ DebugPointBehavior >> priority [
 DebugPointBehavior >> priority: anInteger [
 	priority := anInteger 
 ]
+
+{ #category : #cleanup }
+DebugPointBehavior >> remove [
+	"cleanup actions should be taken here"
+	^self.
+]

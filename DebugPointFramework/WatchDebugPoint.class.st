@@ -61,9 +61,10 @@ WatchDebugPoint >> metaLink [
 				option: #(+ optionWeakAfter +optionAnnounce)).
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 WatchDebugPoint >> name [
-	^#Watcher
+	^name ifNil: [ #Watcher ]
+
 ]
 
 { #category : #'ui building' }

@@ -112,7 +112,10 @@ DebugPointIconStyler >> iconFor: aNode [
 
 { #category : #defaults }
 DebugPointIconStyler >> iconLabel: aNode [
-	^ 'DebugPoint'
+	| dp | 
+	dp := (self debugPointOn: aNode).
+	(dp getBehavior: CountBehavior) ifNotNil: [ :bh | ^dp name, ' (Count: ', bh count asString,')' ].
+	^ dp name
 ]
 
 { #category : #testing }

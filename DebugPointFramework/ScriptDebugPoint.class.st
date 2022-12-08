@@ -22,7 +22,8 @@ ScriptDebugPoint >> hitWithContext: aContext [
 
 { #category : #accessing }
 ScriptDebugPoint >> name [
-	^#Script
+	^name ifNil: [ #Script ]
+
 ]
 
 { #category : #accessing }

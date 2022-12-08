@@ -85,4 +85,14 @@ DebugPointTablePresenter >> initializeDebugPointTable [
 
 		contextMenu: self debugPointContextMenu.
 	self items: (DebugPoint all asOrderedCollection  ). 
+	
+	
+	self dropEnabled: true.
+	self dragEnabled: true.
+	self wantsDrop: [ :item | (item row ~= 0) and: [item passenger first isKindOf: DebugPoint] ]. 
+	self acceptDrop: [ :item | 
+		item passenger first addBehavior: ChainBehavior new.
+		(self itemAt: item row) addBehavior: ChainBehavior new.
+		((self itemAt: item row )getBehavior: ChainBehavior) putChild: (item passenger first).
+		].
 ]

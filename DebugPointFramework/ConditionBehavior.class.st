@@ -55,3 +55,8 @@ ConditionBehavior >> initialize [
 	self priority: 50.
 	self condition: 'false'.
 ]
+
+{ #category : #cleanup }
+ConditionBehavior >> remove [ 
+	self debugPoint properties at: #Condition put: self condition.
+]
