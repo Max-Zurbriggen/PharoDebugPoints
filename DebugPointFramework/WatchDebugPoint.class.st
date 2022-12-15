@@ -58,7 +58,7 @@ WatchDebugPoint >> metaLink [
 				selector: #hitWithContext:value:;
 				arguments: #(context value);
 				control: #after;
-				option: #(+ optionWeakAfter +optionAnnounce)).
+				option: #(+ optionWeakAfter +optionCompileOnLinkInstallation)).
 ]
 
 { #category : #accessing }

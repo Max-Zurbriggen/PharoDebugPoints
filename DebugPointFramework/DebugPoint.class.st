@@ -99,11 +99,8 @@ DebugPoint >> hitWithContext: aContext [
 		at: #context put: aContext; 
 		yourself).
 	
-	"bad code? don't know how anySatisfy: works so i'm leaving it for now"
-	self behaviors do: [ :behavior | 
-		"API: execute should return false if it should interrupt behavior execution"
-		behavior execute ifFalse: [ ^false ]
-		 ].
+	"API: execute should return false if it should interrupt behavior execution"
+	self behaviors allSatisfy: [ :behavior | behavior execute].
 	
 	^true.
 ]
@@ -129,7 +126,7 @@ DebugPoint >> link: aMetaLink [
 	metaLink := aMetaLink 
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 DebugPoint >> metaLink [
 	^(MetaLink new
 		metaObject: self;
