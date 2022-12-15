@@ -48,8 +48,8 @@ DebugPointTest >> testBehaviorPriority [
 	| a b c set |
 	dp := DebugPointManager installNew: DebugPoint On: node.
 	a := OnceBehavior new priority: 2.
-	b := OnceBehavior new priority: 1.
-	c := OnceBehavior new priority: 3.
+	b := CountBehavior new priority: 1.
+	c := ChainBehavior new priority: 3.
 	dp addBehavior: a.
 	dp addBehavior: b.
 	dp addBehavior: c.
@@ -63,11 +63,6 @@ DebugPointTest >> testBreakDebugPoint [
 	dp := DebugPointManager installNew: BreakDebugPoint On: node.
 	self should: [dp hitWithContext: context] raise: Break.
 	self should: [DummyTestClass new id:2 ] raise: Break.
-]
-
-{ #category : #running }
-DebugPointTest >> testChainLinkDebugPoint [
-	dp := DebugPointManager installNew: ChainLinkDebugPoint On: node.
 ]
 
 { #category : #running }
@@ -118,14 +113,16 @@ DebugPointTest >> testConditionBehaviorThisContext [
 ]
 
 { #category : #running }
-DebugPointTest >> testCountDebugPoint [
-	dp := DebugPointManager installNew: CountDebugPoint On: node.
-
-	self assert: ( dp  count ) equals: 0.
+DebugPointTest >> testCountBehavior [
+	| cbh |
+	
+	dp := DebugPointManager installNew: DebugPoint  On: node withBehaviors: {CountBehavior}.
+	cbh := dp getBehavior: CountBehavior.
+	self assert: ( cbh count ) equals: 0.
 	dp hitWithContext: context.
-	self assert: ( dp  count ) equals: 1.
+	self assert: ( cbh count ) equals: 1.
 	dp hitWithContext: context.
-	self assert:  ( dp  count ) equals: 2.
+	self assert:  ( cbh count ) equals: 2.
 
 ]
 
