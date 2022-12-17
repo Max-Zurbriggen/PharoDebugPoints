@@ -58,5 +58,6 @@ ConditionBehavior >> initialize [
 
 { #category : #cleanup }
 ConditionBehavior >> remove [ 
+	"saving the condition in case the condition behavior is added again later"
 	self debugPoint properties at: #Condition put: self condition.
 ]

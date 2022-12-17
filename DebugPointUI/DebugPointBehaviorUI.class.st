@@ -28,3 +28,8 @@ DebugPointBehaviorUI >> debugPoint [
 DebugPointBehaviorUI >> debugPoint: aDebugPoint [
 	debugPoint := aDebugPoint 
 ]
+
+{ #category : #accessing }
+DebugPointBehaviorUI >> expand [
+	^false
+]

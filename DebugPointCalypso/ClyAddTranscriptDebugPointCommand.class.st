@@ -28,9 +28,9 @@ ClyAddTranscriptDebugPointCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyAddTranscriptDebugPointCommand >> execute [
 	| dp |
-	dp := DebugPointManager installNew: TranscriptDebugPoint  On: sourceNode.
-	
-	dp text: self popUp
+	dp := DebugPointManager installNew: TranscriptDebugPoint On: sourceNode
+	"(DebugPointManager installNew: DebugPoint  On: sourceNode withBehaviors: {TranscriptBehavior}) name: #Transcript.
+	(dp getBehavior: TranscriptBehavior) text: self popUp"
 ]
 
 { #category : #execution }

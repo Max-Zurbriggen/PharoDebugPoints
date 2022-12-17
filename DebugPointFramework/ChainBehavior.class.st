@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Chains'
 	],
-	#category : #'DebugPointFramework-Implementations'
+	#category : #'DebugPointFramework-Behaviors'
 }
 
 { #category : #accessing }

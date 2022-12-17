@@ -34,8 +34,8 @@ ChainLinkUI >> defaultLayout [
 	self behavior ifNotNil: [
 		newLayout add: ( SpBoxLayout newTopToBottom borderWidth: 5;
 			add: (self newButton label: 'Reset Chain State'; action: [self resetChain.]) expand: false;
-			add: chain height: 100 ;
-			yourself) expand: false;
+			add: chain "height: 100" ;
+			yourself) expand: true;
 		
 		yourself].
 		
@@ -44,6 +44,11 @@ ChainLinkUI >> defaultLayout [
 
 		
 
+]
+
+{ #category : #layout }
+ChainLinkUI >> expand [
+	^true
 ]
 
 { #category : #initialization }

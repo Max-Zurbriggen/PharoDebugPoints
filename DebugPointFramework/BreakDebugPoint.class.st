@@ -20,8 +20,3 @@ BreakDebugPoint >> hitWithContext: aContext [
 BreakDebugPoint >> name [
 	^name ifNil: [ #Breakpoint ]
 ]
-
-{ #category : #'ui building' }
-BreakDebugPoint >> uiElement [ 
-	^nil
-]

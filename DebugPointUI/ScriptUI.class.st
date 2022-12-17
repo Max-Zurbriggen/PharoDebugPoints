@@ -1,6 +1,6 @@
 Class {
 	#name : #ScriptUI,
-	#superclass : #DebugPointUI,
+	#superclass : #DebugPointBehaviorUI,
 	#instVars : [
 		'codeInput'
 	],
@@ -8,29 +8,59 @@ Class {
 }
 
 { #category : #accessing }
+ScriptUI >> activate [
+	| bh |
+	self behavior ifNotNil: [ ^self ].
+	bh := (ScriptBehavior new script: (self debugPoint properties at: #Script ifAbsent: '')).
+	self debugPoint addBehavior: bh.
+	self behavior: bh
+]
+
+{ #category : #accessing }
+ScriptUI >> deactivate [
+	self debugPoint removeBehavior: ScriptBehavior.
+	self behavior: nil.
+]
+
+{ #category : #accessing }
 ScriptUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
-
-	codeInput text: self debugPoint script.
+	behavior := self debugPoint getBehavior: ScriptBehavior.
+	checkBox state: self behavior isNotNil.
+	
+	(self behavior ifNotNil: [:bh | codeInput text: bh script]).
 ]
 
 { #category : #layout }
 ScriptUI >> defaultLayout [ 
-	
-	
-	^SpBoxLayout newTopToBottom
-		add: (self newLabel label: 'Script') expand: false ;
-		add: ( SpBoxLayout newLeftToRight borderWidth: 5;
-			"add: (self newLabel label: 'Script:') expand: false ;"
+	| newLayout |
+	newLayout := SpBoxLayout newTopToBottom 
+		add: checkBox expand: false;
+		yourself.
+		
+	self behavior ifNotNil: [
+		newLayout add: ( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: codeInput expand: true ;
 			yourself) expand: true;
-		yourself.
+		yourself].
+		
+	^newLayout
+	
+]
+
+{ #category : #accessing }
+ScriptUI >> expand [
+	^true
 ]
 
 { #category : #initialization }
 ScriptUI >> initializePresenters [ 
 	
+	checkBox  := self newCheckBox label: 'Script'.
+	checkBox whenActivatedDo: [ self activate ].
+	checkBox whenDeactivatedDo: [ self deactivate ].
+	
 	codeInput := self newCode.
 	codeInput beForScripting.
-	codeInput whenTextChangedDo: [ self debugPoint script: codeInput text ]
+	codeInput whenTextChangedDo: [ self behavior ifNotNil: [behavior script: codeInput text ]].
 ]

@@ -4,20 +4,15 @@ I am a debug point that executes a script when hit.
 Class {
 	#name : #ScriptDebugPoint,
 	#superclass : #DebugPoint,
-	#instVars : [
-		'script'
-	],
 	#category : #'DebugPointFramework-Implementations'
 }
 
-{ #category : #API }
-ScriptDebugPoint >> hitWithContext: aContext [
-	<debuggerCompleteToSender>
+{ #category : #initialization }
+ScriptDebugPoint >> initialize [ 
+	super initialize.
 	
-	(super hitWithContext: aContext) ifFalse: [^self].
-
-	self script ifNil: [ ^self ].
-	Smalltalk compiler evaluate: self script.
+	self behaviors add: (ScriptBehavior new debugPoint: self).
+	(self getBehavior: ScriptBehavior) script: self popUp.
 ]
 
 { #category : #accessing }
@@ -27,18 +22,13 @@ ScriptDebugPoint >> name [
 ]
 
 { #category : #accessing }
-ScriptDebugPoint >> script [
-	^script ifNil:['']
-]
-
-{ #category : #accessing }
-ScriptDebugPoint >> script: aString [
-	script := aString.
-
-]
-
-{ #category : #'ui building' }
-ScriptDebugPoint >> uiElement [ 
-
-	^ScriptUI new debugPoint: self.
+ScriptDebugPoint >> popUp [
+	|textInput|
+	textInput := SpRequestDialog new
+		label: 'Enter script:';
+		text: '';
+		title: 'Script';
+		openModal.
+	textInput ifNil: [ ^'' ].
+	^textInput 
 ]

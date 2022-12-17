@@ -4,18 +4,15 @@ I am a debug point which writes something with Transcript when hit.
 Class {
 	#name : #TranscriptDebugPoint,
 	#superclass : #DebugPoint,
-	#instVars : [
-		'text'
-	],
 	#category : #'DebugPointFramework-Implementations'
 }
 
-{ #category : #API }
-TranscriptDebugPoint >> hitWithContext: aContext [
+{ #category : #accessing }
+TranscriptDebugPoint >> initialize [ 
+	super initialize.
 	
-	(super hitWithContext: aContext) ifFalse: [^self].
-
-	Transcript show: self text.
+	self behaviors add: (TranscriptBehavior new debugPoint: self).
+	(self getBehavior: TranscriptBehavior) text: self popUp.
 ]
 
 { #category : #accessing }
@@ -25,18 +22,19 @@ TranscriptDebugPoint >> name [
 ]
 
 { #category : #accessing }
-TranscriptDebugPoint >> text [
-	^text ifNil: [ '' ]
+TranscriptDebugPoint >> popUp [
+	|textInput|
+	textInput := SpRequestDialog new
+		label: 'Enter string:';
+		text: '';
+		title: 'Transcript String';
+		openModal.
+	textInput ifNil: [ ^'' ].
+	^textInput 
 ]
 
 { #category : #accessing }
-TranscriptDebugPoint >> text: aString [
-	text := aString.
+TranscriptDebugPoint >> text [
+	^(self getBehavior: TranscriptBehavior) ifNotNil: [ :bh | bh text ] ifNil: [ '' ].
 
-]
-
-{ #category : #'ui building' }
-TranscriptDebugPoint >> uiElement [
-
-	^TranscriptUI new debugPoint: self.
 ]

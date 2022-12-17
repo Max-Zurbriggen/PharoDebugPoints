@@ -23,7 +23,9 @@ DebugPointEditor >> createLayout [
 	self layout add: actionBar expand: false.
 	self layout add: self newActiveCheckBox expand: false.
 	DebugPointBehavior allSubclassesDo: [ :behavior |
-		 self layout add: (behavior uiElement new debugPoint: self debugPoint ) expand: false .
+		| behaviorUI | 
+		behaviorUI := (behavior uiElement new debugPoint: self debugPoint ).
+		 self layout add: behaviorUI expand: ((self debugPoint getBehavior: behavior) ifNotNil: [ behaviorUI expand ] ifNil: [ false ] ) .
 		]. 
 	debugPoint uiElement ifNotNil: [ :ui | self layout add: ui ].
 	"self layout add: debugPoint uiElement."
