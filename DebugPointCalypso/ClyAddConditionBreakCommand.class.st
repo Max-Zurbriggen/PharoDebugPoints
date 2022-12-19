@@ -30,7 +30,8 @@ ClyAddConditionBreakCommand >> execute [
 	|dp |
 	dp := DebugPointManager installNew: BreakDebugPoint On: sourceNode withBehaviors: {ConditionBehavior }.
 	
-	(dp getBehavior: ConditionBehavior) condition: self popUp
+	(dp getBehavior: ConditionBehavior) condition: self popUp.
+	self putIconInProperties: dp.
 ]
 
 { #category : #execution }

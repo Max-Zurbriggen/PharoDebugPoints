@@ -10,6 +10,6 @@ IconStyler class >> withStaticStylers [
 	"
 	
 	^ self new 
-		stylerClasses: (Set new addAll: DebugPointIconStyler subclasses; addAll: {DebugPointIconStyler. BreakpointIconStyler. CounterIconStyler. DisabledBreakpointIconStyler. FlagIconStyler. HaltIconStyler. MetaLinkIconStyler. SemanticWarningIconStyler. WatchIconStyler. DocCommentIconStyler}; yourself); 
+		stylerClasses: {DebugPointIconStyler. BreakpointIconStyler. CounterIconStyler. DisabledBreakpointIconStyler. FlagIconStyler. HaltIconStyler. MetaLinkIconStyler. SemanticWarningIconStyler. WatchIconStyler. DocCommentIconStyler};
 		yourself
 ]

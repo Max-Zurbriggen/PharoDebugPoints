@@ -12,7 +12,35 @@ DebugPointIconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
 	"there probably is a better way that just adding a second row but i couldn't figure out rubric"
 	| conf |
 	(self shouldStyleNode: aNode) ifFalse: [ ^ self ].
-	conf := RubConfigurationChange new.
+
+	"list options for each debug point"
+	(self allDebugPointsOn: aNode) do: [ :dp |
+		
+		conf := RubConfigurationChange new.
+	conf configurationBlock: [ :text | 
+		| r r2 |
+		r := self segmentMorphClass from: start to: stop + 1.
+		text addSegment: r.
+		r label: (self iconLabelBlock: dp).
+		r icon: (self iconFor: dp).
+		r iconBlock: (self iconBlock: dp).
+		r color: aColor.
+		r borderColor: self borderColor .
+		r2 := self segmentMorphClass from: start to: stop + 1.
+		text addSegment: r2.
+		r2 label: 'Remove'.
+		r2 icon: (self iconFor: dp ).
+		r2 iconBlock: (self iconBlockEdit: dp).
+		r2 color: aColor.
+		r2 borderColor: self borderColor .
+		].
+	
+	textModel announce: conf 
+	].
+	
+	
+	
+	"conf := RubConfigurationChange new.
 	conf configurationBlock: [ :text | 
 		| r r2 |
 		r := self segmentMorphClass from: start to: stop + 1.
@@ -31,7 +59,13 @@ DebugPointIconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
 		r2 borderColor: self borderColor .
 		].
 	
-	textModel announce: conf
+	textModel announce: conf"
+]
+
+{ #category : #private }
+DebugPointIconStyler >> allDebugPointsOn: aNode [
+
+	^(aNode links select: [ :link | link metaObject isKindOf: self forClass ]) collect: [:link | link metaObject].
 ]
 
 { #category : #private }
@@ -40,9 +74,9 @@ DebugPointIconStyler >> debugPointOn: aNode [
 ]
 
 { #category : #defaults }
-DebugPointIconStyler >> disableIcon: anIcon onNode: aNode [
+DebugPointIconStyler >> disableIcon: anIcon dp: dp [
 
-	(self debugPointOn: aNode) enabled ifFalse: [
+	dp enabled ifFalse: [
 		^anIcon dimmed
 		"in case i want it crossed out when disabled:"
 		"^anIcon mergeWith: (self iconNamed: #smallCancel)"
@@ -57,9 +91,9 @@ DebugPointIconStyler >> forClass [
 ]
 
 { #category : #defaults }
-DebugPointIconStyler >> hasBehaviorIcon: anIcon onNode: aNode [
+DebugPointIconStyler >> hasBehaviorIcon: anIcon dp: dp [
 
-	((self debugPointOn: aNode) behaviors ) ifNotEmpty: [ ^anIcon mergeWith: (((self iconNamed: #smallCogInitialState)scaledToSize: 9@9)darker: 1 ) at: 8@0 ].
+	(dp behaviors ) ifNotEmpty: [ ^anIcon mergeWith: (((self iconNamed: #smallCogInitialState)scaledToSize: 9@9)darker: 1 ) at: 8@0 ].
 	^anIcon
 	
 	"in case i want seperate things for each behavior:"
@@ -82,43 +116,44 @@ DebugPointIconStyler >> highlightColor [
 ]
 
 { #category : #defaults }
-DebugPointIconStyler >> icon [
+DebugPointIconStyler >> icon: dp [
 	
-	^ self iconNamed: #smallDebug
+	^ dp properties at: #Icon ifAbsent: [ #smallDebug ].
 ]
 
 { #category : #defaults }
-DebugPointIconStyler >> iconBlock: aNode [
+DebugPointIconStyler >> iconBlock: dp [
 
-	^[ :seg | DebugPointManagerUI new open; select: (self debugPointOn: aNode). ]
+	^[ :seg | DebugPointManagerUI new open; select: dp. ]
 
 ]
 
 { #category : #defaults }
-DebugPointIconStyler >> iconBlockEdit: aNode [
-		 ^ [ :seg | (self debugPointOn: aNode) remove.
+DebugPointIconStyler >> iconBlockEdit: dp [
+		 ^ [ :seg | dp remove.
 	   seg delete ]
 ]
 
 { #category : #defaults }
-DebugPointIconStyler >> iconFor: aNode [
+DebugPointIconStyler >> iconFor: dp [
 	| icon |
-	icon := self icon deepCopy.	
-	icon := self hasBehaviorIcon: icon onNode: aNode.
-	icon := self disableIcon: icon onNode: aNode.
+	icon := (self iconNamed: (self icon: dp)) deepCopy.
+	icon := self hasBehaviorIcon: icon dp: dp.
+	icon := self disableIcon: icon dp: dp.
 
 	^ icon
 ]
 
 { #category : #defaults }
-DebugPointIconStyler >> iconLabel: aNode [
-	| dp | 
-	dp := (self debugPointOn: aNode).
+DebugPointIconStyler >> iconLabel: dp [
+	"| dp | 
+	dp := (self debugPointOn: aNode)."
 	(dp getBehavior: CountBehavior) ifNotNil: [ :bh | ^dp name, ' (Count: ', bh count asString,')' ].
 	^ dp name
 ]
 
 { #category : #testing }
 DebugPointIconStyler >> shouldStyleNode: aNode [
+
 	^aNode hasDebugPointOfType: self forClass
 ]

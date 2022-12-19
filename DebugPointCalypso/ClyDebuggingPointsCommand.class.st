@@ -44,3 +44,9 @@ ClyDebuggingPointsCommand class >> sourceCodeMenuActivation [
 		  order: self contextMenuOrder
 		  for: ClyMethodSourceCodeContext
 ]
+
+{ #category : #execution }
+ClyDebuggingPointsCommand >> putIconInProperties: dp [
+	dp properties at: #Icon put: self defaultMenuIconName.
+	DebugPointManager notifyDebugPointChanged: dp.
+]

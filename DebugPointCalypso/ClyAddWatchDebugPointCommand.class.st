@@ -27,5 +27,7 @@ ClyAddWatchDebugPointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddWatchDebugPointCommand >> execute [
-	DebugPointManager installNew: WatchDebugPoint  On: sourceNode.
+	|dp|
+	dp := DebugPointManager installNew: WatchDebugPoint  On: sourceNode.
+	self putIconInProperties: dp.
 ]

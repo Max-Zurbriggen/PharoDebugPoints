@@ -27,5 +27,8 @@ ClyAddChainDebugPointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddChainDebugPointCommand >> execute [
-	(DebugPointManager installNew: DebugPoint  On: sourceNode withBehaviors: {ChainBehavior}) name: #ChainLink
+	| dp |
+	dp := (DebugPointManager installNew: DebugPoint  On: sourceNode withBehaviors: {ChainBehavior}) name: #ChainLink.
+	
+self putIconInProperties: dp.
 ]

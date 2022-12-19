@@ -28,9 +28,11 @@ ClyAddScriptDebugPointCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyAddScriptDebugPointCommand >> execute [
 	| dp |
-	dp := DebugPointManager installNew: ScriptDebugPoint On: sourceNode .
-		"(DebugPointManager installNew: DebugPoint  On: sourceNode withBehaviors: {ScriptBehavior}) name: #Script.
-	(dp getBehavior: ScriptBehavior) script: self popUp"
+	dp := 	(DebugPointManager installNew: DebugPoint  On: sourceNode withBehaviors: {ScriptBehavior}) name: #Script.
+	
+	(dp getBehavior: ScriptBehavior) script: self popUp.
+	
+	self putIconInProperties: dp.
 ]
 
 { #category : #execution }

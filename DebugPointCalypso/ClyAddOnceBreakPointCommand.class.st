@@ -27,5 +27,8 @@ ClyAddOnceBreakPointCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddOnceBreakPointCommand >> execute [
-	DebugPointManager installNew: BreakDebugPoint On: sourceNode withBehaviors: {OnceBehavior}
+	
+	|dp|
+	dp := DebugPointManager installNew: BreakDebugPoint On: sourceNode withBehaviors: {OnceBehavior}.
+	self putIconInProperties: dp.
 ]
