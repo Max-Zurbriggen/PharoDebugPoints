@@ -27,11 +27,15 @@ ClyAddConditionBreakCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyAddConditionBreakCommand >> execute [
-	|dp |
-	dp := DebugPointManager installNew: BreakDebugPoint On: sourceNode withBehaviors: {ConditionBehavior }.
-	
-	(dp getBehavior: ConditionBehavior) condition: self popUp.
-	self putIconInProperties: dp.
+
+	| dp |
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      On: sourceNode
+		      withBehaviors: { ConditionBehavior }.
+ 
+	dp condition: self popUp.
+	self putIconInProperties: dp
 ]
 
 { #category : #execution }

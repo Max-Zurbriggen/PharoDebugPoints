@@ -68,6 +68,17 @@ DebugPoint >> behaviors: aSetOfBehaviors [
 ]
 
 { #category : #accessing }
+DebugPoint >> doesNotUnderstand: message [
+	"forward not understood messages to behaviors, 'delegation complements composition' "
+	self behaviors do: [ :bh | 
+		(bh respondsTo: message selector)
+			ifTrue: [ ^bh perform: message selector withEnoughArguments: message arguments ]
+		].
+	
+	^super doesNotUnderstand: message
+]
+
+{ #category : #accessing }
 DebugPoint >> enabled [
 	^enabled
 ]
