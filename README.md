@@ -41,7 +41,7 @@ The manager should be mostly self-explanatory, a debug point can be selected on 
 ![Menu](/pictures/managerWithChain.png)
 
 ## Object Centric Debug Points
-
+Sometimes you only want to execute the behaviors of a debug point when a specific object calls a method. By setting the scope of a debug point to an object this can be achieved.
 When inspecting an object, you can set the scope of an already existing debug point to this specific object:
 
 ![Menu](/pictures/scopeButton.png)
