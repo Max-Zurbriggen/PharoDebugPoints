@@ -1,6 +1,6 @@
 # PharoDebugPoints
 
-Imagine breakpoints that do something else than breaking. We named these points debug points. This repository adds debug points that can be placed in your code for easier debugging, and the tools to use them. There are a couple of different types and some behaviors which can be added to any type of debug point. You can add this repository to your image with the followng command:
+Imagine breakpoints that do something else than breaking. We named these points debug points. This repository adds debug points that can be placed in your code for easier debugging, and the tools to use them. There are a couple of behaviors most of which can be added to any type of debug point. You can add this repository to your image with the followng command:
 
   ```Smalltalk
 Metacello new
@@ -18,8 +18,10 @@ All debug points can be placed like with previous breakpoints by right-clicking 
 
 ![Menu](/pictures/debugPointMenuV2.png)
 
-## Debug Point Features
-- Breakpoint: 	Break when the node is reached
+## Debug Point Behaviors
+With the exception of Break and Watch all of the behaviors below can be added and combined in any debug point in the manager.
+
+- Break: 	Break when the node is reached
 - Condition:	The debug point is only executed when the condition returns true.
 - Once:		The debug point is deactivated after being executed.
 - Count: 	Count how often a debug point is executed.
