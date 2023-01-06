@@ -18,17 +18,14 @@ All debug points can be placed like with previous breakpoints by right-clicking 
 
 ![Menu](/pictures/debugPointMenuV2.png)
 
-## Debug Point Types
+## Debug Point Features
 - Breakpoint: 	Break when the node is reached
-- Script: 		Execute a script when the node is reached
-- Transcript:	Write something to transcript when the node is reached
-- Watch: 		Saves the values of the node in a history
-
-## Debug Point Behaviors
-Behaviors can be added to all types of debug points in the manager.
 - Condition:	The debug point is only executed when the condition returns true.
 - Once:		The debug point is deactivated after being executed.
 - Count: 	Count how often a debug point is executed.
+- Watch: 		Saves the values of the node in a history
+- Script: 		Execute a script when the node is reached
+- Transcript:	Write something to transcript when the node is reached
 - Chain:  When the parent debug point is executed it activates the child debug point while deactivating itself. A debug point can be added as a child by drag and dropping it on the desired parent in the debug point manager in the list on the left side.
 
 ## Managing Debug Points
