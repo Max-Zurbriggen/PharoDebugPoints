@@ -111,9 +111,9 @@ DebugPoint >> hitWithContext: aContext [
 		yourself).
 	
 	"API: execute should return false if it should interrupt behavior execution"
-	self behaviors allSatisfy: [ :behavior | behavior execute].
+	^self behaviors allSatisfy: [ :behavior | behavior execute].
 	
-	^true.
+
 ]
 
 { #category : #initialization }

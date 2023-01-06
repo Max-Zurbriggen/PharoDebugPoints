@@ -12,7 +12,7 @@ BreakDebugPoint >> hitWithContext: aContext [
 	<debuggerCompleteToSender>
 	
 	(super hitWithContext: aContext) ifFalse: [^self].
-	
+
 	Break break.
 ]
 
