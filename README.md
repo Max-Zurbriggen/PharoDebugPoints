@@ -28,6 +28,7 @@ With the exception of Break and Watch all of the behaviors below can be added an
 - Watch: 		Saves the values of the node in a history
 - Script: 		Execute a script when the node is reached
 - Transcript:	Write something to transcript when the node is reached
+- Test Environment Only: The other behaviors of the debug point will only be executed when the method is called in the context of a test.
 - Chain:  When the parent debug point is executed it activates the child debug point while deactivating itself. A debug point can be added as a child by drag and dropping it on the desired parent in the debug point manager in the list on the left side.
 
 ## Managing Debug Points
