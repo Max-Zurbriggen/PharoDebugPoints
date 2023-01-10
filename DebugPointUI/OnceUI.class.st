@@ -1,3 +1,6 @@
+"
+I am the UI element for the OnceBehavior of DebugPoints and am added to the DebugPointEditor.
+"
 Class {
 	#name : #OnceUI,
 	#superclass : #DebugPointBehaviorUI,

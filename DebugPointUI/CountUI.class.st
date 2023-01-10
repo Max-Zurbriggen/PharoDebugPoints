@@ -1,3 +1,6 @@
+"
+I am the UI element for the CountBehavior of DebugPoints and am added to the DebugPointEditor.
+"
 Class {
 	#name : #CountUI,
 	#superclass : #DebugPointBehaviorUI,

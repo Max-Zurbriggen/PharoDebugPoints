@@ -1,13 +1,13 @@
+"
+I am a table presenter for debug points with a custom context menu.
+"
 Class {
 	#name : #DebugPointTablePresenter,
 	#superclass : #SpTablePresenter,
-	#instVars : [
-		'code'
-	],
 	#category : #DebugPointUI
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'context menu' }
 DebugPointTablePresenter >> debugPointContextMenu [ 
 	^ self newMenu
 		addGroup: [ :aGroup | 
@@ -47,13 +47,13 @@ DebugPointTablePresenter >> debugPointContextMenu [
 				]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 DebugPointTablePresenter >> initialize [ 
 	super initialize.
 	self initializeDebugPointTable 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 DebugPointTablePresenter >> initializeDebugPointTable [ 
 
 	self beResizable.

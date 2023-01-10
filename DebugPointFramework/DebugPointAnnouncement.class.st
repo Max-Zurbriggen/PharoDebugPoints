@@ -1,10 +1,12 @@
+"
+I am the base for DebugPoint Announcements that are required to update UIs.
+"
 Class {
 	#name : #DebugPointAnnouncement,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
 		'debugPoint',
-		'nodes',
-		'methods'
+		'nodes'
 	],
 	#category : #'DebugPointFramework-Announcements'
 }
@@ -58,7 +60,7 @@ DebugPointAnnouncement >> debugPoint: aDebugPoint [
 	debugPoint := aDebugPoint 
 ]
 
-{ #category : #TOREMOVE }
+{ #category : #accessing }
 DebugPointAnnouncement >> methods [
 	^nodes flatCollect: [ :entity |
 		(entity isKindOf: RBProgramNode) 

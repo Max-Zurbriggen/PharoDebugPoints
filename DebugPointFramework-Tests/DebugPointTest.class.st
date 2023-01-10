@@ -151,7 +151,8 @@ DebugPointTest >> testOnceBreakBehavior [
 { #category : #running }
 DebugPointTest >> testTranscriptDebugPoint [
 
-	dp := DebugPointManager installNew: TranscriptDebugPoint On: node.
+	"dp := DebugPointManager installNew: TranscriptDebugPoint On: node."
+	dp := DebugPointManager installNew: DebugPoint On: node withBehaviors: {TranscriptBehavior}.
 	dp text: 'string'.
 	dp hitWithContext: context.
 	Transcript stepGlobal .

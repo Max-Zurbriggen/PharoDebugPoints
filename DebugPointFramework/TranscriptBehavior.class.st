@@ -1,3 +1,6 @@
+"
+I am a behavior that can be added to debug points. I write the string in my text variable to the transcript window when executed.
+"
 Class {
 	#name : #TranscriptBehavior,
 	#superclass : #DebugPointBehavior,
@@ -13,7 +16,7 @@ TranscriptBehavior class >> uiElement [
 	^TranscriptUI
 ]
 
-{ #category : #API }
+{ #category : #execution }
 TranscriptBehavior >> execute [
 	
 	Transcript show: self text.
@@ -21,7 +24,7 @@ TranscriptBehavior >> execute [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : #cleanup }
 TranscriptBehavior >> remove [ 
 	"saving the text in case the behavior is added again later"
 	self debugPoint properties at: #TranscriptText put: self text.

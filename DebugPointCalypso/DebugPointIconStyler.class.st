@@ -1,5 +1,5 @@
 "
-All of my subclasses are automatically styled.
+I style the the code window of the calypso browser to show debug points.
 "
 Class {
 	#name : #DebugPointIconStyler,

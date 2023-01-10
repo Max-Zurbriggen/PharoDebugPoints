@@ -1,3 +1,6 @@
+"
+I am a behavior that can be added to debug points. I check if the current execution context is a test. Only if the debug point is reached when running a test the execution of behaviors continues, otherwise it interrupts.
+"
 Class {
 	#name : #TestEnvironmentBehavior,
 	#superclass : #DebugPointBehavior,
@@ -10,12 +13,12 @@ TestEnvironmentBehavior class >> uiElement [
 	^TestEnvironmentUI
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 TestEnvironmentBehavior >> context [
 	^self getArgument: #context
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 TestEnvironmentBehavior >> evaluate: expression withContext: aContext [
 	^ Smalltalk compiler
 		source: expression;

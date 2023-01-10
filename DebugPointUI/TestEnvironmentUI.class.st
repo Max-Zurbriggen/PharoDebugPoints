@@ -1,3 +1,6 @@
+"
+I am the UI element for the TestEnvironmentBehavior of DebugPoints and am added to the DebugPointEditor.
+"
 Class {
 	#name : #TestEnvironmentUI,
 	#superclass : #DebugPointBehaviorUI,

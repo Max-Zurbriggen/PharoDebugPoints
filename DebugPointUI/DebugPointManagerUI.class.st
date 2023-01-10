@@ -1,3 +1,6 @@
+"
+I am the UI for the complete DebugPoint Manager.
+"
 Class {
 	#name : #DebugPointManagerUI,
 	#superclass : #SpPresenter,
@@ -80,7 +83,7 @@ DebugPointManagerUI >> select: aDebugPoint [
 	dpTable selectItem: aDebugPoint 
 ]
 
-{ #category : #initialization }
+{ #category : #update }
 DebugPointManagerUI >> updateEditor [
 	dpTable refresh.
 	dpEditor updateAll .
@@ -88,7 +91,7 @@ DebugPointManagerUI >> updateEditor [
 	
 ]
 
-{ #category : #initialization }
+{ #category : #update }
 DebugPointManagerUI >> updateTable [
 	| prevSel |
 	prevSel := dpTable selectedItem.

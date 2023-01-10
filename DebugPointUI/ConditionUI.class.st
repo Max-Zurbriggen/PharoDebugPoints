@@ -1,3 +1,6 @@
+"
+I am the UI element for the ConditionBehavior of DebugPoints and am added to the DebugPointEditor.
+"
 Class {
 	#name : #ConditionUI,
 	#superclass : #DebugPointBehaviorUI,

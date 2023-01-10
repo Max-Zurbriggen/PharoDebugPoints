@@ -105,7 +105,7 @@ DebugPointManager class >> registerInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
-{ #category : #'class initialization' }
+{ #category : #removing }
 DebugPointManager class >> removeFromMethod: aMethod [
 
 	DebugPoint all copy do: [ :debugPoint | 

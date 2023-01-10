@@ -11,7 +11,7 @@ Class {
 	#category : #'DebugPointFramework-Implementations'
 }
 
-{ #category : #execution }
+{ #category : #API }
 WatchDebugPoint >> addValue: aValue [
 	self history addFirst: aValue.
 	(self limit = 0) ifFalse: [ 
@@ -20,12 +20,12 @@ WatchDebugPoint >> addValue: aValue [
 	
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 WatchDebugPoint >> history [
 	^history ifNil: [ history := OrderedCollection new. ]
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 WatchDebugPoint >> history: anOrderedCollection [
 	history := anOrderedCollection 
 ]
@@ -38,12 +38,12 @@ WatchDebugPoint >> hitWithContext: aContext value: aValue [
 	DebugPointManager notifyDebugPointChanged: self.
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 WatchDebugPoint >> limit [
 	^limit ifNil: [ limit := 0 ]
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 WatchDebugPoint >> limit: anInteger [
 	limit := anInteger.
 	(anInteger = 0) ifFalse: [ 
@@ -63,7 +63,7 @@ WatchDebugPoint >> metaLink [
 
 { #category : #accessing }
 WatchDebugPoint >> name [
-	^name ifNil: [ #Watcher ]
+	^name ifNil: [ #WatchPoint ]
 
 ]
 

@@ -1,3 +1,6 @@
+"
+I am the superclass for UI elements for subclasses of DebugPoint.
+"
 Class {
 	#name : #DebugPointUI,
 	#superclass : #SpPresenter,

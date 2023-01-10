@@ -1,3 +1,6 @@
+"
+I am a test class for running DebugPointTest tests.
+"
 Class {
 	#name : #DummyTestClass,
 	#superclass : #Object,

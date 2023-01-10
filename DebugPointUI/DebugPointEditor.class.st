@@ -1,3 +1,6 @@
+"
+I create a horizontal list of UI elements, based on the behaviors and class of a DebugPoint.
+"
 Class {
 	#name : #DebugPointEditor,
 	#superclass : #SpPresenter,

@@ -16,22 +16,22 @@ ConditionBehavior class >> uiElement [
 	^ConditionUI
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ConditionBehavior >> condition [
 	^condition
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ConditionBehavior >> condition: aCondition [
 	condition := aCondition
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 ConditionBehavior >> context [
 	^self getArgument: #context
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 ConditionBehavior >> evaluate: expression withContext: aContext [
 	^ Smalltalk compiler
 		source: expression;

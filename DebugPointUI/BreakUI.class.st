@@ -1,3 +1,6 @@
+"
+I am the UI element for a breakpoint.
+"
 Class {
 	#name : #BreakUI,
 	#superclass : #DebugPointUI,

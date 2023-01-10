@@ -1,3 +1,6 @@
+"
+I am the UI element for the ScriptBehavior of DebugPoints and am added to the DebugPointEditor.
+"
 Class {
 	#name : #ScriptUI,
 	#superclass : #DebugPointBehaviorUI,
@@ -7,7 +10,7 @@ Class {
 	#category : #DebugPointUI
 }
 
-{ #category : #accessing }
+{ #category : #private }
 ScriptUI >> activate [
 	| bh |
 	self behavior ifNotNil: [ ^self ].
@@ -16,7 +19,7 @@ ScriptUI >> activate [
 	self behavior: bh
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 ScriptUI >> deactivate [
 	self debugPoint removeBehavior: ScriptBehavior.
 	self behavior: nil.
@@ -48,7 +51,7 @@ ScriptUI >> defaultLayout [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #layout }
 ScriptUI >> expand [
 	^true
 ]

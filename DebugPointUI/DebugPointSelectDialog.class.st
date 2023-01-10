@@ -1,3 +1,6 @@
+"
+I am a select dialog to display DebugPoints so that the scope of a DebugPoint can be set to a specific object.
+"
 Class {
 	#name : #DebugPointSelectDialog,
 	#superclass : #SpSelectDialog,
@@ -22,7 +25,7 @@ DebugPointSelectDialog >> defaultLayout [
 		yourself
 ]
 
-{ #category : #layout }
+{ #category : #initialization }
 DebugPointSelectDialog >> initializePresenters [ 
 	label := self newLabel.
 
@@ -36,7 +39,7 @@ DebugPointSelectDialog >> initializePresenters [
 	]
 ]
 
-{ #category : #layout }
+{ #category : #initialization }
 DebugPointSelectDialog >> initializeWindow: aWindowPresenter [ 
 	
 	aWindowPresenter
@@ -46,18 +49,18 @@ DebugPointSelectDialog >> initializeWindow: aWindowPresenter [
 
 ]
 
-{ #category : #layout }
+{ #category : #api }
 DebugPointSelectDialog >> items: items [ 
 	"filter debug points such that only those that are attached to the class of the inspected object are displayed"
 	list items: (items select: [ :db | db method methodClass = self scope ])
 ]
 
-{ #category : #layout }
+{ #category : #accessing }
 DebugPointSelectDialog >> scope [  
 	^scope
 ]
 
-{ #category : #layout }
+{ #category : #accessing }
 DebugPointSelectDialog >> scope: anObject [ 
 "see items: method"
 	scope := anObject class

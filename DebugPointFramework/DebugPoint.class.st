@@ -67,7 +67,7 @@ DebugPoint >> behaviors: aSetOfBehaviors [
 	behaviors := aSetOfBehaviors 
 ]
 
-{ #category : #accessing }
+{ #category : #'reflective operations' }
 DebugPoint >> doesNotUnderstand: message [
 	"forward not understood messages to behaviors, 'delegation complements composition' "
 	self behaviors do: [ :bh | 
@@ -89,7 +89,7 @@ DebugPoint >> enabled: aBoolean [
 	DebugPointManager notifyDebugPointChanged: self.
 ]
 
-{ #category : #API }
+{ #category : #accessing }
 DebugPoint >> getArgument: aSymbol [
 	^self arguments at: aSymbol
 ]
@@ -123,11 +123,6 @@ DebugPoint >> initialize [
 ]
 
 { #category : #accessing }
-DebugPoint >> layout [
-	
-]
-
-{ #category : #accessing }
 DebugPoint >> link [
 	^metaLink
 ]
@@ -146,7 +141,7 @@ DebugPoint >> metaLink [
 		arguments: #(context) ).
 ]
 
-{ #category : #removing }
+{ #category : #accessing }
 DebugPoint >> method [
 "returns the method to which the debug point is attached"
 	^self node methodNode method
@@ -219,13 +214,13 @@ DebugPoint >> removeFromMethod: aMethod [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 DebugPoint >> resetObjectScope [
 	self targetInstance: nil.
 	self link condition: nil arguments: nil
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 DebugPoint >> setObjectScope: anObject [
 
 	"this might get changed such that the metalink will be attached to the instance directly instead of checking on all instances"

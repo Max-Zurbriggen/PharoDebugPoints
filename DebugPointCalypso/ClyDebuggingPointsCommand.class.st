@@ -1,3 +1,6 @@
+"
+I am the superclass for all menu entries in the ""Debug Points"" menu entry when right clicking in a code presenter.
+"
 Class {
 	#name : #ClyDebuggingPointsCommand,
 	#superclass : #ClyDebuggingCommand,

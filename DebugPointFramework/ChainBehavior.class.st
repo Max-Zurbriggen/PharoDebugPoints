@@ -1,3 +1,6 @@
+"
+I am a behavior that can be added to debug points. I maintain a chain of debug points. When a debug point in the chain is hit I deactivate it and activate the next debug point in the chain.
+"
 Class {
 	#name : #ChainBehavior,
 	#superclass : #DebugPointBehavior,
@@ -48,7 +51,7 @@ ChainBehavior class >> uiElement [
 	^ ChainLinkUI
 ]
 
-{ #category : #execution }
+{ #category : #private }
 ChainBehavior >> checkCircularChain: aDebugPoint withParent: aParent [
 	"should return true if there is a circular dependency so that the child will not be added"
 	| parent |
@@ -64,7 +67,7 @@ ChainBehavior >> checkCircularChain: aDebugPoint withParent: aParent [
 
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 ChainBehavior >> child [
 	^self class childFor: self debugPoint.
 
@@ -78,12 +81,12 @@ ChainBehavior >> execute [
 	^true
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 ChainBehavior >> parent [
 	^self class parentFor: self debugPoint.
 ]
 
-{ #category : #execution }
+{ #category : #API }
 ChainBehavior >> putChild: aDebugPoint [
 
 	(self checkCircularChain: aDebugPoint withParent: self debugPoint) 
@@ -94,7 +97,7 @@ ChainBehavior >> putChild: aDebugPoint [
 	DebugPointManager notifyDebugPointChanged: aDebugPoint
 ]
 
-{ #category : #execution }
+{ #category : #cleanup }
 ChainBehavior >> remove [ 
 	"removing element as child and as parent of other debug points"
 	self class allChains removeKey: self debugPoint ifAbsent: [].
@@ -102,7 +105,7 @@ ChainBehavior >> remove [
 
 ]
 
-{ #category : #execution }
+{ #category : #API }
 ChainBehavior >> resetChain [
 
 	(self class rootFor: self debugPoint) enabled: true.
@@ -110,7 +113,7 @@ ChainBehavior >> resetChain [
 	
 ]
 
-{ #category : #execution }
+{ #category : #private }
 ChainBehavior >> resetSubChain: aDebugPoint [
 	| child |
 	child := 	self class allChains at: aDebugPoint ifAbsent: [ ^nil. ].

@@ -1,3 +1,6 @@
+"
+I am a script behavior that can be added to debug points. I execute arbitrary code that is saved in my script variable.
+"
 Class {
 	#name : #ScriptBehavior,
 	#superclass : #DebugPointBehavior,
@@ -22,18 +25,18 @@ ScriptBehavior >> execute [
 	^true.
 ]
 
-{ #category : #execution }
+{ #category : #cleanup }
 ScriptBehavior >> remove [ 
 	"saving the script in case the script behavior is added again later"
 	self debugPoint properties at: #Script put: self script.
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 ScriptBehavior >> script [
 	^script ifNil:['']
 ]
 
-{ #category : #execution }
+{ #category : #accessing }
 ScriptBehavior >> script: aScript [
 	script := aScript 
 ]

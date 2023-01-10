@@ -1,3 +1,6 @@
+"
+I am the UI element for the ChainLinkBehavior of DebugPoints and am added to the DebugPointEditor.
+"
 Class {
 	#name : #ChainLinkUI,
 	#superclass : #DebugPointBehaviorUI,
@@ -73,7 +76,7 @@ ChainLinkUI >> initializePresenters [
 		self behavior: nil. ].
 ]
 
-{ #category : #layout }
+{ #category : #API }
 ChainLinkUI >> resetChain [
 
 	self behavior resetChain.

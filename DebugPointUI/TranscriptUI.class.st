@@ -1,3 +1,6 @@
+"
+I am the UI element for the TranscriptBehavior of DebugPoints and am added to the DebugPointEditor.
+"
 Class {
 	#name : #TranscriptUI,
 	#superclass : #DebugPointBehaviorUI,
@@ -7,7 +10,7 @@ Class {
 	#category : #DebugPointUI
 }
 
-{ #category : #layout }
+{ #category : #private }
 TranscriptUI >> activate [
 	| bh |
 	self behavior ifNotNil: [ ^self ].
@@ -16,7 +19,7 @@ TranscriptUI >> activate [
 	self behavior: bh
 ]
 
-{ #category : #layout }
+{ #category : #private }
 TranscriptUI >> deactivate [
 	self debugPoint removeBehavior: TranscriptBehavior.
 	self behavior: nil.

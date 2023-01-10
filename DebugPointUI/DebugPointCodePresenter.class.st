@@ -1,9 +1,9 @@
+"
+I am a code presenter that highlights the code of an AST node to which a DebugPoint is attached.
+"
 Class {
 	#name : #DebugPointCodePresenter,
 	#superclass : #SpCodePresenter,
-	#instVars : [
-		'code'
-	],
 	#category : #DebugPointUI
 }
 
