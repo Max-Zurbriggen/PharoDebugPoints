@@ -20,8 +20,11 @@ SeasideRequestBehavior >> context [
 
 { #category : #execution }
 SeasideRequestBehavior >> execute [
-
-	(self request remoteAddress = self ip) ifFalse: [ ^false ].
+	| receiver |
+	receiver := self context receiver .
+	"(receiver respondsTo: 'requestContext') ifFalse: [ ^false ]."
+	(receiver isKindOf: WAObject) ifFalse: [ ^false ].
+	(receiver requestContext request remoteAddress = self ip) ifFalse: [ ^false ].
 	^true
 
 ]
@@ -41,9 +44,4 @@ SeasideRequestBehavior >> ip [
 { #category : #execution }
 SeasideRequestBehavior >> ip: aString [
 	ip := aString
-]
-
-{ #category : #execution }
-SeasideRequestBehavior >> request [ 
-	^self context receiver requestContext request
 ]
