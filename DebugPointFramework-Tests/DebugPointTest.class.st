@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'dp',
 		'node',
-		'context'
+		'context',
+		'dp2'
 	],
 	#category : #'DebugPointFramework-Tests'
 }
@@ -39,7 +40,7 @@ DebugPointTest >> setUpContext [
 DebugPointTest >> tearDown [ 
 	
 	dp remove.
-	
+	dp2 ifNotNil: [dp2 remove].
 	super tearDown.
 ]
 
@@ -63,6 +64,42 @@ DebugPointTest >> testBreakDebugPoint [
 	dp := DebugPointManager installNew: BreakDebugPoint On: node.
 	self should: [dp hitWithContext: context] raise: Break.
 	self should: [DummyTestClass new id:2 ] raise: Break.
+]
+
+{ #category : #running }
+DebugPointTest >> testChainBehavior [
+	dp := DebugPointManager installNew: DebugPoint  On: node withBehaviors: {ChainBehavior}.
+	dp2 := DebugPointManager installNew: DebugPoint  On: node withBehaviors: {ChainBehavior}.
+	
+	"check parent/child"
+	self assert: (dp child) equals: nil.
+	self assert: (dp parent) equals: nil.
+	dp putChild: dp2.
+	self assert: (dp child) equals: dp2.
+	self assert: (dp parent) equals: nil.
+	self assert: (dp2 parent) equals: dp.
+	
+	"reset states check"
+	dp resetChain.
+	self assert: (dp enabled) equals: true.
+	self assert: (dp2 enabled) equals: false.
+	
+	"hit parent, check states"
+	dp hitWithContext: context.
+	self assert: (dp enabled) equals: false.
+	self assert: (dp2 enabled) equals: true.
+	"hit child, check states"
+	dp2 hitWithContext: context.
+	self assert: (dp enabled) equals: false.
+	self assert: (dp2 enabled) equals: false.
+
+	"check parent/child after removal"
+	dp2 removeBehavior: ChainBehavior.
+	self assert: (dp parent) equals: nil.
+	self assert: (dp child) equals: nil.
+	
+
+
 ]
 
 { #category : #running }
@@ -145,6 +182,32 @@ DebugPointTest >> testOnceBreakBehavior [
 	self should: [dp hitWithContext: context] raise: Break.
 	self assert: (dp enabled) equals: false.
 	self shouldnt: [dp hitWithContext: context] raise: Break.
+
+]
+
+{ #category : #running }
+DebugPointTest >> testScriptDebugPoint [
+
+	"dp := DebugPointManager installNew: TranscriptDebugPoint On: node."
+	dp := DebugPointManager installNew: DebugPoint On: node withBehaviors: {ScriptBehavior}.
+	dp script: 'true'.
+	self shouldnt: [dp hitWithContext: context] raise: Break.
+	self shouldnt: [DummyTestClass new id:2 ] raise: Break.
+	dp script: 'Break signal'.
+	self should: [dp hitWithContext: context] raise: Break.
+	self should: [DummyTestClass new id:2 ] raise: Break.
+]
+
+{ #category : #running }
+DebugPointTest >> testTestEnvironmentBehavior [
+	dp := DebugPointManager installNew: BreakDebugPoint On: node withBehaviors: {TestEnvironmentBehavior }.
+
+	self should: [dp hitWithContext: context] raise: Break.
+	"To check if the test triggers when the execution environment is not a test"
+	CurrentExecutionEnvironment restoreDefault.
+	self assert: (CurrentExecutionEnvironment value isTest) equals: false.
+	self shouldnt: [dp hitWithContext: context] raise: Break.
+
 
 ]
 
