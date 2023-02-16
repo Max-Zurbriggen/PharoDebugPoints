@@ -44,8 +44,7 @@ ConditionBehavior >> evaluate: expression withContext: aContext [
 { #category : #execution }
 ConditionBehavior >> execute [
 	self condition ifNil: [ ^true ].
-	(self evaluate: self condition withContext: self context) ifFalse: [ ^false ].
-	^true
+	^(self evaluate: self condition withContext: self context).
 ]
 
 { #category : #initialization }

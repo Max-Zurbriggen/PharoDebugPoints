@@ -18,10 +18,8 @@ ScriptBehavior class >> uiElement [
 
 { #category : #execution }
 ScriptBehavior >> execute [
-
 	self script ifNil: [ ^true ].
 	Smalltalk compiler evaluate: self script.
-	
 	^true.
 ]
 

@@ -33,7 +33,6 @@ WatchDebugPoint >> history: anOrderedCollection [
 { #category : #API }
 WatchDebugPoint >> hitWithContext: aContext value: aValue [
 	(self hitWithContext: aContext) ifFalse: [^self].
-	
 	self addValue: aValue.
 	DebugPointManager notifyDebugPointChanged: self.
 ]

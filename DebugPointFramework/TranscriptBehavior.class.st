@@ -18,9 +18,7 @@ TranscriptBehavior class >> uiElement [
 
 { #category : #execution }
 TranscriptBehavior >> execute [
-	
 	Transcript show: self text.
-	
 	^true
 ]
 

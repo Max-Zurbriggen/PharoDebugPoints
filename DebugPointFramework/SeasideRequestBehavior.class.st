@@ -22,10 +22,8 @@ SeasideRequestBehavior >> context [
 SeasideRequestBehavior >> execute [
 	| receiver |
 	receiver := self context receiver .
-	"(receiver respondsTo: 'requestContext') ifFalse: [ ^false ]."
 	(receiver isKindOf: WAObject) ifFalse: [ ^false ].
-	(receiver requestContext request remoteAddress = self ip) ifFalse: [ ^false ].
-	^true
+	^(receiver requestContext request remoteAddress = self ip)
 
 ]
 

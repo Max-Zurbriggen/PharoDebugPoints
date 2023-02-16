@@ -15,8 +15,7 @@ TestEnvironmentBehavior class >> uiElement [
 
 { #category : #execution }
 TestEnvironmentBehavior >> execute [
-	(CurrentExecutionEnvironment value isTest) ifFalse: [ ^false ].
-	^true
+	^(CurrentExecutionEnvironment value isTest).
 
 ]
 

@@ -16,6 +16,5 @@ OnceBehavior class >> uiElement [
 { #category : #execution }
 OnceBehavior >> execute [
 	self debugPoint enabled: false.
-	
 	^true.
 ]
