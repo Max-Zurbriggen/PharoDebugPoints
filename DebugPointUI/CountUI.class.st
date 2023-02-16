@@ -39,7 +39,6 @@ CountUI >> expandedLayout [
 	^( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: (self newLabel label: 'Current Count:') expand: false ;
 			add: textInput  expand: true ;
-			add: (self newButton label: 'reset'; action: [self behavior count: 0. self update]) expand: false ;
 			yourself)
 ]
 
