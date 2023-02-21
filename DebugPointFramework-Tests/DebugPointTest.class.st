@@ -224,9 +224,9 @@ DebugPointTest >> testTranscriptDebugPoint [
 
 { #category : #running }
 DebugPointTest >> testWatchDebugPoint [
-	| his | 
-	
-	dp := DebugPointManager installNew: WatchDebugPoint On: node.
+	| his node2 | 
+	node2 := (DummyTestClass methods select: [ :method | method name = 'DummyTestClass>>#id:' ]) first ast children second children first children first children first.
+	dp := DebugPointManager installNew: WatchDebugPoint On: node2.
 	his := OrderedCollection new.
 
 	"check empty history"
