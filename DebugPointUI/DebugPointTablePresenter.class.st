@@ -2,12 +2,13 @@
 I am a table presenter for debug points with a custom context menu.
 "
 Class {
-	#name : #DebugPointTablePresenter,
-	#superclass : #SpTablePresenter,
-	#category : #DebugPointUI
+	#name : 'DebugPointTablePresenter',
+	#superclass : 'SpTablePresenter',
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 DebugPointTablePresenter >> debugPointContextMenu [ 
 	^ self newMenu
 		addGroup: [ :aGroup | 
@@ -47,13 +48,13 @@ DebugPointTablePresenter >> debugPointContextMenu [
 				]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointTablePresenter >> initialize [ 
 	super initialize.
 	self initializeDebugPointTable 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointTablePresenter >> initializeDebugPointTable [ 
 
 	self beResizable.

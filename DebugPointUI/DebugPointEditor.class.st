@@ -2,23 +2,24 @@
 I create a horizontal list of UI elements, based on the behaviors and class of a DebugPoint.
 "
 Class {
-	#name : #DebugPointEditor,
-	#superclass : #SpPresenter,
+	#name : 'DebugPointEditor',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'debugPoint',
 		'isActiveCheckBox',
 		'actionBar'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointEditor >> changeDebugPointState: newState [
 	self debugPoint enabled: newState.
 	DebugPointManager notifyDebugPointChanged: self debugPoint .
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DebugPointEditor >> createLayout [
 
 	self debugPoint ifNil: [ ^self layout: self defaultLayout ].
@@ -35,7 +36,7 @@ DebugPointEditor >> createLayout [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugPointEditor >> debugPoint [
 	^debugPoint
 	
@@ -43,7 +44,7 @@ DebugPointEditor >> debugPoint [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugPointEditor >> debugPoint: aDebugPoint [
 	debugPoint := aDebugPoint .
 	
@@ -51,14 +52,14 @@ DebugPointEditor >> debugPoint: aDebugPoint [
 	
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DebugPointEditor >> defaultLayout [ 
 	^SpBoxLayout new hAlignCenter; vAlignCenter;
 	add: (SpLabelPresenter new label: 'Select a Debug Point');
 	yourself.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointEditor >> initializePresenters [
 	
 	actionBar := self newActionBar
@@ -78,7 +79,7 @@ DebugPointEditor >> initializePresenters [
 		
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DebugPointEditor >> newActiveCheckBox [
 	isActiveCheckBox := self newCheckBox label: 'enabled'.
 	isActiveCheckBox state: self debugPoint enabled.
@@ -87,7 +88,7 @@ DebugPointEditor >> newActiveCheckBox [
 	^isActiveCheckBox 
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 DebugPointEditor >> updateAll [
 
 	self createLayout.

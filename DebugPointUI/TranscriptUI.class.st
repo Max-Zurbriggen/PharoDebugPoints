@@ -2,15 +2,16 @@
 I am the UI element for the TranscriptBehavior of DebugPoints and am added to the DebugPointEditor.
 "
 Class {
-	#name : #TranscriptUI,
-	#superclass : #DebugPointBehaviorUI,
+	#name : 'TranscriptUI',
+	#superclass : 'DebugPointBehaviorUI',
 	#instVars : [
 		'textInput'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TranscriptUI >> activate [
 	| bh |
 	self behavior ifNotNil: [ ^self ].
@@ -19,13 +20,13 @@ TranscriptUI >> activate [
 	self behavior: bh
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TranscriptUI >> deactivate [
 	self debugPoint removeBehavior: TranscriptBehavior.
 	self behavior: nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TranscriptUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
 	
@@ -36,7 +37,7 @@ TranscriptUI >> debugPoint: aDebugPoint [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TranscriptUI >> defaultLayout [ 
 	| newLayout |
 	
@@ -54,7 +55,7 @@ TranscriptUI >> defaultLayout [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TranscriptUI >> initializePresenters [ 
 	
 	textInput  := self newText.

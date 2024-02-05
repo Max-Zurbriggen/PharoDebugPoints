@@ -2,15 +2,16 @@
 I am the UI element for the ChainLinkBehavior of DebugPoints and am added to the DebugPointEditor.
 "
 Class {
-	#name : #ChainLinkUI,
-	#superclass : #DebugPointBehaviorUI,
+	#name : 'ChainLinkUI',
+	#superclass : 'DebugPointBehaviorUI',
 	#instVars : [
 		'chain'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChainLinkUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
 	behavior := self debugPoint getBehavior: ChainBehavior.
@@ -25,7 +26,7 @@ ChainLinkUI >> debugPoint: aDebugPoint [
 ].
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ChainLinkUI >> defaultLayout [ 
 	| newLayout |
 	
@@ -49,12 +50,12 @@ ChainLinkUI >> defaultLayout [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ChainLinkUI >> expand [
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChainLinkUI >> initializePresenters [ 
 	
 	chain := self newTreeTable beResizable.
@@ -76,7 +77,7 @@ ChainLinkUI >> initializePresenters [
 		self behavior: nil. ].
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 ChainLinkUI >> resetChain [
 
 	self behavior resetChain.

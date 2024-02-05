@@ -1,1 +1,1 @@
-Package { #name : #DebugPointUI }
+Package { #name : 'DebugPointUI' }

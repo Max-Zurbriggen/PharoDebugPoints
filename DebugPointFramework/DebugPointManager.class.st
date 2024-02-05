@@ -4,12 +4,14 @@ I am responsible for managing the debug points.
 An exception is the removal of Debug points, which is handled in the ""remove"" method of DebugPoint instances.
 "
 Class {
-	#name : #DebugPointManager,
-	#superclass : #Object,
-	#category : #'DebugPointFramework-Base'
+	#name : 'DebugPointManager',
+	#superclass : 'Object',
+	#category : 'DebugPointFramework-Base',
+	#package : 'DebugPointFramework',
+	#tag : 'Base'
 }
 
-{ #category : #removing }
+{ #category : 'removing' }
 DebugPointManager class >> handleClassRemoved: anAnnouncement [
 
 	DebugPoint all copy do: [ :debugPoint | 
@@ -18,28 +20,28 @@ DebugPointManager class >> handleClassRemoved: anAnnouncement [
 			ifFound: [ debugPoint remove"debugPoint removeFromClass: anAnnouncement classRemoved" ] ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 DebugPointManager class >> handleMethodModified: anAnnouncement [
 	self removeFromMethod: anAnnouncement oldMethod
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 DebugPointManager class >> handleMethodRemoved: anAnnouncement [
 	self removeFromMethod: anAnnouncement method
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DebugPointManager class >> initialize [
 	self registerInterestToSystemAnnouncement
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 DebugPointManager class >> installNew: aDebugPointClass On: aNode [
 
 	^self installNew: aDebugPointClass On: aNode withBehaviors: {  }.
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 DebugPointManager class >> installNew: aDebugPointClass On: aNode withBehaviors: aListOfBehaviorClasses [
 	"this should be the single point of installation for debug points, removal is in the remove method of debug point instances"
 	| dp ml |
@@ -62,7 +64,7 @@ DebugPointManager class >> installNew: aDebugPointClass On: aNode withBehaviors:
 	^dp	
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 DebugPointManager class >> notifyDebugPointAdded: aDebugPoint [
 
 	| announcement |
@@ -72,7 +74,7 @@ DebugPointManager class >> notifyDebugPointAdded: aDebugPoint [
 	SystemAnnouncer uniqueInstance announce: announcement
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 DebugPointManager class >> notifyDebugPointChanged: aDebugPoint [
 	
 	| announcement |
@@ -82,7 +84,7 @@ DebugPointManager class >> notifyDebugPointChanged: aDebugPoint [
 	SystemAnnouncer uniqueInstance announce: announcement
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 DebugPointManager class >> notifyDebugPointRemoved: aDebugPoint fromNodes: nodes [
 	"nodes have to be seperate because they will be removed from the debugpoint before this method is called"
 	| announcement |
@@ -95,7 +97,7 @@ DebugPointManager class >> notifyDebugPointRemoved: aDebugPoint fromNodes: nodes
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DebugPointManager class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 
@@ -105,7 +107,7 @@ DebugPointManager class >> registerInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 DebugPointManager class >> removeFromMethod: aMethod [
 
 	DebugPoint all copy do: [ :debugPoint | 

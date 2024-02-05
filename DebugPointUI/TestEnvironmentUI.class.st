@@ -2,12 +2,13 @@
 I am the UI element for the TestEnvironmentBehavior of DebugPoints and am added to the DebugPointEditor.
 "
 Class {
-	#name : #TestEnvironmentUI,
-	#superclass : #DebugPointBehaviorUI,
-	#category : #DebugPointUI
+	#name : 'TestEnvironmentUI',
+	#superclass : 'DebugPointBehaviorUI',
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestEnvironmentUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
 	behavior := self debugPoint getBehavior: TestEnvironmentBehavior .
@@ -15,7 +16,7 @@ TestEnvironmentUI >> debugPoint: aDebugPoint [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TestEnvironmentUI >> defaultLayout [ 
 	
 	^SpBoxLayout newTopToBottom
@@ -23,7 +24,7 @@ TestEnvironmentUI >> defaultLayout [
 		yourself.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TestEnvironmentUI >> initializePresenters [ 
 	
 	checkBox  := self newCheckBox label: 'Test Environment Only'.

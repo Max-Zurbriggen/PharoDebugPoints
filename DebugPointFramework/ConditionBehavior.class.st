@@ -2,36 +2,38 @@
 I am the condition behavior which can be added to debug points. If my condition is true or nil the execute method will return true, else it will return false or an error.
 "
 Class {
-	#name : #ConditionBehavior,
-	#superclass : #DebugPointBehavior,
+	#name : 'ConditionBehavior',
+	#superclass : 'DebugPointBehavior',
 	#instVars : [
 		'condition'
 	],
-	#category : #'DebugPointFramework-Behaviors'
+	#category : 'DebugPointFramework-Behaviors',
+	#package : 'DebugPointFramework',
+	#tag : 'Behaviors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConditionBehavior class >> uiElement [
 
 	^ConditionUI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConditionBehavior >> condition [
 	^condition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConditionBehavior >> condition: aCondition [
 	condition := aCondition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConditionBehavior >> context [
 	^self getArgument: #context
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConditionBehavior >> evaluate: expression withContext: aContext [
 	^ Smalltalk compiler
 		source: expression;
@@ -41,13 +43,13 @@ ConditionBehavior >> evaluate: expression withContext: aContext [
 		evaluate
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ConditionBehavior >> execute [
 	self condition ifNil: [ ^true ].
 	^(self evaluate: self condition withContext: self context).
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ConditionBehavior >> initialize [ 
 	"should be executed before once and count etc."
 	super initialize.
@@ -55,7 +57,7 @@ ConditionBehavior >> initialize [
 	self condition: 'false'.
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ConditionBehavior >> remove [ 
 	"saving the condition in case the condition behavior is added again later"
 	self debugPoint properties at: #Condition put: self condition.

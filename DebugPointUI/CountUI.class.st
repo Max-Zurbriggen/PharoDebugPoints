@@ -2,15 +2,16 @@
 I am the UI element for the CountBehavior of DebugPoints and am added to the DebugPointEditor.
 "
 Class {
-	#name : #CountUI,
-	#superclass : #DebugPointBehaviorUI,
+	#name : 'CountUI',
+	#superclass : 'DebugPointBehaviorUI',
 	#instVars : [
 		'textInput'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CountUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
 	behavior := self debugPoint getBehavior: CountBehavior.
@@ -19,7 +20,7 @@ CountUI >> debugPoint: aDebugPoint [
 		textInput text: behavior count asString ].
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 CountUI >> defaultLayout [ 
 	| newLayout |
 	newLayout := SpBoxLayout newTopToBottom 
@@ -34,7 +35,7 @@ CountUI >> defaultLayout [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 CountUI >> expandedLayout [
 	^( SpBoxLayout newLeftToRight borderWidth: 5;
 			add: (self newLabel label: 'Current Count:') expand: false ;
@@ -42,7 +43,7 @@ CountUI >> expandedLayout [
 			yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CountUI >> initializePresenters [ 
 	
 	textInput := self newTextInput beNotEditable .

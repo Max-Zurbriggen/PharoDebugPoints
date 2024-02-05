@@ -2,12 +2,13 @@
 I am the UI element for the OnceBehavior of DebugPoints and am added to the DebugPointEditor.
 "
 Class {
-	#name : #OnceUI,
-	#superclass : #DebugPointBehaviorUI,
-	#category : #DebugPointUI
+	#name : 'OnceUI',
+	#superclass : 'DebugPointBehaviorUI',
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OnceUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
 	behavior := self debugPoint getBehavior: OnceBehavior.
@@ -15,7 +16,7 @@ OnceUI >> debugPoint: aDebugPoint [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 OnceUI >> defaultLayout [ 
 	
 	^SpBoxLayout newTopToBottom
@@ -23,7 +24,7 @@ OnceUI >> defaultLayout [
 		yourself.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OnceUI >> initializePresenters [ 
 	
 	checkBox  := self newCheckBox label: 'Once'.

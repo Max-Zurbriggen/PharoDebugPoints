@@ -2,16 +2,17 @@
 I a the UI element for a watchpoint.
 "
 Class {
-	#name : #WatchUI,
-	#superclass : #DebugPointUI,
+	#name : 'WatchUI',
+	#superclass : 'DebugPointUI',
 	#instVars : [
 		'historyList',
 		'textInput'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WatchUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
 	
@@ -19,7 +20,7 @@ WatchUI >> debugPoint: aDebugPoint [
 	historyList items: self debugPoint history.
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 WatchUI >> defaultLayout [ 
 	
 	^SpBoxLayout newTopToBottom 
@@ -37,7 +38,7 @@ WatchUI >> defaultLayout [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WatchUI >> initializePresenters [ 
 	
 	historyList := self newList 

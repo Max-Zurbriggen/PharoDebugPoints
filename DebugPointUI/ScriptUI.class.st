@@ -2,15 +2,16 @@
 I am the UI element for the ScriptBehavior of DebugPoints and am added to the DebugPointEditor.
 "
 Class {
-	#name : #ScriptUI,
-	#superclass : #DebugPointBehaviorUI,
+	#name : 'ScriptUI',
+	#superclass : 'DebugPointBehaviorUI',
 	#instVars : [
 		'codeInput'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ScriptUI >> activate [
 	| bh |
 	self behavior ifNotNil: [ ^self ].
@@ -19,13 +20,13 @@ ScriptUI >> activate [
 	self behavior: bh
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ScriptUI >> deactivate [
 	self debugPoint removeBehavior: ScriptBehavior.
 	self behavior: nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScriptUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
 	behavior := self debugPoint getBehavior: ScriptBehavior.
@@ -34,7 +35,7 @@ ScriptUI >> debugPoint: aDebugPoint [
 	(self behavior ifNotNil: [:bh | codeInput text: bh script]).
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScriptUI >> defaultLayout [ 
 	| newLayout |
 	newLayout := SpBoxLayout newTopToBottom 
@@ -51,12 +52,12 @@ ScriptUI >> defaultLayout [
 	
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScriptUI >> expand [
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScriptUI >> initializePresenters [ 
 	
 	checkBox  := self newCheckBox label: 'Script'.

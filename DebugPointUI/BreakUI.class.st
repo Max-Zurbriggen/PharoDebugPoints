@@ -2,12 +2,13 @@
 I am the UI element for a breakpoint.
 "
 Class {
-	#name : #BreakUI,
-	#superclass : #DebugPointUI,
-	#category : #DebugPointUI
+	#name : 'BreakUI',
+	#superclass : 'DebugPointUI',
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 BreakUI >> defaultLayout [ 
 	
 	^SpBoxLayout newTopToBottom 

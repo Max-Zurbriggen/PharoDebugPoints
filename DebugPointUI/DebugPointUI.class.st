@@ -2,20 +2,21 @@
 I am the superclass for UI elements for subclasses of DebugPoint.
 "
 Class {
-	#name : #DebugPointUI,
-	#superclass : #SpPresenter,
+	#name : 'DebugPointUI',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'debugPoint'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugPointUI >> debugPoint [ 
 	^debugPoint 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugPointUI >> debugPoint: aDebugPoint [
 	debugPoint := aDebugPoint 
 ]

@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfPharoDebugPoints }
+Package { #name : 'BaselineOfPharoDebugPoints' }
