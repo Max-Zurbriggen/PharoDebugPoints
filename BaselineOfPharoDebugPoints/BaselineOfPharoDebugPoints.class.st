@@ -15,8 +15,8 @@ BaselineOfPharoDebugPoints >> baseline: spec [
 
 		spec 
 			package: 'DebugPointFramework';
-			package: 'DebugPointCalypso';
 			package: 'DebugPointUI' with: [ spec requires: #('DebugPointFramework') ];
+			package: 'DebugPointCalypso' with: [ spec requires: #('DebugPointUI' 'DebugPointFramework') ];
 			package: 'DebugPointFramework-Tests' with: [ spec requires: #('DebugPointFramework')];
 			package: 'DebugPointSeaside' with: [ spec requires: #('DebugPointFramework' 'DebugPointUI') ].
 		
