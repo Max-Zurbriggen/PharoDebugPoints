@@ -2,15 +2,16 @@
 I am the UI element for the ConditionBehavior of DebugPoints and am added to the DebugPointEditor.
 "
 Class {
-	#name : #ConditionUI,
-	#superclass : #DebugPointBehaviorUI,
+	#name : 'ConditionUI',
+	#superclass : 'DebugPointBehaviorUI',
 	#instVars : [
 		'codeInput'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 ConditionUI >> activate [
 	| bh |
 	self behavior ifNotNil: [ ^self ].
@@ -19,13 +20,13 @@ ConditionUI >> activate [
 	self behavior: bh
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ConditionUI >> deactivate [
 	self debugPoint removeBehavior: ConditionBehavior.
 	self behavior: nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConditionUI >> debugPoint: aDebugPoint [
 	super debugPoint: aDebugPoint.
 	
@@ -36,7 +37,7 @@ ConditionUI >> debugPoint: aDebugPoint [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ConditionUI >> defaultLayout [ 
 	| newLayout |
 	
@@ -54,7 +55,7 @@ ConditionUI >> defaultLayout [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ConditionUI >> initializePresenters [ 
 	
 	codeInput  := self newCode.

@@ -2,16 +2,17 @@
 I am a select dialog to display DebugPoints so that the scope of a DebugPoint can be set to a specific object.
 "
 Class {
-	#name : #DebugPointSelectDialog,
-	#superclass : #SpSelectDialog,
+	#name : 'DebugPointSelectDialog',
+	#superclass : 'SpSelectDialog',
 	#instVars : [
 		'code',
 		'scope'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 DebugPointSelectDialog >> defaultLayout [ 
 
 	^ SpBoxLayout newTopToBottom
@@ -25,7 +26,7 @@ DebugPointSelectDialog >> defaultLayout [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointSelectDialog >> initializePresenters [ 
 	label := self newLabel.
 
@@ -39,7 +40,7 @@ DebugPointSelectDialog >> initializePresenters [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointSelectDialog >> initializeWindow: aWindowPresenter [ 
 	
 	aWindowPresenter
@@ -49,18 +50,18 @@ DebugPointSelectDialog >> initializeWindow: aWindowPresenter [
 
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DebugPointSelectDialog >> items: items [ 
 	"filter debug points such that only those that are attached to the class of the inspected object are displayed"
 	list items: (items select: [ :db | db method methodClass = self scope ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugPointSelectDialog >> scope [  
 	^scope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugPointSelectDialog >> scope: anObject [ 
 "see items: method"
 	scope := anObject class

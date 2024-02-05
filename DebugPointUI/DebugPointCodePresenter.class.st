@@ -2,12 +2,13 @@
 I am a code presenter that highlights the code of an AST node to which a DebugPoint is attached.
 "
 Class {
-	#name : #DebugPointCodePresenter,
-	#superclass : #SpCodePresenter,
-	#category : #DebugPointUI
+	#name : 'DebugPointCodePresenter',
+	#superclass : 'SpCodePresenter',
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #update }
+{ #category : 'update' }
 DebugPointCodePresenter >> updateCode: aDebugPoint [ 
 	"updates the code window with the code of the selected debug point"
 	aDebugPoint ifNil:[self text: ''.^self].

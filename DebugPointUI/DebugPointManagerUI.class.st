@@ -2,17 +2,18 @@
 I am the UI for the complete DebugPoint Manager.
 "
 Class {
-	#name : #DebugPointManagerUI,
-	#superclass : #SpPresenter,
+	#name : 'DebugPointManagerUI',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'dpTable',
 		'dpEditor',
 		'dpCode'
 	],
-	#category : #DebugPointUI
+	#category : 'DebugPointUI',
+	#package : 'DebugPointUI'
 }
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 DebugPointManagerUI class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Debug Point Manager')
@@ -24,7 +25,7 @@ DebugPointManagerUI class >> menuCommandOn: aBuilder [
 	aBuilder withSeparatorAfter
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DebugPointManagerUI >> defaultLayout [ 
 	^SpPanedLayout newLeftToRight
 		add: (SpPanedLayout newTopToBottom  
@@ -39,7 +40,7 @@ DebugPointManagerUI >> defaultLayout [
 		
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointManagerUI >> initialize [ 
 
 	super initialize.
@@ -50,7 +51,7 @@ DebugPointManagerUI >> initialize [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointManagerUI >> initializePresenters [ 
 
 	self initializeTable.
@@ -60,7 +61,7 @@ DebugPointManagerUI >> initializePresenters [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointManagerUI >> initializeTable [
 	dpTable := DebugPointTablePresenter new.
 	
@@ -69,7 +70,7 @@ DebugPointManagerUI >> initializeTable [
 		dpCode updateCode: dpTable selectedItem ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugPointManagerUI >> initializeWindow: aWindowPresenter [
 	
 	aWindowPresenter
@@ -78,12 +79,12 @@ DebugPointManagerUI >> initializeWindow: aWindowPresenter [
 		initialExtent: 800@550
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DebugPointManagerUI >> select: aDebugPoint [
 	dpTable selectItem: aDebugPoint 
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 DebugPointManagerUI >> updateEditor [
 	dpTable refresh.
 	dpEditor updateAll .
@@ -91,7 +92,7 @@ DebugPointManagerUI >> updateEditor [
 	
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 DebugPointManagerUI >> updateTable [
 	| prevSel |
 	prevSel := dpTable selectedItem.
