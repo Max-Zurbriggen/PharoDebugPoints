@@ -27,7 +27,7 @@ BaselineOfPharoDebugPoints >> baseline: spec [
 			group: 'UI' with: #('Core'  'DebugPointUI');
 			group: 'Seaside' with: #('UI' 'DebugPointSeaside');
 			group: 'BrowserIntegration' with: #('DebugPointCalypso');
-			group: 'default' with: #('Tests' 'UI')
+			group: 'default' with: #('Tests' 'UI' 'BrowserIntegration')
 	]
 ]
 
